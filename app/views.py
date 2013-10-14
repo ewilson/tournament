@@ -6,9 +6,9 @@ import config
 from app import app
 
 @app.route('/')
-@app.route('/index')
+@app.route('/tournaments')
 def index():
-    return render_template('index.html')
+    return render_template('tournaments.html')
 
 @app.before_request
 def before_request():
