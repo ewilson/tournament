@@ -4,6 +4,9 @@
     <title>Tournament</title>
   </head>
   <body>
-    <h1>Hello Tournament</h1>
+    <h1>Tournaments</h1>
+    {% for tournament in tournaments %}
+      <p>{{tournament.description}} started on {{tournament.start_date}}</p>
+    {% endfor %}
   </body>
 </html>
