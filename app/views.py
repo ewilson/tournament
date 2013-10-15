@@ -1,18 +1,18 @@
 from flask import render_template, redirect, flash, g
 import sqlite3
-
 import config
-
 from app import app
+from forms import TournForm
 
 @app.route('/')
-@app.route('/tournaments')
+@app.route('/tournaments', methods = ['GET', 'POST'])
 def index():
     cur = g.db.execute('select start_date, tourn_type, description from tournament')
     tournaments = [Tournament(*row) for row in cur.fetchall()]
-    for t in tournaments:
-        print t
-    return render_template('tournaments.html', tournaments=tournaments)
+    form = TournForm()
+    return render_template('tournaments.html', 
+                           tournaments=tournaments,
+                           form=form)
 
 @app.before_request
 def before_request():

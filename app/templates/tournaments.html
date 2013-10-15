@@ -8,5 +8,14 @@
     {% for tournament in tournaments %}
       <p>{{tournament.description}} started on {{tournament.start_date}}</p>
     {% endfor %}
+    <h2>Add new tournament</h2>
+    <form action="" method="post" name="tournament">
+      {{form.hidden_tag()}}
+      <p>
+	Enter name of new tournament: {{form.description(size=40)}}<br/>
+	Tournament type: {{form.tourn_type(size=20)}}<br/>
+      </p>
+      <p><input type="submit" value="Add"></p>
+    </form>
   </body>
 </html>
