@@ -11,8 +11,8 @@ def index():
     form = TournForm()
     if form.validate_on_submit():
         insert_tournament = """
-        insert into tournament (start_date, tourn_type, description)
-        values (date('now'), '%s', '%s')
+        insert into tournament (start_date, tourn_type, description, begun)
+        values (date('now'), '%s', '%s', 0)
         """ % (form.tourn_type.data, form.description.data)
         print insert_tournament
         g.db.execute(insert_tournament)
