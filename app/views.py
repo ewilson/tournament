@@ -7,13 +7,19 @@ from forms import TournForm
 @app.route('/')
 @app.route('/tournaments', methods = ['GET', 'POST'])
 def index():
+    form = TournForm()
+    if form.validate_on_submit():
+        insert_tournament = """
+        insert into tournament (start_date, tourn_type, description)
+        values (date('now'), '%s', '%s')
+        """ % (form.tourn_type.data, form.description.data)
+        print insert_tournament
+        g.db.execute(insert_tournament)
     cur = g.db.execute('select start_date, tourn_type, description from tournament')
     tournaments = [Tournament(*row) for row in cur.fetchall()]
-    form = TournForm()
     return render_template('tournaments.html', 
                            tournaments=tournaments,
                            form=form)
-
 @app.before_request
 def before_request():
     g.db = connect_db()
