@@ -5,6 +5,9 @@ class Tournament:
         self.tourn_type = tourn_type
         self.description = description
     
+    def __init__(self):
+        pass
+
     def __repr__(self):
         return ('<(%d)%s:%s--%s>' % 
                 (self.id, self.description, self.tourn_type, self.start_date))

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>Tournaments</h1>
+
+{% if tournament.begun %}
+list matches
+{% else %}
+configure tourney
+{% endif %}
+
+{% endblock %}

@@ -24,7 +24,10 @@ def index():
 
 @app.route('/tournament/<id>')
 def tournament(id):
-    pass
+    select = "select * from tournament where id = %d" % int(id)
+    tournament = Tournament()
+    tournament.begun = 0
+    return render_template('tournament.html', tournament=tournament)
 
 @app.before_request
 def before_request():
