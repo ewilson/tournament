@@ -4,29 +4,23 @@ import config
 from app import app
 from forms import TournForm
 from models import Tournament
+import tournament_dao
 
 @app.route('/', methods = ['GET','POST'])
 def index():
     form = TournForm()
     if form.validate_on_submit():
-        insert_tournament = """
-        insert into tournament (start_date, tourn_type, description, begun)
-        values (date('now'), '%s', '%s', 0)
-        """ % (form.tourn_type.data, form.description.data)
-        print insert_tournament
-        g.db.execute(insert_tournament)
-        g.db.commit()
-    cur = g.db.execute('select id, start_date, tourn_type, description from tournament')
-    tournaments = [Tournament(*row) for row in cur.fetchall()]
+        tournament = Tournament(0,'',form.tourn_type.data,
+                                form.description.data,0)
+        tournament_dao.create(tournament)
+    tournaments = tournament_dao.find_all()
     return render_template('index.html', 
                            tournaments=tournaments,
                            form=form)
 
 @app.route('/tournament/<id>')
 def tournament(id):
-    select = "select * from tournament where id = %d" % int(id)
-    tournament = Tournament()
-    tournament.begun = 0
+    tournament = tournament_dao.find(id)
     return render_template('tournament.html', tournament=tournament)
 
 @app.before_request
