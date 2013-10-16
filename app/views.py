@@ -17,11 +17,16 @@ def index():
         print insert_tournament
         g.db.execute(insert_tournament)
         g.db.commit()
-    cur = g.db.execute('select start_date, tourn_type, description from tournament')
+    cur = g.db.execute('select id, start_date, tourn_type, description from tournament')
     tournaments = [Tournament(*row) for row in cur.fetchall()]
     return render_template('tournaments.html', 
                            tournaments=tournaments,
                            form=form)
+
+@app.route('/tournament/<id>')
+def tournament(id):
+    pass
+
 @app.before_request
 def before_request():
     g.db = connect_db()

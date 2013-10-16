@@ -6,7 +6,9 @@
   <body>
     <h1>Tournaments</h1>
     {% for tournament in tournaments %}
-      <p>{{tournament.description}} started on {{tournament.start_date}}</p>
+      <a href="{{url_for('tournament', id = tournament.id)}}">
+        <p>{{tournament.description}} started on {{tournament.start_date}}</p>
+      </a>
     {% endfor %}
     <h2>Add new tournament</h2>
     <form action="" method="post" name="tournament">
