@@ -6,7 +6,6 @@ from forms import TournForm
 from models import Tournament
 
 @app.route('/', methods = ['GET','POST'])
-@app.route('/tournaments', methods = ['GET', 'POST'])
 def index():
     form = TournForm()
     if form.validate_on_submit():
@@ -19,7 +18,7 @@ def index():
         g.db.commit()
     cur = g.db.execute('select id, start_date, tourn_type, description from tournament')
     tournaments = [Tournament(*row) for row in cur.fetchall()]
-    return render_template('tournaments.html', 
+    return render_template('index.html', 
                            tournaments=tournaments,
                            form=form)
 
