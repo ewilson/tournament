@@ -2,9 +2,9 @@ from flask import render_template, redirect, flash, g
 import sqlite3
 import config
 from app import app
-from forms import TournForm
-from models import Tournament
-import tournament_dao
+from forms import TournForm, PlayerForm
+from models import Tournament, Player
+import tournament_dao, player_dao
 
 @app.route('/', methods = ['GET','POST'])
 def index():
@@ -22,6 +22,17 @@ def index():
 def tournament(id):
     tournament = tournament_dao.find(id)
     return render_template('tournament.html', tournament=tournament)
+
+@app.route('/player', methods = ['GET','POST'])
+def player():
+    form = PlayerForm()
+    if form.validate_on_submit():
+        player = Player(0,form.fname.data)
+        player_dao.create(player)
+    players = player_dao.find_all()
+    return render_template('player.html', 
+                           players=players,
+                           form=form)
 
 @app.before_request
 def before_request():

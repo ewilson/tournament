@@ -6,8 +6,9 @@ create table tournament (
        tourn_type text not null,
        begun integer not null
 );
-drop table if exists matches;
-create table matches (
+
+drop table if exists match;
+create table match (
        id integer primary key autoincrement,
        tournament_id integer not null,
        entered_time text not null,
@@ -18,3 +19,8 @@ create table matches (
        completed integer not null
 );
 
+drop table if exists player;
+create table player (
+       id integer primary key autoincrement,
+       fname text not null
+);

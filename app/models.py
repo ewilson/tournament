@@ -9,3 +9,11 @@ class Tournament:
     def __repr__(self):
         return ('<(%d)%s:%s--%s>' % 
                 (self.id, self.description, self.tourn_type, self.start_date))
+
+class Player:
+    def __init__(self, id, fname):
+        self.id = id
+        self.fname = fname
+    
+    def __repr__(self):
+        return '<(%d)%s>' % (self.id, self.fname)

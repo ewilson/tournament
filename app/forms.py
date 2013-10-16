@@ -5,3 +5,6 @@ from wtforms.validators import Required
 class TournForm(Form):
     description = TextField('description', validators=[Required()])
     tourn_type = TextField('tourn_type')
+
+class PlayerForm(Form):
+    fname = TextField('fname', validators=[Required()])
