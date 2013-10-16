@@ -11,12 +11,7 @@ drop table if exists match;
 create table match (
        id integer primary key autoincrement,
        tournament_id integer not null,
-       entered_time text not null,
-       player_1_id integer not null,
-       player_2_id integer not null,
-       player_1_score integer,
-       player_2_score integer,
-       completed integer not null
+       entered_time text
 );
 
 drop table if exists player;
@@ -24,3 +19,22 @@ create table player (
        id integer primary key autoincrement,
        fname text not null
 );
+
+-- "attempt" could be called player_match
+drop table if exists attempt;
+create table attempt (
+       id integer primary key autoincrement,
+       player_id integer not null,
+       match_id integer not null,
+       score integer
+);
+
+-- "entry" could be called player_tournament
+drop table if exists entry;
+create table entry (
+       id integer primary key autoincrement,
+       player_id integer not null,
+       tournament_id integer not null,
+       champion integer
+);
+
