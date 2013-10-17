@@ -21,7 +21,12 @@ def index():
 @app.route('/tournament/<id>')
 def tournament(id):
     tournament = tournament_dao.find(id)
-    return render_template('tournament.html', tournament=tournament)
+    entries = [Player(1,'Able'),Player(2,'Belshazzar')]
+    other_players = []
+    return render_template('tournament.html', 
+                           tournament=tournament,
+                           entries=entries,
+                           other_players=other_players)
 
 @app.route('/player', methods = ['GET','POST'])
 def player():
@@ -29,6 +34,7 @@ def player():
     if form.validate_on_submit():
         player = Player(0,form.fname.data)
         player_dao.create(player)
+        form.fname.data = ''
     players = player_dao.find_all()
     return render_template('player.html', 
                            players=players,

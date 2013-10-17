@@ -5,7 +5,21 @@
 {% if tournament.begun %}
 list matches
 {% else %}
-configure tourney
+  {% if entries %}
+    <h2>Competitors signed up</h2>
+    {% for entry in entries %}
+      <p>{{entry.fname}}</p>
+    {% endfor %}
+  {% else %}
+    <h2>No Competitors Added</h2>
+  {% endif %}
+  {% if other_players %}
+    {% for player in other_players %}
+      <p>{{entry.fname}}</p>
+    {% endfor %}
+  {% else %}
+    <h2>No other players to add</h2>
+  {% endif %}
 {% endif %}
 
 {% endblock %}
