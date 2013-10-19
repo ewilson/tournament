@@ -1,8 +1,5 @@
 import numpy as np
 
-def foo(num):
-    return num + num
-
 def round_robin(teams):
     n = len(teams)
     a = np.zeros(shape=(n,n))
