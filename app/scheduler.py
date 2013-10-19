@@ -2,27 +2,41 @@ import numpy as np
 
 def round_robin(teams):
     n = len(teams)
-    a = np.zeros(shape=(n,n))
-    b = a.sum(axis=0)
+    g = Graph(n)
     schedule = []
-    fewest_games = min(b)
-    while fewest_games < (n-1):
-        at_minimum = np.where(b == fewest_games)[0]
+    while g.min_edges < (n-1):
+        at_minimum = g.at_minimum()
         if len(at_minimum) > 1:
             first = at_minimum[0]
             for option in at_minimum[1:]:
-                if a[first][option] == 0:
-                    a[first][option] = 1
-                    a[option][first] = 1
-                    b = a.sum(axis=0)
+                if g.is_not_edge(first,option):
+                    g.add_edge(first,option)
                     schedule.append(set([teams[first],teams[option]]))
                     break
         else:
             print 'oh oh'
-        fewest_games = min(b)
     return schedule
                              
-            
+class Graph(object):
+    def __init__(self,n):
+        self.n = n
+        self.a = np.zeros(shape=(n,n))
+        self.num_edges = self.a.sum(axis=0)
+        self.min_edges = 0
+
+    def is_not_edge(self,x,y):
+        return self.a[x][y] == 0 
+
+    def add_edge(self,x,y):
+        self.a[x][y] = 1
+        self.a[y][x] = 1
+        self.num_edges = self.a.sum(axis=0)
+        self.min_edges = min(self.num_edges)
+    
+    def at_minimum(self):
+        return np.where(self.num_edges == self.min_edges)[0]
+        
+        
             
             
         
