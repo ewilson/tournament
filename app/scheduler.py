@@ -4,7 +4,7 @@ def round_robin(teams):
     n = len(teams)
     g = Graph(n)
     schedule = []
-    while g.min_edges < (n-1):
+    while not g.finished():
         at_minimum = g.at_minimum()
         if len(at_minimum) > 1:
             first = at_minimum[0]
@@ -15,6 +15,7 @@ def round_robin(teams):
                     break
         else:
             print 'oh oh'
+            break
     return schedule
                              
 class Graph(object):
@@ -35,6 +36,9 @@ class Graph(object):
     
     def at_minimum(self):
         return np.where(self.num_edges == self.min_edges)[0]
+
+    def finished(self):
+        self.min_edges == (self.n - 1)
         
         
             
