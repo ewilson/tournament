@@ -6,25 +6,22 @@ def round_robin(teams):
     schedule = []
     while not g.finished():
         at_minimum = g.at_minimum(0)
+        first = at_minimum[0]
         if len(at_minimum) > 1:
-            first = at_minimum[0]
-            for option in at_minimum[1:]:
-                if g.is_not_edge(first,option):
-                    g.add_edge(first,option)
-                    schedule.append(set([teams[first],teams[option]]))
-                    break
+            _choose_pair(first, at_minimum[1:],g,schedule,teams)
         else:
             at_next = g.at_minimum(1)
             if len(at_next) > 1:
-                print at_next
-                first = at_minimum[0]
-                for option in at_next:
-                    if g.is_not_edge(first,option):
-                        g.add_edge(first,option)
-                        schedule.append(set([teams[first],teams[option]]))
-                        break
+                _choose_pair(first, at_next,g,schedule,teams)
     return schedule
-                             
+
+def _choose_pair(first, options, g, schedule, teams):
+    for option in options:
+        if g.is_not_edge(first,option):
+            g.add_edge(first,option)
+            schedule.append(set([teams[first],teams[option]]))
+            break
+            
 class Graph(object):
     def __init__(self,n):
         self.n = n
