@@ -23,3 +23,10 @@ def test_three_teams_scheduled():
     assert schedule[1] == set(['charlie','alpha'])
     assert schedule[2] == set(['bravo','charlie'])
 
+def test_six_teams_scheduled():
+    teams = ['alpha','bravo','charlie','delta','echo','foxtrot']
+
+    schedule = scheduler.round_robin(teams)
+
+    assert len(schedule) == 15
+
