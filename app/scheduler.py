@@ -1,26 +1,34 @@
 import numpy as np
 
 def round_robin(teams):
-    n = len(teams)
-    g = Graph(n)
-    schedule = []
-    while not g.finished():
-        at_minimum = g.at_minimum(0)
-        first = at_minimum[0]
-        if len(at_minimum) > 1:
-            _choose_pair(first, at_minimum[1:],g,schedule,teams)
-        else:
-            at_next = g.at_minimum(1)
-            if len(at_next) > 1:
-                _choose_pair(first, at_next,g,schedule,teams)
-    return schedule
+    builder = RoundRobinBuilder(teams)
+    return builder.build_round_robin()
 
-def _choose_pair(first, options, g, schedule, teams):
-    for option in options:
-        if g.is_not_edge(first,option):
-            g.add_edge(first,option)
-            schedule.append(set([teams[first],teams[option]]))
-            break
+class RoundRobinBuilder(object):
+    def __init__(self, teams):
+        self.teams = teams
+        self.g = Graph(len(teams))
+        self.schedule = []
+
+    def build_round_robin(self):
+        while not self.g.finished():
+            at_minimum = self.g.at_minimum(0)
+            print at_minimum
+            first = at_minimum[0]
+            if len(at_minimum) > 1:
+                self._choose_pair(first, at_minimum[1:])
+            else:
+                at_next = self.g.at_minimum(1)
+                if len(at_next) > 1:
+                    self._choose_pair(first, at_next)
+        return self.schedule
+
+    def _choose_pair(self, first, options):
+        for option in options:
+            if self.g.is_not_edge(first,option):
+                self.g.add_edge(first,option)
+                self.schedule.append(set([self.teams[first],self.teams[option]]))
+                break
             
 class Graph(object):
     def __init__(self,n):
@@ -44,9 +52,3 @@ class Graph(object):
     def finished(self):
         return self.min_edges == (self.n - 1)
         
-        
-            
-            
-        
-    
-    
