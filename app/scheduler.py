@@ -1,9 +1,5 @@
 import numpy as np
 
-def round_robin(teams):
-    builder = RoundRobinBuilder(teams)
-    return builder.build_round_robin()
-
 class RoundRobinBuilder(object):
     def __init__(self, teams):
         self.teams = teams
@@ -11,20 +7,11 @@ class RoundRobinBuilder(object):
         self.schedule = []
 
     def build_round_robin(self):
-        count = 0
         while not self.g.finished():
-            count += 1
-            at_minimum = self.g.at_minimum(0)
-            at_next = self.g.at_minimum(1)
-            first = at_minimum[0]
-            if len(at_minimum) > 1 and len(at_next) == 0:
-                self._choose_pair(first, at_minimum[1:])
-            elif len(at_minimum) == 0:
-                self._choose_pair(first, at_next)
-            else:
-                merged = list(at_minimum[1:])
-                merged.extend(at_next)
-                self._choose_pair(first, merged)
+            options = list(self.g.at_minimum(0))
+            next_options = self.g.at_minimum(1)
+            options.extend(next_options)
+            self._choose_pair(options[0],options[1:])
         return self.schedule
 
     def _choose_pair(self, first, options):
