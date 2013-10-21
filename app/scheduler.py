@@ -13,14 +13,12 @@ class RoundRobinBuilder(object):
     def build_round_robin(self):
         while not self.g.finished():
             at_minimum = self.g.at_minimum(0)
-            print at_minimum
+            at_next = self.g.at_minimum(1)
             first = at_minimum[0]
             if len(at_minimum) > 1:
                 self._choose_pair(first, at_minimum[1:])
             else:
-                at_next = self.g.at_minimum(1)
-                if len(at_next) > 1:
-                    self._choose_pair(first, at_next)
+                self._choose_pair(first, at_next)
         return self.schedule
 
     def _choose_pair(self, first, options):
