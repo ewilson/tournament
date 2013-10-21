@@ -3,23 +3,26 @@ import numpy as np
 class RoundRobinBuilder(object):
     def __init__(self, teams):
         self.teams = teams
-        self.g = Graph(len(teams))
+
         self.schedule = []
+def round_robin(teams):
+    g = Graph(len(teams))
+    schedule = []
 
-    def build_round_robin(self):
-        while not self.g.finished():
-            options = list(self.g.at_minimum(0))
-            next_options = self.g.at_minimum(1)
-            options.extend(next_options)
-            self._choose_pair(options[0],options[1:])
-        return self.schedule
-
-    def _choose_pair(self, first, options):
+    def _choose_pair(first, options):
         for option in options:
-            if self.g.is_not_edge(first,option):
-                self.g.add_edge(first,option)
-                self.schedule.append(set([self.teams[first],self.teams[option]]))
+            if g.is_not_edge(first,option):
+                g.add_edge(first,option)
+                schedule.append(set([teams[first],teams[option]]))
                 break
+
+    while not g.finished():
+        options = list(g.at_minimum(0))
+        next_options = g.at_minimum(1)
+        options.extend(next_options)
+        _choose_pair(options[0],options[1:])
+    return schedule
+
             
 class Graph(object):
     def __init__(self,n):
