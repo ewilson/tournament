@@ -24,6 +24,7 @@ def tournament(id):
     entries = player_dao.find_in_tournament(id) 
     other_players = player_dao.find_not_in_tournament(id)
     form = TourneyEntry()
+    form.enter.choices = [(player.id, player.fname) for player in entries]
     return render_template('tournament.html', 
                            tournament=tournament,
                            entries=entries,

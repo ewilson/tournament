@@ -5,15 +5,12 @@
 {% if tournament.begun %}
 list matches
 {% else %}
-  <form action="tournament/1" method="post" name="entries">
-    {{form.enter}}
-  </form>
 
   {% if entries %}
     <h2>Competitors signed up</h2>
-    {% for entry in entries %}
-      <p>{{entry.fname}}</p>
-    {% endfor %}
+    <form action="tournament/1" method="post" name="entries">
+      {{form.enter}}
+    </form>
   {% else %}
     <h2>No Competitors Added</h2>
   {% endif %}

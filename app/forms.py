@@ -16,7 +16,6 @@ class EntryForm(Form):
 class TourneyEntry(Form):
     enter = SelectMultipleField(
         'Enter',
-        choices=[('val_a','Value A'), ('val_b','Value B'), ('val_c','Value C')],
         option_widget=CheckboxInput(),
         widget=ListWidget(prefix_label=False)
         )
