@@ -2,7 +2,7 @@ from flask import render_template, redirect, flash, g
 import sqlite3
 import config
 from app import app
-from forms import TournForm, PlayerForm
+from forms import TournForm, PlayerForm, TourneyEntry
 from models import Tournament, Player
 import tournament_dao, player_dao
 
@@ -22,11 +22,13 @@ def index():
 def tournament(id):
     tournament = tournament_dao.find(id)
     entries = player_dao.find_in_tournament(id) 
-    other_players = player_dao.find_not_in_tournament(id) 
+    other_players = player_dao.find_not_in_tournament(id)
+    form = TourneyEntry()
     return render_template('tournament.html', 
                            tournament=tournament,
                            entries=entries,
-                           other_players=other_players)
+                           other_players=other_players,
+                           form=form)
 
 @app.route('/player', methods = ['GET','POST'])
 def player():
