@@ -14,8 +14,9 @@ list matches
     <h2>No Competitors Added</h2>
   {% endif %}
   {% if other_players %}
+    <h2>Players to add</h2>
     {% for player in other_players %}
-      <p>{{entry.fname}}</p>
+      <p>{{player.fname}}</p>
     {% endfor %}
   {% else %}
     <h2>No other players to add</h2>

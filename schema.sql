@@ -23,7 +23,6 @@ create table player (
 -- "attempt" could be called player_match
 drop table if exists attempt;
 create table attempt (
-       id integer primary key autoincrement,
        player_id integer not null,
        match_id integer not null,
        score integer
@@ -32,7 +31,6 @@ create table attempt (
 -- "entry" could be called player_tournament
 drop table if exists entry;
 create table entry (
-       id integer primary key autoincrement,
        player_id integer not null,
        tournament_id integer not null,
        champion integer

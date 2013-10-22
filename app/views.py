@@ -21,8 +21,8 @@ def index():
 @app.route('/tournament/<id>')
 def tournament(id):
     tournament = tournament_dao.find(id)
-    entries = [Player(1,'Able'),Player(2,'Belshazzar')]
-    other_players = []
+    entries = player_dao.find_in_tournament(id) 
+    other_players = player_dao.find_not_in_tournament(id) 
     return render_template('tournament.html', 
                            tournament=tournament,
                            entries=entries,
