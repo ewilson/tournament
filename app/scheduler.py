@@ -1,10 +1,5 @@
 import numpy as np
 
-class RoundRobinBuilder(object):
-    def __init__(self, teams):
-        self.teams = teams
-
-        self.schedule = []
 def round_robin(teams):
     g = Graph(len(teams))
     schedule = []
