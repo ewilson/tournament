@@ -8,8 +8,10 @@ list matches
 
   {% if entries %}
     <h2>Competitors signed up</h2>
-    <form action="tournament/1" method="post" name="entries">
+    <form action="1" method="post" name="entries">
       {{form.enter}}
+      {{form.hidden_tag()}}
+      <p><input type="submit" value="Add"></p>
     </form>
   {% else %}
     <h2>No Competitors Added</h2>

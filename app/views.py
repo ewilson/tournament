@@ -18,13 +18,15 @@ def index():
                            tournaments=tournaments,
                            form=form)
 
-@app.route('/tournament/<id>')
+@app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
     tournament = tournament_dao.find(id)
     entries = player_dao.find_in_tournament(id) 
     other_players = player_dao.find_not_in_tournament(id)
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in entries]
+    if form.is_submitted():
+        print "Data",form.enter.data
     return render_template('tournament.html', 
                            tournament=tournament,
                            entries=entries,
