@@ -5,25 +5,22 @@
 {% if tournament.begun %}
 list matches
 {% else %}
-
+  <form action="1" method="post" name="entries">
+  {{form.hidden_tag()}}
   {% if entries %}
     <h2>Competitors signed up</h2>
-    <form action="1" method="post" name="entries">
       {{form.enter}}
-      {{form.hidden_tag()}}
-      <p><input type="submit" value="Add"></p>
     </form>
   {% else %}
     <h2>No Competitors Added</h2>
   {% endif %}
   {% if other_players %}
     <h2>Players to add</h2>
-    {% for player in other_players %}
-      <p>{{player.fname}}</p>
-    {% endfor %}
+    {{form.enter}}
   {% else %}
     <h2>No other players to add</h2>
   {% endif %}
+  <p><input type="submit" value="Add"></p>
 {% endif %}
 
 {% endblock %}

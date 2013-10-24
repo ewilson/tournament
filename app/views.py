@@ -25,6 +25,7 @@ def tournament(id):
     other_players = player_dao.find_not_in_tournament(id)
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in entries]
+    form.enter.default = [1]
     if form.is_submitted():
         print "Data",form.enter.data
     return render_template('tournament.html', 
