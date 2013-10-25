@@ -20,12 +20,16 @@ def index():
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
+    print "ID:",id
     tournament = tournament_dao.find(id)
     players = player_dao.find_all()
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in players]
     if form.is_submitted():
         print "Data",form.enter.data
+        for player_id in form.enter.data:
+            player_dao.enter_tournament(player_id, id)
+        # NEED REDIRECT HERE
     return render_template('tournament.html', 
                            tournament=tournament,
                            players=player,

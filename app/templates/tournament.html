@@ -5,7 +5,7 @@
 {% if tournament.begun %}
 list matches
 {% else %}
-  <form action="1" method="post" name="entries">
+  <form action="{{tournament.id}}" method="post" name="entries">
   {{form.hidden_tag()}}
   {% if players %}
     <h2>Add Players</h2>

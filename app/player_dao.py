@@ -21,6 +21,15 @@ def create(player):
     g.db.execute(insert_player)
     g.db.commit()
 
+def enter_tournament(player_id, tournament_id):
+    insert_entry = """
+        insert into entry (player_id, tournament_id)
+        values (%s, %s)
+    """ % (player_id, tournament_id)
+    print insert_entry
+    g.db.execute(insert_entry)
+    g.db.commit()
+
 def find_in_tournament(tournament_id):
     select = '''
     select p.id, p.fname from player p, entry e
