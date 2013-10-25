@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, g
+from flask import render_template, redirect, flash, g, request
 import sqlite3
 import config
 from app import app
@@ -21,17 +21,14 @@ def index():
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
     tournament = tournament_dao.find(id)
-    entries = player_dao.find_in_tournament(id) 
-    other_players = player_dao.find_not_in_tournament(id)
+    players = player_dao.find_all()
     form = TourneyEntry()
-    form.enter.choices = [(player.id, player.fname) for player in entries]
-    form.enter.default = [1]
+    form.enter.choices = [(player.id, player.fname) for player in players]
     if form.is_submitted():
         print "Data",form.enter.data
     return render_template('tournament.html', 
                            tournament=tournament,
-                           entries=entries,
-                           other_players=other_players,
+                           players=player,
                            form=form)
 
 @app.route('/player', methods = ['GET','POST'])

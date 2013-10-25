@@ -7,20 +7,15 @@ list matches
 {% else %}
   <form action="1" method="post" name="entries">
   {{form.hidden_tag()}}
-  {% if entries %}
-    <h2>Competitors signed up</h2>
-      {{form.enter}}
-    </form>
-  {% else %}
-    <h2>No Competitors Added</h2>
-  {% endif %}
-  {% if other_players %}
-    <h2>Players to add</h2>
+  {% if players %}
+    <h2>Add Players</h2>
     {{form.enter}}
   {% else %}
-    <h2>No other players to add</h2>
+    <h2>No players to add</h2>
   {% endif %}
-  <p><input type="submit" value="Add"></p>
+    <p><input type="submit" value="Add"></p>
+  </form>
+
 {% endif %}
 
 {% endblock %}
