@@ -20,8 +20,10 @@ def index():
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
-    print "ID:",id
     tournament = tournament_dao.find(id)
+    print tournament
+    if tournament.begun == 1:
+        render_template('play-tournament.html')
     players = player_dao.find_all()
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in players]

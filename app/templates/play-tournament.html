@@ -2,15 +2,5 @@
 {% block body %}
 <h1>Tournament {{tournament.description}}</h1>
 
-<form action="{{tournament.id}}" method="post" name="entries">
-  {{form.hidden_tag()}}
-  {% if players %}
-    <h2>Add Players</h2>
-    {{form.enter}}
-  {% else %}
-    <h2>No players to add</h2>
-  {% endif %}
-    <p><input type="submit" value="Add"></p>
-</form>
-
+  Need some stuff here -- for entering games scheduled in a tourney.
 {% endblock %}
