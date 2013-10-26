@@ -2,10 +2,7 @@
 {% block body %}
 <h1>Tournament {{tournament.description}}</h1>
 
-{% if tournament.begun %}
-list matches
-{% else %}
-  <form action="{{tournament.id}}" method="post" name="entries">
+<form action="{{tournament.id}}" method="post" name="entries">
   {{form.hidden_tag()}}
   {% if players %}
     <h2>Add Players</h2>
@@ -14,8 +11,6 @@ list matches
     <h2>No players to add</h2>
   {% endif %}
     <p><input type="submit" value="Add"></p>
-  </form>
-
-{% endif %}
+</form>
 
 {% endblock %}

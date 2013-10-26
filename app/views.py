@@ -30,7 +30,7 @@ def tournament(id):
         for player_id in form.enter.data:
             player_dao.enter_tournament(player_id, id)
         # NEED REDIRECT HERE
-    return render_template('tournament.html', 
+    return render_template('edit-tournament.html', 
                            tournament=tournament,
                            players=player,
                            form=form)
