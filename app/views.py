@@ -37,6 +37,12 @@ def tournament(id):
                            players=player,
                            form=form)
 
+@app.route('/tournament/start/<id>', methods = ['POST'])
+def start_tournament(id):
+    tournament = tournament_dao.find(id)
+    tournament.begun = 1
+    tournament_dao.update(tournament)
+
 @app.route('/player', methods = ['GET','POST'])
 def player():
     form = PlayerForm()
