@@ -3,7 +3,7 @@ import sqlite3
 import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntry
-from models import Tournament, Player
+from models import Tournament, Player, Match
 import tournament_dao, player_dao
 
 @app.route('/', methods = ['GET','POST'])
@@ -52,6 +52,32 @@ def player():
     return render_template('player.html', 
                            players=players,
                            form=form)
+
+@app.route('/games-tmp')
+def games():
+    p1 = Player(1,'Albert')
+    p2 = Player(2,'Bernard')
+    p3 = Player(3,'Charles')
+    p4 = Player(4,'DeMarcus')
+    cm1 = Match(p1,p2)
+    cm1.score1 = 4
+    cm1.score2 = 3
+    cm2 = Match(p1,p3)
+    cm1.score1 = 44
+    cm2.score2 = 3
+    completed = [cm1, cm2]
+    sm1 = Match(p2,p4)
+    sm2 = Match(p3,p4)
+    schedule = [sm1,sm2]
+    class Foo:
+        def __init__(self):
+            self.description = 'fake'
+            self.begun = 1
+    
+    return render_template('play-tournament.html',
+                           tournament = Foo(),
+                           completed = completed,
+                           schedule = schedule)
 
 @app.before_request
 def before_request():

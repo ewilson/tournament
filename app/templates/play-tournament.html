@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% block body %}
 <h1>Tournament {{tournament.description}}</h1>
-
+{% for c_match in completed %}
+  <p>{{c_match.player1}}: {{c_match.score1}}</p>
+  <p>{{c_match.player2}}: {{c_match.score2}}</p>
+<br/>
+{% endfor %}
+{% for s_match in schedule %}
+  <p>{{s_match.player1}} vs {{s_match.player2}}</p>
+{% endfor %}
   Need some stuff here -- for entering games scheduled in a tourney.
 {% endblock %}
