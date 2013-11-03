@@ -23,7 +23,8 @@ def tournament(id):
     tournament = tournament_dao.find(id)
     print tournament
     if tournament.begun == 1:
-        render_template('play-tournament.html')
+        return render_template('play-tournament.html',
+                               tournament=tournament)
     players = player_dao.find_all()
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in players]
@@ -31,17 +32,14 @@ def tournament(id):
         print "Data",form.enter.data
         for player_id in form.enter.data:
             player_dao.enter_tournament(player_id, id)
-        # NEED REDIRECT HERE
+            tournament.begun = 1
+            tournament_dao.update(tournament)
+            return render_template('play-tournament.html',
+                                   tournament=tournament)
     return render_template('edit-tournament.html', 
                            tournament=tournament,
                            players=player,
                            form=form)
-
-@app.route('/tournament/start/<id>', methods = ['POST'])
-def start_tournament(id):
-    tournament = tournament_dao.find(id)
-    tournament.begun = 1
-    tournament_dao.update(tournament)
 
 @app.route('/player', methods = ['GET','POST'])
 def player():
