@@ -9,25 +9,20 @@ def find_all():
     return [Player(*row) for row in cur.fetchall()]
 
 def find(id):
-    select = "select id, fname from player where id = %d" % int(id)
-    cur = g.db.execute(select)
+    select = "select id, fname from player where id = ?"
+    cur = g.db.execute(select,int(id))
     return Player(*cur.fetchone())
 
 def create(player):
-    insert_player = """
-        insert into player (fname) values ('%s')
-        """ % player.fname
+    insert_player = "insert into player (fname) values (?)"
     print insert_player
-    g.db.execute(insert_player)
+    g.db.execute(insert_player,[player.fname])
     g.db.commit()
 
 def enter_tournament(player_id, tournament_id):
-    insert_entry = """
-        insert into entry (player_id, tournament_id)
-        values (%s, %s)
-    """ % (player_id, tournament_id)
+    insert_entry = "insert into entry (player_id, tournament_id) values (?, ?)"
     print insert_entry
-    g.db.execute(insert_entry)
+    g.db.execute(insert_entry,[player_id,tournament_id])
     g.db.commit()
 
 def find_in_tournament(tournament_id):
