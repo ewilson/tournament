@@ -10,27 +10,26 @@ def find_all():
     return [Tournament(*row) for row in cur.fetchall()]
 
 def find(id):
-    select = "select * from tournament where id = %d" % int(id)
-    cur = g.db.execute(select)
+    select = "select * from tournament where id = ?"
+    cur = g.db.execute(select, [id])
     return Tournament(*cur.fetchone())
 
-def create(tournament):
+def create(tourn):
     insert_tournament = """
         insert into tournament (start_date, tourn_type, description, begun)
-        values (date('now'), '%s', '%s', 0)
-        """ % (tournament.tourn_type, tournament.description)
+        values (date('now'), ?, ?, 0)"""
     print insert_tournament
-    g.db.execute(insert_tournament)
+    g.db.execute(insert_tournament, [tourn.tourn_type, tourn.description])
     g.db.commit()
 
-def update(tournament):
+def update(tourn):
     update = """
-        update tournament set start_date = '%s',
-                              tourn_type = '%s',
-                              description = '%s',
-                              begun = '%d' where id = '%d'
-    """ % (tournament.start_date, tournament.tourn_type, tournament.description, tournament.begun, tournament.id)
-    print update
-    g.db.execute(update)
+        update tournament set start_date = ?,
+                              tourn_type = ?,
+                              description = ?,
+                              begun = ? where id = ?"""
+    data = [tourn.start_date, tourn.tourn_type, tourn.description, 
+            tourn.begun, tourn.id]
+    g.db.execute(update, data)
     g.db.commit()
 
