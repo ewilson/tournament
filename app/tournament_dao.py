@@ -4,7 +4,7 @@ import sqlite3
 from models import Tournament
 
 def find_all():
-    select = '''select id, start_date, tourn_type, description, begun
+    select = '''select id, start_date, description, tourn_type, begun
                 from tournament'''
     cur = g.db.execute(select)
     return [Tournament(*row) for row in cur.fetchall()]

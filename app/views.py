@@ -10,8 +10,8 @@ import tournament_dao, player_dao
 def index():
     form = TournForm()
     if form.validate_on_submit():
-        tournament = Tournament(0,'',form.tourn_type.data,
-                                form.description.data,0)
+        tournament = Tournament(0,'',form.description.data,
+                                form.tourn_type.data,0)
         tournament_dao.create(tournament)
     tournaments = tournament_dao.find_all()
     return render_template('index.html', 
@@ -32,10 +32,9 @@ def tournament(id):
         print "Data",form.enter.data
         for player_id in form.enter.data:
             player_dao.enter_tournament(player_id, id)
-            tournament.begun = 1
-            tournament_dao.update(tournament)
-            return render_template('play-tournament.html',
-                                   tournament=tournament)
+        tournament.begun = 1
+        tournament_dao.update(tournament)
+        return render_template('play-tournament.html', tournament=tournament)
     return render_template('edit-tournament.html', 
                            tournament=tournament,
                            players=player,
