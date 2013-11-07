@@ -7,7 +7,7 @@
 <br/>
 {% endfor %}
 {% for s_match in schedule %}
-  <p>{{s_match.player1}} vs {{s_match.player2}}</p>
+  <p>{{s_match.player1.fname}} vs {{s_match.player2.fname}}</p>
 {% endfor %}
   Need some stuff here -- for entering games scheduled in a tourney.
 {% endblock %}

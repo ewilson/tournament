@@ -22,6 +22,7 @@ def create(tourn):
     g.db.execute(insert_tournament, [tourn.tourn_type, tourn.description])
     g.db.commit()
 
+# Not currently used
 def update(tourn):
     update = """
         update tournament set start_date = ?,
@@ -33,3 +34,11 @@ def update(tourn):
     g.db.execute(update, data)
     g.db.commit()
 
+def begin(tourn_id):
+    update = "update tournament set begun = ? where id = ?"
+    data = [1, tourn_id]
+    g.db.execute(update, data)
+    g.db.commit()
+
+def add_pairs(player_ids, tournament_id):
+    pass

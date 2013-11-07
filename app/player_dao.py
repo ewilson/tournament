@@ -22,13 +22,14 @@ def create(player):
 def enter_tournament(player_id, tournament_id):
     insert_entry = "insert into entry (player_id, tournament_id) values (?, ?)"
     print insert_entry
+    print player_id
+    print tournament_id
     g.db.execute(insert_entry,[player_id,tournament_id])
     g.db.commit()
 
-# Not currently used
 def find_in_tournament(tournament_id):
     select = '''
-    select p.id, p.fname from player p, entry e
+    select p.fname, p.id from player p, entry e
     where p.id = e.player_id and e.tournament_id = ? '''
     print select
     cur = g.db.execute(select, tournament_id)

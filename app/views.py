@@ -4,7 +4,7 @@ import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntry
 from models import Tournament, Player, Match
-import tournament_dao, player_dao
+import tournament_dao, player_dao, pants
 
 @app.route('/', methods = ['GET','POST'])
 def index():
@@ -29,12 +29,11 @@ def tournament(id):
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in players]
     if form.is_submitted():
-        print "Data",form.enter.data
-        for player_id in form.enter.data:
-            player_dao.enter_tournament(player_id, id)
-        tournament.begun = 1
-        tournament_dao.update(tournament)
-        return render_template('play-tournament.html', tournament=tournament)
+        pants.setup_round_robin(form.enter.data, id)
+        schedule = pants.find_matches(id)
+        print schedule
+        return render_template('play-tournament.html', tournament=tournament,
+                               schedule=schedule)
     return render_template('edit-tournament.html', 
                            tournament=tournament,
                            players=player,
@@ -51,32 +50,6 @@ def player():
     return render_template('player.html', 
                            players=players,
                            form=form)
-
-@app.route('/games-tmp')
-def games():
-    p1 = Player(1,'Albert')
-    p2 = Player(2,'Bernard')
-    p3 = Player(3,'Charles')
-    p4 = Player(4,'DeMarcus')
-    cm1 = Match(p1,p2)
-    cm1.score1 = 4
-    cm1.score2 = 3
-    cm2 = Match(p1,p3)
-    cm1.score1 = 44
-    cm2.score2 = 3
-    completed = [cm1, cm2]
-    sm1 = Match(p2,p4)
-    sm2 = Match(p3,p4)
-    schedule = [sm1,sm2]
-    class Foo:
-        def __init__(self):
-            self.description = 'fake'
-            self.begun = 1
-    
-    return render_template('play-tournament.html',
-                           tournament = Foo(),
-                           completed = completed,
-                           schedule = schedule)
 
 @app.before_request
 def before_request():
