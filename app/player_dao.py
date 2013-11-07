@@ -4,12 +4,12 @@ import sqlite3
 from models import Player
 
 def find_all():
-    select = '''select id, fname from player'''
+    select = '''select fname, id from player'''
     cur = g.db.execute(select)
     return [Player(*row) for row in cur.fetchall()]
 
 def find(id):
-    select = "select id, fname from player where id = ?"
+    select = "select fname, id from player where id = ?"
     cur = g.db.execute(select,[id])
     return Player(*cur.fetchone())
 
@@ -42,3 +42,4 @@ def find_not_in_tournament(tournament_id):
     print select
     cur = g.db.execute(select, tournament_id)
     return [Player(*row) for row in cur.fetchall()]
+

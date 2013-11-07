@@ -1,4 +1,4 @@
-class Tournament:
+class Tournament(object):
     def __init__(self, id, start_date, description, tourn_type, begun):
         self.id = id
         self.start_date = start_date
@@ -11,15 +11,15 @@ class Tournament:
                 (self.id, self.description, 
                  self.tourn_type, self.start_date,self.begun))
 
-class Player:
-    def __init__(self, id, fname):
+class Player(object):
+    def __init__(self, fname, id = 0):
         self.id = id
         self.fname = fname
     
     def __repr__(self):
         return '<(%d)%s>' % (self.id, self.fname)
 
-class Match:
+class Match(object):
     def __init__(self, player1, player2):
         self.player1 = player1
         self.player2 = player2
