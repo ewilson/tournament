@@ -1,5 +1,8 @@
-DATABASE = 'data/tourn.db'
-SCHEMA = '../data/schema.sql'
-TEST_DATABASE = '../data/tourn_test.db'
+import os
+
+ROOT = os.path.dirname(__file__)
+DATABASE = ROOT + '/data/tourn.db'
+SCHEMA = ROOT + '/data/schema.sql'
+TEST_DATABASE = ROOT + '/data/tourn_test.db'
 CSRF_ENABLED = True
 SECRET_KEY = 'super-secure-open-source-project'
