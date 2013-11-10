@@ -4,7 +4,7 @@ import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntry
 from models import Tournament, Player, Match
-import tournament_dao, player_dao, pants
+import tournament_dao, player_dao, tournament
 
 @app.route('/', methods = ['GET','POST'])
 def index():
@@ -29,8 +29,8 @@ def tournament(id):
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in players]
     if form.is_submitted():
-        pants.setup_round_robin(form.enter.data, id)
-        schedule = pants.find_matches(id)
+        tournament.setup_round_robin(form.enter.data, id)
+        schedule = tournament.find_matches(id)
         print schedule
         return render_template('play-tournament.html', tournament=tournament,
                                schedule=schedule)
