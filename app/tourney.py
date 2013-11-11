@@ -1,6 +1,3 @@
-#
-# NEED A NAME FOR MODULE THAT IS NOT PANTS
-#
 import player_dao, tournament_dao, scheduler
 from models import Player, Match
 

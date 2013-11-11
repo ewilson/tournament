@@ -4,7 +4,7 @@ import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntry
 from models import Tournament, Player, Match
-import tournament_dao, player_dao, tournament
+import tournament_dao, player_dao, tourney
 
 @app.route('/', methods = ['GET','POST'])
 def index():
@@ -21,7 +21,6 @@ def index():
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
     tournament = tournament_dao.find(id)
-    print tournament
     if tournament.begun == 1:
         return render_template('play-tournament.html',
                                tournament=tournament)
@@ -29,8 +28,8 @@ def tournament(id):
     form = TourneyEntry()
     form.enter.choices = [(player.id, player.fname) for player in players]
     if form.is_submitted():
-        tournament.setup_round_robin(form.enter.data, id)
-        schedule = tournament.find_matches(id)
+        tourney.setup_round_robin(form.enter.data, id)
+        schedule = tourney.find_matches(id)
         print schedule
         return render_template('play-tournament.html', tournament=tournament,
                                schedule=schedule)
@@ -54,7 +53,8 @@ def player():
 @app.before_request
 def before_request():
     g.db = connect_db()
-    g.db.execute('pragma foriegn_keys = ON')
+    g.db.execute('pragma foreign_keys = ON')
+    g.db.commit()
 
 @app.teardown_request
 def teardown_request(exception):
