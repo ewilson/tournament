@@ -43,7 +43,7 @@ def tournament(id):
 def player():
     form = PlayerForm()
     if form.validate_on_submit():
-        player = Player(0,form.fname.data)
+        player = Player(form.fname.data)
         player_dao.create(player)
         form.fname.data = ''
     players = player_dao.find_all()
@@ -54,6 +54,7 @@ def player():
 @app.before_request
 def before_request():
     g.db = connect_db()
+    g.db.execute('pragma foriegn_keys = ON')
 
 @app.teardown_request
 def teardown_request(exception):
