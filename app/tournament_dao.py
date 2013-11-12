@@ -40,5 +40,3 @@ def begin(tourn_id):
     g.db.execute(update, data)
     g.db.commit()
 
-def add_pairs(player_ids, tournament_id):
-    pass
