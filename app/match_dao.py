@@ -20,7 +20,7 @@ def find_scheduled_by_tournament(tournament_id):
     matches = [find(row[0]) for row in cur.fetchall()]
     return matches
 
-def create(match, tournament_id):
+def create(player_ids, tournament_id):
     insert_match = "insert into match (tournament_id) values (?)"
     insert_entry = """
     insert into attempt (player_id, match_id)
@@ -30,7 +30,7 @@ def create(match, tournament_id):
     g.db.execute(insert_match,[tournament_id])
     cursor = g.db.execute('SELECT max(id) FROM match')
     match_id = cursor.fetchone()[0]
-    g.db.execute(insert_entry,[match.player1.id, match_id])
-    g.db.execute(insert_entry,[match.player2.id, match_id])
+    for player_id in player_ids:
+        g.db.execute(insert_entry,[player_id, match_id])
     g.db.commit()
 
