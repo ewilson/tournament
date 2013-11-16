@@ -21,22 +21,19 @@ def index():
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
     tournament = tournament_dao.find(id)
-    if tournament.begun == 1:
-        return render_template('play-tournament.html',
-                               tournament=tournament)
-    players = player_dao.find_all()
     form = TourneyEntry()
-    form.enter.choices = [(player.id, player.fname) for player in players]
+    if not tournament.begun and not form.is_submitted():
+        players = player_dao.find_all()
+        form.enter.choices = [(player.id, player.fname) for player in players]
+        return render_template('edit-tournament.html', 
+                               tournament=tournament,
+                               players=player,
+                               form=form)
     if form.is_submitted():
         tourney.setup_round_robin(form.enter.data, id)
-        schedule = tourney.find_matches(id)
-        print schedule
-        return render_template('play-tournament.html', tournament=tournament,
-                               schedule=schedule)
-    return render_template('edit-tournament.html', 
-                           tournament=tournament,
-                           players=player,
-                           form=form)
+    schedule = tourney.find_matches(id)
+    return render_template('play-tournament.html', tournament=tournament,
+                           schedule=schedule)
 
 @app.route('/player', methods = ['GET','POST'])
 def player():
