@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, g, request
+from flask import render_template, redirect, flash, g, request, url_for
 import sqlite3
 import config
 from app import app
@@ -31,10 +31,15 @@ def tournament(id):
                                form=form)
     if form.is_submitted():
         tourney.setup_round_robin(form.enter.data, id)
+    return redirect('/play-tournament/%s' % id)
+
+@app.route('/play-tournament/<id>', methods = ['GET','POST'])
+def play_tournament(id):
+    tournament = tournament_dao.find(id)
     schedule = tourney.find_matches(id)
     return render_template('play-tournament.html', tournament=tournament,
                            schedule=schedule)
-
+    
 @app.route('/player', methods = ['GET','POST'])
 def player():
     form = PlayerForm()
