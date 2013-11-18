@@ -33,3 +33,5 @@ def create(player_ids, tournament_id):
         g.db.execute(insert_entry,[player_id, match_id])
     g.db.commit()
 
+def update(id, score1, score2):
+    pass

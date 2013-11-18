@@ -35,9 +35,12 @@ def tournament(id):
 
 @app.route('/play-tournament/<id>', methods = ['GET','POST'])
 def play_tournament(id):
+    form = MatchForm()
+    print form
+    if request.method == 'POST': #NEED TO CLEAN UP VALIDATION
+        match_dao.update(form.id.data, form.score1.data, form.score2.data)
     tournament = tournament_dao.find(id)
     schedule = tourney.find_matches(id)
-    form = MatchForm()
     return render_template('play-tournament.html', 
                            tournament=tournament,
                            schedule=schedule,
