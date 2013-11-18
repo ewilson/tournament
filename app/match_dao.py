@@ -10,8 +10,7 @@ def find(id):
     """
     cur = g.db.execute(select, [id])
     players = [Player(*row) for row in cur.fetchall()]
-    m = Match(*players)
-    m.id = id
+    m = Match(*players, id=id)
     return m
 
 def find_scheduled_by_tournament(tournament_id):

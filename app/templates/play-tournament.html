@@ -8,8 +8,8 @@
 {% endfor %}
 {% for s_match in schedule %}
   <form action="foo" method="post" name="match">
-  {{form.hidden_tag()}}
     <p>
+      {{form.id(value=s_match.id)}}
       {{s_match.player1.fname}}: {{form.score1(size=4)}}<br/>
       {{s_match.player2.fname}}: {{form.score2(size=4)}}<br/>
     </p>

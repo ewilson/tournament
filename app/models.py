@@ -20,6 +20,10 @@ class Player(object):
         return '<(%d)%s>' % (self.id, self.fname)
 
 class Match(object):
-    def __init__(self, player1, player2):
+    def __init__(self, player1, player2, id = 0):
+        self.id = id
         self.player1 = player1
         self.player2 = player2
+
+    def __repr__(self):
+        return '<(%d): %s vs %s>' % (self.id, self.player1, self.player2)

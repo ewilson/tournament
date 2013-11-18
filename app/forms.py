@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, SelectMultipleField
+from wtforms import TextField, BooleanField, SelectMultipleField, HiddenField
 from wtforms.widgets import CheckboxInput, ListWidget
 from wtforms.validators import Required
 
@@ -17,5 +17,6 @@ class TourneyEntryForm(Form):
         widget=ListWidget(prefix_label=True))
 
 class MatchForm(Form):
+    id = HiddenField('id', validators=[Required()])
     score1 = TextField('score1', validators=[Required()])
     score2 = TextField('score2', validators=[Required()])
