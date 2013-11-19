@@ -37,7 +37,7 @@ def test_create_and_find_match(g):
     assert retrieved_match.player1.fname == p.fname
     assert retrieved_match.player2.fname == p2.fname
 
-foo = '''
+
 def test_create_and_find_scheduled_by_tournament(g):
     p = Player("test player")
     p2 = Player("test player 2")
@@ -48,6 +48,18 @@ def test_create_and_find_scheduled_by_tournament(g):
     p2.id = 2
     player_dao.create(p3)
     p3.id = 3
-    match_dao
-    
-'''
+    t = Tournament(0,'','T1','type',0)
+    tournament_dao.create(t)
+    t.id = 1
+    t2 = Tournament(0,'','T2','type',0)
+    tournament_dao.create(t2)
+    t2.id = 2
+
+    match_dao.create([p.id,p2.id], t.id)
+    match_dao.create([p.id,p2.id], t2.id)
+    match_dao.create([p.id,p3.id], t2.id)
+    retrieved_matches = match_dao.find_scheduled_by_tournament(t2.id)
+
+    assert len(retrieved_matches) == 2
+    assert retrieved_matches[0].player2.fname == p2.fname
+    assert retrieved_matches[1].id == 3
