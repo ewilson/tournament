@@ -24,13 +24,14 @@ def test_create_and_find_match(g):
     p.id = 1
     player_dao.create(p2)
     p2.id = 2
-    match = Match(p,p2)
     tournament_id = 3
 
-    match_dao.create(match,tournament_id)
+    match_dao.create([p.id, p2.id], tournament_id)
     retrieved_match = match_dao.find(1)
 
     assert retrieved_match.id == 1
     assert retrieved_match.player1.fname == p.fname
     assert retrieved_match.player2.fname == p2.fname
 
+#def test_create_and_find_scheduled_by_tournament(g):
+    
