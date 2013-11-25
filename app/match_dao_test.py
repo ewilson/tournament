@@ -82,6 +82,8 @@ def test_update_match_with_result(g):
 
     match_dao.update(match)
     retrieved_match = match_dao.find(match_id)
+    scheduled_matches = match_dao.find_scheduled_by_tournament(t.id)
+    completed_matches = match_dao.find_completed_by_tournament(t.id)
 
     assert retrieved_match.score1 == 19
     assert retrieved_match.score2 == 21
@@ -89,3 +91,6 @@ def test_update_match_with_result(g):
     assert retrieved_match.player2.fname == p2.fname
     assert retrieved_match.player1.id == p.id
     assert retrieved_match.player2.id == p2.id
+    assert len(scheduled_matches) == 0
+    assert len(completed_matches) == 1
+

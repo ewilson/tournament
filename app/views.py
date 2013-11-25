@@ -46,10 +46,12 @@ def play_tournament(id):
                                score1=form.score1.data, 
                                score2=form.score2.data))
     tournament = tournament_dao.find(id)
-    schedule = tourney.find_matches(id)
+    schedule = tourney.find_scheduled_matches(id)
+    completed = tourney.find_completed_matches(id)
     return render_template('play-tournament.html', 
                            tournament=tournament,
                            schedule=schedule,
+                           completed=completed,
                            form=form)
     
 @app.route('/player', methods = ['GET','POST'])

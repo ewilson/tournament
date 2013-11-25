@@ -2,8 +2,8 @@
 {% block body %}
 <h1>Tournament {{tournament.description}}</h1>
 {% for c_match in completed %}
-  <p>{{c_match.player1}}: {{c_match.score1}}</p>
-  <p>{{c_match.player2}}: {{c_match.score2}}</p>
+  <p>{{c_match.player1.fname}}: {{c_match.score1}}</p>
+  <p>{{c_match.player2.fname}}: {{c_match.score2}}</p>
 <br/>
 {% endfor %}
 {% for s_match in schedule %}
@@ -19,5 +19,4 @@
   </form>
   <hr/>
 {% endfor %}
-  Need some stuff here -- for entering games scheduled in a tourney.
 {% endblock %}

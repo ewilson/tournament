@@ -9,6 +9,10 @@ def setup_round_robin(player_ids, tournament_id):
     for pair in pairs:
         match_dao.create(list(pair), tournament_id)
 
-def find_matches(tournament_id):
+def find_scheduled_matches(tournament_id):
     matches = match_dao.find_scheduled_by_tournament(tournament_id)
+    return matches
+
+def find_completed_matches(tournament_id):
+    matches = match_dao.find_completed_by_tournament(tournament_id)
     return matches

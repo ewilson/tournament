@@ -1,5 +1,6 @@
 from flask import g
 import sqlite3
+from datetime import datetime
 
 from models import Match, Player
 
@@ -20,7 +21,13 @@ def find(id):
     return m
 
 def find_scheduled_by_tournament(tournament_id):
-    select = "select id from match where tournament_id = ?"
+    select = "select id from match where tournament_id = ? and entered_time is null"
+    cur = g.db.execute(select, [tournament_id])
+    matches = [find(row[0]) for row in cur.fetchall()]
+    return matches
+
+def find_completed_by_tournament(tournament_id):
+    select = "select id from match where tournament_id = ? and entered_time is not null"
     cur = g.db.execute(select, [tournament_id])
     matches = [find(row[0]) for row in cur.fetchall()]
     return matches
@@ -46,5 +53,7 @@ def update(match):
     g.db.execute("BEGIN TRANSACTION")
     g.db.execute(update,[match.score1,match.player1.id,match.id])
     g.db.execute(update,[match.score2,match.player2.id,match.id])
+    g.db.execute('update match set entered_time = ? where id = ?',
+                 [datetime.now(),match.id])
     g.db.commit()
 
