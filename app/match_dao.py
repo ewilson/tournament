@@ -5,12 +5,18 @@ from models import Match, Player
 
 def find(id):
     select = """
-    select p.fname, p.id from player p, attempt a
+    select p.fname, p.id, a.score from player p, attempt a
     where p.id = a.player_id and a.match_id = ?
     """
+    m = Match(id=id)
     cur = g.db.execute(select, [id])
-    players = [Player(*row) for row in cur.fetchall()]
-    m = Match(*players, id=id)
+    attempts = cur.fetchall()
+    player1 = Player(*attempts[0][:-1])
+    m.player1 = player1
+    m.score1 = attempts[0][-1]
+    player2 = Player(*attempts[1][:-1])
+    m.player2 = player2
+    m.score2 = attempts[1][-1]
     return m
 
 def find_scheduled_by_tournament(tournament_id):

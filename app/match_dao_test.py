@@ -83,4 +83,7 @@ def test_update_match_with_result(g):
 
     assert retrieved_match.score1 == 19
     assert retrieved_match.score2 == 21
-    
+    assert retrieved_match.player1.fname == p.fname
+    assert retrieved_match.player2.fname == p2.fname
+    assert retrieved_match.player1.id == p.id
+    assert retrieved_match.player2.id == p2.id
