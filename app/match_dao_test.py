@@ -76,9 +76,11 @@ def test_update_match_with_result(g):
     t.id = 1
     match_dao.create([p.id, p2.id], t.id)
     match_id = 1
+    match = Match(player1=p,player2=p2,id=match_id)
+    match.score1 = 19
+    match.score2 = 21
 
-    match_dao.update(match_id, [{'score':21, 'player_id':2},
-                                {'score':19, 'player_id':1}])
+    match_dao.update(match)
     retrieved_match = match_dao.find(match_id)
 
     assert retrieved_match.score1 == 19

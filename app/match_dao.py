@@ -39,12 +39,12 @@ def create(player_ids, tournament_id):
         g.db.execute(insert_entry,[player_id, match_id])
     g.db.commit()
 
-def update(id, player_scores):
+def update(match):
     update = """
     update attempt set score = ? 
     where player_id = ? and match_id = ?"""
     g.db.execute("BEGIN TRANSACTION")
-    for score in player_scores:
-        g.db.execute(update,[score['score'],score['player_id'],id])
+    g.db.execute(update,[match.score1,match.player1.id,match.id])
+    g.db.execute(update,[match.score2,match.player2.id,match.id])
     g.db.commit()
 

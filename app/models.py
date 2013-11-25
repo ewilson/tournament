@@ -12,7 +12,7 @@ class Tournament(object):
                  self.tourn_type, self.start_date,self.begun))
 
 class Player(object):
-    def __init__(self, fname, id = 0):
+    def __init__(self, fname='', id = 0):
         self.id = id
         self.fname = fname
     
@@ -20,10 +20,12 @@ class Player(object):
         return '<(%d)%s>' % (self.id, self.fname)
 
 class Match(object):
-    def __init__(self, player1=None, player2=None, id = 0):
+    def __init__(self, player1=None, player2=None, score1=0, score2=0, id = 0):
         self.id = id
         self.player1 = player1
         self.player2 = player2
+        self.score1 = score1
+        self.score2 = score2
 
     def __repr__(self):
         return '<(%d): %s vs %s>' % (self.id, self.player1, self.player2)
