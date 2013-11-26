@@ -1,5 +1,6 @@
 class Tournament(object):
-    def __init__(self, id, start_date, description, tourn_type, begun):
+    def __init__(self, id=id, start_date='', description='', 
+                 tourn_type='', begun=0):
         self.id = id
         self.start_date = start_date
         self.tourn_type = tourn_type
