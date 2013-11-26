@@ -4,7 +4,10 @@
 {% for c_match in completed %}
   <p>{{c_match.player1.fname}}: {{c_match.score1}}</p>
   <p>{{c_match.player2.fname}}: {{c_match.score2}}</p>
-<br/>
+  <a href="{{url_for('undo_match', 
+	   tourn_id = tournament.id, 
+	   match_id = c_match.id)}}">Undo!</a>
+<hr/>
 {% endfor %}
 {% for s_match in schedule %}
   <form action="{{tournament.id}}" method="post" name="match">

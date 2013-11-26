@@ -31,7 +31,7 @@ def tournament(id):
                                form=form)
     if form.is_submitted():
         tourney.setup_round_robin(form.enter.data, id)
-    return redirect('/play-tournament/%s' % id)
+    return redirect(url_for('play_tournament', id=id))
 
 @app.route('/play-tournament/<id>', methods = ['GET','POST'])
 def play_tournament(id):
@@ -53,7 +53,13 @@ def play_tournament(id):
                            schedule=schedule,
                            completed=completed,
                            form=form)
-    
+
+@app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
+def undo_match(tourn_id, match_id):
+#    tourney.undo_match(id)
+    print "NEED TO UNDO MATCH %s FOR TOURNAMENT %s" % (match_id, tourn_id)
+    return redirect(url_for('play_tournament',id=tourn_id))
+
 @app.route('/player', methods = ['GET','POST'])
 def player():
     form = PlayerForm()
