@@ -16,3 +16,7 @@ def find_scheduled_matches(tournament_id):
 def find_completed_matches(tournament_id):
     matches = match_dao.find_completed_by_tournament(tournament_id)
     return matches
+
+def undo_match(match_id):
+    match = match_dao.find(match_id)
+    match_dao.undo(match)

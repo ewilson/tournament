@@ -57,3 +57,14 @@ def update(match):
                  [datetime.now(),match.id])
     g.db.commit()
 
+def undo(match):
+    update = """
+    update attempt set score = 0 where player_id = ? and match_id = ?
+    """
+    g.db.execute("BEGIN TRANSACTION")
+    g.db.execute(update,[match.player1.id,match.id])
+    g.db.execute(update,[match.player2.id,match.id])
+    g.db.execute('update match set entered_time = null where id = ?',
+                 [match.id])
+    g.db.commit()
+

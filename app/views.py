@@ -56,8 +56,7 @@ def play_tournament(id):
 
 @app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
 def undo_match(tourn_id, match_id):
-#    tourney.undo_match(id)
-    print "NEED TO UNDO MATCH %s FOR TOURNAMENT %s" % (match_id, tourn_id)
+    tourney.undo_match(match_id)
     return redirect(url_for('play_tournament',id=tourn_id))
 
 @app.route('/player', methods = ['GET','POST'])
