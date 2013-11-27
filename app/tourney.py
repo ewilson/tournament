@@ -20,3 +20,10 @@ def find_completed_matches(tournament_id):
 def undo_match(match_id):
     match = match_dao.find(match_id)
     match_dao.undo(match)
+
+def update_match(match_id, player1_id, player2_id, score1, score2):
+    player1 = Player(id=player1_id)
+    player2 = Player(id=player2_id)
+    match = Match(id=match_id, player1=player1, player2=player2,
+                  score1=score1, score2=score2)
+    match_dao.update(match)

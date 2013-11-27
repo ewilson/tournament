@@ -4,7 +4,7 @@ import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntryForm, MatchForm
 from models import Tournament, Player, Match
-import tournament_dao, player_dao, match_dao, tourney
+import tournament_dao, player_dao, tourney
 
 @app.route('/', methods = ['GET','POST'])
 def index():
@@ -38,13 +38,9 @@ def play_tournament(id):
     form = MatchForm()
     print form
     if request.method == 'POST': #NEED TO CLEAN UP VALIDATION
-        player1 = Player(id=form.player1_id.data)
-        player2 = Player(id=form.player2_id.data)
-        match_dao.update(Match(id=form.id.data,
-                               player1=player1,
-                               player2=player2,
-                               score1=form.score1.data, 
-                               score2=form.score2.data))
+        tourney.update_match(form.id.data, form.player1_id.data,
+                             form.player2_id.data, form.score1.data,
+                             form.score2.data)
     tournament = tournament_dao.find(id)
     schedule = tourney.find_scheduled_matches(id)
     completed = tourney.find_completed_matches(id)
