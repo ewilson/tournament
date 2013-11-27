@@ -1,5 +1,5 @@
 import player_dao, tournament_dao, match_dao, scheduler
-from models import Player, Match
+from models import Player, Match, Tournament
 
 def setup_round_robin(player_ids, tournament_id):
     for player_id in player_ids:
@@ -27,3 +27,7 @@ def update_match(match_id, player1_id, player2_id, score1, score2):
     match = Match(id=match_id, player1=player1, player2=player2,
                   score1=score1, score2=score2)
     match_dao.update(match)
+
+def create_tournament(description,tourn_type):
+    tournament = Tournament(0,'',description,tourn_type,0)
+    tournament_dao.create(tournament)

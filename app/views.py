@@ -3,16 +3,14 @@ import sqlite3
 import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntryForm, MatchForm
-from models import Tournament, Player, Match
+from models import Player
 import tournament_dao, player_dao, tourney
 
 @app.route('/', methods = ['GET','POST'])
 def index():
     form = TournForm()
     if form.validate_on_submit():
-        tournament = Tournament(0,'',form.description.data,
-                                form.tourn_type.data,0)
-        tournament_dao.create(tournament)
+        tourney.create_tournament(form.description.data,form.tourn_type.data)
     tournaments = tournament_dao.find_all()
     return render_template('index.html', 
                            tournaments=tournaments,
