@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
+{% set tournament = model['tournament'] %}
 <h1>Tournament {{tournament.description}}</h1>
-{% for c_match in completed %}
+{% for c_match in model['completed'] %}
   <p>{{c_match.player1.fname}}: {{c_match.score1}}</p>
   <p>{{c_match.player2.fname}}: {{c_match.score2}}</p>
   <a href="{{url_for('undo_match', 
@@ -9,7 +10,7 @@
 	   match_id = c_match.id)}}">Undo!</a>
 <hr/>
 {% endfor %}
-{% for s_match in schedule %}
+{% for s_match in model['schedule'] %}
   <form action="{{tournament.id}}" method="post" name="match">
     <p>
       {{form.id(value=s_match.id)}}

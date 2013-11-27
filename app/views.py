@@ -41,13 +41,12 @@ def play_tournament(id):
         tourney.update_match(form.id.data, form.player1_id.data,
                              form.player2_id.data, form.score1.data,
                              form.score2.data)
-    tournament = tournament_dao.find(id)
-    schedule = tourney.find_scheduled_matches(id)
-    completed = tourney.find_completed_matches(id)
+    model = {}
+    model['tournament'] = tournament_dao.find(id)
+    model['schedule'] = tourney.find_scheduled_matches(id)
+    model['completed'] = tourney.find_completed_matches(id)
     return render_template('play-tournament.html', 
-                           tournament=tournament,
-                           schedule=schedule,
-                           completed=completed,
+                           model=model,
                            form=form)
 
 @app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
