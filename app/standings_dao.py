@@ -13,6 +13,7 @@ def find(tournament_id):
         from attempt a, match m 
         where a.match_id = m.id
         and m.tournament_id = ?
+        and m.entered_time is not null
         group by a.match_id
       ) ss on a.match_id = ss.match_id
     ) group by player_id
