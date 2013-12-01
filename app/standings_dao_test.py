@@ -20,7 +20,6 @@ def g():
     player_dao.g = fG
     tournament_dao.g = fG
 
-
 def test_standings(g):
     p = Player("test player")
     p2 = Player("test player 2")
@@ -53,12 +52,51 @@ def test_standings(g):
     standings = standings_dao.find(t.id)
 
     assert standings[0].player_id == p3.id
-    assert standings[0].wins == 2
-    assert standings[0].losses == 0
+    assert standings[0].win == 2
+    assert standings[0].loss == 0
     assert standings[1].player_id == p2.id
-    assert standings[1].wins == 1
-    assert standings[1].losses == 1
+    assert standings[1].win == 1
+    assert standings[1].loss == 1
     assert standings[2].player_id == p.id
-    assert standings[2].wins == 0
-    assert standings[2].losses == 2
+    assert standings[2].win == 0
+    assert standings[2].loss == 2
 
+def test_standings_with_ties(g):
+    p = Player("test player")
+    p2 = Player("test player 2")
+    p3 = Player("test player 3")
+    player_dao.create(p)
+    p.id = 1
+    player_dao.create(p2)
+    p2.id = 2
+    player_dao.create(p3)
+    p3.id = 3
+    t = Tournament(0,'','T1','type',0)
+    tournament_dao.create(t)
+    t.id = 1
+    match_dao.create([p.id, p2.id], t.id)
+    match_dao.create([p.id, p3.id], t.id)
+    match_dao.create([p3.id, p2.id], t.id)
+    match = Match(player1=p,player2=p2,id=1)
+    match.score1 = 19
+    match.score2 = 21
+    match2 = Match(player1=p,player2=p3,id=2)
+    match2.score1 = 17
+    match2.score2 = 17
+
+    match_dao.update(match)
+    match_dao.update(match2)
+    standings = standings_dao.find(t.id)
+
+    assert standings[0].player_id == p2.id
+    assert standings[0].win == 1
+    assert standings[0].loss == 0
+    assert standings[0].tie == 0
+    assert standings[1].player_id == p.id
+    assert standings[1].win == 0
+    assert standings[1].loss == 1
+    assert standings[1].tie == 1
+    assert standings[2].player_id == p3.id
+    assert standings[2].win == 0
+    assert standings[2].loss == 0
+    assert standings[2].tie == 1
