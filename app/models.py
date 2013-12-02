@@ -37,6 +37,16 @@ class Standing(object):
         self.win = win
         self.loss = loss
         self.tie = tie
+        self.perc = self.compute_percent()
+        self.percent_display = "%.1f" % self.perc 
+
+    def compute_percent(self):
+        games = self.win + self.loss + self.tie
+        if games == 0:
+            p = 0.0
+        else:
+            p = 100.0 * (self.win + 0.5*self.tie) / games
+        return p
 
     def __repr__(self):
         return '(%d): W: %d, L: %d' % (self.name, self.win, self.loss)

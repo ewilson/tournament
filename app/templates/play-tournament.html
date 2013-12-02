@@ -28,7 +28,7 @@
 <div style="float:left;margin:5px">
   <table border="1">
     <thead>
-      <tr><th>Team</th><th>W</th><th>L</th><th>T</th></tr>
+      <tr><th>Team</th><th>W</th><th>L</th><th>T</th><th>%</th></tr>
     </thead>
     <tbody>
     {% for standing_row in model['standings'] %}
@@ -37,6 +37,7 @@
 	<td>{{standing_row.win}}</td>
 	<td>{{standing_row.loss}}</td>
 	<td>{{standing_row.tie}}</td>
+	<td>{{standing_row.percent_display}}</td> 
       </tr>
     {% endfor %}
     </tbody>
