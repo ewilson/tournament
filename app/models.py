@@ -32,11 +32,11 @@ class Match(object):
         return '<(%d): %s vs %s>' % (self.id, self.player1, self.player2)
 
 class Standing(object):
-    def __init__(self, player_id=0, win=0, loss=0, tie=0):
-        self.player_id = player_id
+    def __init__(self, name=0, win=0, loss=0, tie=0):
+        self.name = name
         self.win = win
         self.loss = loss
         self.tie = tie
 
     def __repr__(self):
-        return '(%d): W: %d, L: %d' % (self.player_id, self.win, self.loss)
+        return '(%d): W: %d, L: %d' % (self.name, self.win, self.loss)

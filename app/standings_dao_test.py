@@ -51,13 +51,13 @@ def test_standings(g):
     match_dao.update(match3)
     standings = standings_dao.find(t.id)
 
-    assert standings[0].player_id == p3.id
+    assert standings[0].name == p3.fname
     assert standings[0].win == 2
     assert standings[0].loss == 0
-    assert standings[1].player_id == p2.id
+    assert standings[1].name == p2.fname
     assert standings[1].win == 1
     assert standings[1].loss == 1
-    assert standings[2].player_id == p.id
+    assert standings[2].name == p.fname
     assert standings[2].win == 0
     assert standings[2].loss == 2
 
@@ -88,15 +88,44 @@ def test_standings_with_ties(g):
     match_dao.update(match2)
     standings = standings_dao.find(t.id)
 
-    assert standings[0].player_id == p2.id
+    assert standings[0].name == p2.fname
     assert standings[0].win == 1
     assert standings[0].loss == 0
     assert standings[0].tie == 0
-    assert standings[1].player_id == p.id
+    assert standings[1].name == p.fname
     assert standings[1].win == 0
     assert standings[1].loss == 1
     assert standings[1].tie == 1
-    assert standings[2].player_id == p3.id
+    assert standings[2].name == p3.fname
     assert standings[2].win == 0
     assert standings[2].loss == 0
     assert standings[2].tie == 1
+
+def test_standings_with_games_not_played(g):
+    p = Player("test player")
+    p2 = Player("test player 2")
+    p3 = Player("test player 3")
+    player_dao.create(p)
+    p.id = 1
+    player_dao.create(p2)
+    p2.id = 2
+    player_dao.create(p3)
+    p3.id = 3
+    t = Tournament(0,'','T1','type',0)
+    tournament_dao.create(t)
+    t.id = 1
+    match_dao.create([p.id, p2.id], t.id)
+    match_dao.create([p.id, p3.id], t.id)
+    match_dao.create([p3.id, p2.id], t.id)
+
+    standings = standings_dao.find(t.id)
+
+    assert standings[0].win == 0
+    assert standings[0].loss == 0
+    assert standings[0].tie == 0
+    assert standings[1].win == 0
+    assert standings[1].loss == 0
+    assert standings[1].tie == 0
+    assert standings[2].win == 0
+    assert standings[2].loss == 0
+    assert standings[2].tie == 0
