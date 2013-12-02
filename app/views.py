@@ -3,7 +3,7 @@ import sqlite3
 import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntryForm, MatchForm
-from models import Player
+from models import Player, Standing
 import tournament_dao, player_dao, tourney
 
 @app.route('/', methods = ['GET','POST'])
@@ -43,6 +43,10 @@ def play_tournament(id):
     model['tournament'] = tournament_dao.find(id)
     model['schedule'] = tourney.find_scheduled_matches(id)
     model['completed'] = tourney.find_completed_matches(id)
+    standing_row_1 = Standing('CBJ',60,12,10)
+    standing_row_2 = Standing('UNH',12,13,12)
+    standing_row_3 = Standing('MSU',0,5,6)
+    model['standings'] = [standing_row_1, standing_row_2, standing_row_3]
     return render_template('play-tournament.html', 
                            model=model,
                            form=form)

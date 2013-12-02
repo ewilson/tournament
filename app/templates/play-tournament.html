@@ -2,25 +2,44 @@
 {% block body %}
 {% set tournament = model['tournament'] %}
 <h1>Tournament {{tournament.description}}</h1>
-{% for c_match in model['completed'] %}
-  <p>{{c_match.player1.fname}}: {{c_match.score1}}</p>
-  <p>{{c_match.player2.fname}}: {{c_match.score2}}</p>
-  <a href="{{url_for('undo_match', 
-	   tourn_id = tournament.id, 
-	   match_id = c_match.id)}}">Undo!</a>
-<hr/>
-{% endfor %}
-{% for s_match in model['schedule'] %}
-  <form action="{{tournament.id}}" method="post" name="match">
-    <p>
-      {{form.id(value=s_match.id)}}
-      {{form.player1_id(value=s_match.player1.id)}}
-      {{form.player2_id(value=s_match.player2.id)}}
-      {{s_match.player1.fname}}: {{form.score1(size=4,value='')}}<br/>
-      {{s_match.player2.fname}}: {{form.score2(size=4,value='')}}<br/>
-    </p>
-    <p><input type="submit" value="Add Match"></p>
-  </form>
+<div style="float:left;margin:5px">
+  {% for c_match in model['completed'] %}
+    <p>{{c_match.player1.fname}}: {{c_match.score1}}</p>
+    <p>{{c_match.player2.fname}}: {{c_match.score2}}</p>
+    <a href="{{url_for('undo_match', 
+	     tourn_id = tournament.id, 
+	     match_id = c_match.id)}}">Undo!</a>
   <hr/>
-{% endfor %}
+  {% endfor %}
+  {% for s_match in model['schedule'] %}
+    <form action="{{tournament.id}}" method="post" name="match">
+      <p>
+	{{form.id(value=s_match.id)}}
+	{{form.player1_id(value=s_match.player1.id)}}
+	{{form.player2_id(value=s_match.player2.id)}}
+	{{s_match.player1.fname}}: {{form.score1(size=4,value='')}}<br/>
+	{{s_match.player2.fname}}: {{form.score2(size=4,value='')}}<br/>
+      </p>
+      <p><input type="submit" value="Add Match"></p>
+    </form>
+    <hr/>
+  {% endfor %}
+</div>
+<div style="float:left;margin:5px">
+  <table border="1">
+    <thead>
+      <tr><th>Team</th><th>W</th><th>L</th><th>T</th></tr>
+    </thead>
+    <tbody>
+    {% for standing_row in model['standings'] %}
+      <tr>
+	<td>{{standing_row.player_id}}</td>
+	<td>{{standing_row.win}}</td>
+	<td>{{standing_row.loss}}</td>
+	<td>{{standing_row.tie}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
