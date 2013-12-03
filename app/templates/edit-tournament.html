@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block body %}
 <h1>Tournament {{tournament.description}}</h1>
-
-<form action="{{tournament.id}}" method="post" name="entries">
-  {{form.hidden_tag()}}
   {% if players %}
-    <h2>Add Players</h2>
-    {{form.enter}}
+    <form action="{{tournament.id}}" method="post" name="entries">
+      {{form.hidden_tag()}}
+      <h2>Add Players</h2>
+      {{form.enter}}
+      <p><input type="submit" value="Add"></p>
+    </form>
   {% else %}
     <h2>No players to add</h2>
+    <p>Maybe you want to <a href={{url_for('player')}}>add some</a>?
   {% endif %}
-    <p><input type="submit" value="Add"></p>
-</form>
 {% endblock %}

@@ -10,12 +10,10 @@ def setup_round_robin(player_ids, tournament_id):
         match_dao.create(list(pair), tournament_id)
 
 def find_scheduled_matches(tournament_id):
-    matches = match_dao.find_scheduled_by_tournament(tournament_id)
-    return matches
+    return match_dao.find_scheduled_by_tournament(tournament_id)
 
 def find_completed_matches(tournament_id):
-    matches = match_dao.find_completed_by_tournament(tournament_id)
-    return matches
+    return match_dao.find_completed_by_tournament(tournament_id)
 
 def undo_match(match_id):
     match = match_dao.find(match_id)
@@ -35,6 +33,12 @@ def create_tournament(description,tourn_type):
 def find_tournaments():
     return tournament_dao.find_all()
 
+def find_tournament_by_id(id):
+    return tournament_dao.find(id)
+
 def find_standings(tournament_id):
     standings = standings_dao.find(tournament_id)
     return sorted(standings, key=lambda x: x.perc, reverse=True)
+
+def find_players():
+    return player_dao.find_all()

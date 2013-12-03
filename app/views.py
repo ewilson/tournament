@@ -18,14 +18,14 @@ def index():
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
-    tournament = tournament_dao.find(id)
     form = TourneyEntryForm()
+    tournament = tourney.find_tournament_by_id(id)
     if not tournament.begun and not form.is_submitted():
-        players = player_dao.find_all()
+        players = tourney.find_players()
         form.enter.choices = [(player.id, player.fname) for player in players]
         return render_template('edit-tournament.html', 
                                tournament=tournament,
-                               players=player,
+                               players=players,
                                form=form)
     if form.is_submitted():
         tourney.setup_round_robin(form.enter.data, id)
