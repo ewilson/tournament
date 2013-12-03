@@ -11,7 +11,7 @@ def index():
     form = TournForm()
     if form.validate_on_submit():
         tourney.create_tournament(form.description.data,form.tourn_type.data)
-    tournaments = tournament_dao.find_all()
+    tournaments = tourney.find_tournaments()
     return render_template('index.html', 
                            tournaments=tournaments,
                            form=form)

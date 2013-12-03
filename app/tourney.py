@@ -32,6 +32,9 @@ def create_tournament(description,tourn_type):
     tournament = Tournament(0,'',description,tourn_type,0)
     tournament_dao.create(tournament)
 
+def find_tournaments():
+    return tournament_dao.find_all()
+
 def find_standings(tournament_id):
     standings = standings_dao.find(tournament_id)
     return sorted(standings, key=lambda x: x.perc, reverse=True)
