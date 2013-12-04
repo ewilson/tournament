@@ -4,14 +4,14 @@ import config
 from app import app
 from forms import TournForm, PlayerForm, TourneyEntryForm, MatchForm
 from models import Player, Standing
-import tournament_dao, player_dao, tourney
+import tournament_dao, player_dao, match_dao, tourney
 
 @app.route('/', methods = ['GET','POST'])
 def index():
     form = TournForm()
     if form.validate_on_submit():
         tourney.create_tournament(form.description.data,form.tourn_type.data)
-    tournaments = tourney.find_tournaments()
+    tournaments = tournament_dao.find_all()
     return render_template('index.html', 
                            tournaments=tournaments,
                            form=form)
@@ -19,9 +19,9 @@ def index():
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
     form = TourneyEntryForm()
-    tournament = tourney.find_tournament_by_id(id)
+    tournament = tournament_dao.find(id)
     if not tournament.begun and not form.is_submitted():
-        players = tourney.find_players()
+        players = player_dao.find_all()
         form.enter.choices = [(player.id, player.fname) for player in players]
         return render_template('edit-tournament.html', 
                                tournament=tournament,
@@ -41,8 +41,8 @@ def play_tournament(id):
                              form.score2.data)
     model = {}
     model['tournament'] = tournament_dao.find(id)
-    model['schedule'] = tourney.find_scheduled_matches(id)
-    model['completed'] = tourney.find_completed_matches(id)
+    model['schedule'] = match_dao.find_scheduled_by_tournament(id)
+    model['completed'] = match_dao.find_completed_by_tournament(id)
     model['standings'] = tourney.find_standings(id)
     return render_template('play-tournament.html', 
                            model=model,
