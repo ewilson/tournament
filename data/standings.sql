@@ -26,5 +26,4 @@
 	group by a.match_id
       ) ss on a.match_id = ss.match_id and p.id = a.player_id
     ) group by player_id
-    order by win desc
     ;
