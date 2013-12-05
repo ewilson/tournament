@@ -48,18 +48,19 @@ def create(player_ids, tournament_id):
 
 def update(match):
     update = """
-    update attempt set score = ? 
+    update attempt set score = ?, opp_score = ?
     where player_id = ? and match_id = ?"""
     g.db.execute("BEGIN TRANSACTION")
-    g.db.execute(update,[match.score1,match.player1.id,match.id])
-    g.db.execute(update,[match.score2,match.player2.id,match.id])
+    g.db.execute(update,[match.score1,match.score2,match.player1.id,match.id])
+    g.db.execute(update,[match.score2,match.score1,match.player2.id,match.id])
     g.db.execute('update match set entered_time = ? where id = ?',
                  [datetime.now(),match.id])
     g.db.commit()
 
 def undo(match):
     update = """
-    update attempt set score = 0 where player_id = ? and match_id = ?
+    update attempt set score = 0, opp_score = 0
+    where player_id = ? and match_id = ?
     """
     g.db.execute("BEGIN TRANSACTION")
     g.db.execute(update,[match.player1.id,match.id])

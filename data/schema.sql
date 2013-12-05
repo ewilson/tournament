@@ -27,6 +27,7 @@ create table attempt (
        player_id integer not null,
        match_id integer not null,
        score integer,
+       opp_score integer,
        primary key (player_id, match_id),
        foreign key (player_id) REFERENCES player (id),
        foreign key (match_id) REFERENCES match (id)

@@ -1,4 +1,4 @@
-    select fname,
+	    select fname,
 	   sum(result='W') win,
 	   sum(result='L') loss,
 	   sum(result='T') tie from
@@ -22,7 +22,7 @@
 	       m.entered_time
 	from attempt a, match m
 	where a.match_id = m.id
-	and m.tournament_id = 27
+	and m.tournament_id = 1
 	group by a.match_id
       ) ss on a.match_id = ss.match_id and p.id = a.player_id
     ) group by player_id
