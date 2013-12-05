@@ -51,15 +51,15 @@ def test_standings(g):
     match_dao.update(match3)
     standings = standings_dao.find(t.id)
 
-    assert standings[0].name == p3.fname
-    assert standings[0].win == 2
-    assert standings[0].loss == 0
+    assert standings[0].name == p.fname
+    assert standings[0].win == 0
+    assert standings[0].loss == 2
     assert standings[1].name == p2.fname
     assert standings[1].win == 1
     assert standings[1].loss == 1
-    assert standings[2].name == p.fname
-    assert standings[2].win == 0
-    assert standings[2].loss == 2
+    assert standings[2].name == p3.fname
+    assert standings[2].win == 2
+    assert standings[2].loss == 0
 
 def test_standings_with_ties(g):
     p = Player("test player")
@@ -88,14 +88,14 @@ def test_standings_with_ties(g):
     match_dao.update(match2)
     standings = standings_dao.find(t.id)
 
-    assert standings[0].name == p2.fname
-    assert standings[0].win == 1
-    assert standings[0].loss == 0
-    assert standings[0].tie == 0
-    assert standings[1].name == p.fname
-    assert standings[1].win == 0
-    assert standings[1].loss == 1
-    assert standings[1].tie == 1
+    assert standings[0].name == p.fname
+    assert standings[0].win == 0
+    assert standings[0].loss == 1
+    assert standings[0].tie == 1
+    assert standings[1].name == p2.fname
+    assert standings[1].win == 1
+    assert standings[1].loss == 0
+    assert standings[1].tie == 0
     assert standings[2].name == p3.fname
     assert standings[2].win == 0
     assert standings[2].loss == 0

@@ -32,11 +32,14 @@ class Match(object):
         return '<(%d): %s vs %s>' % (self.id, self.player1, self.player2)
 
 class Standing(object):
-    def __init__(self, name=0, win=0, loss=0, tie=0):
+    def __init__(self, pid=0, name=0, win=0, loss=0, tie=0, pf=0, pa=0):
+        self.pid = pid
         self.name = name
         self.win = win
         self.loss = loss
         self.tie = tie
+        self.pf = pf
+        self.pa = pa
         self.perc = self.compute_percent()
         self.percent_display = "%.1f" % self.perc 
 
@@ -49,4 +52,4 @@ class Standing(object):
         return p
 
     def __repr__(self):
-        return '(%d): W: %d, L: %d' % (self.name, self.win, self.loss)
+        return '(%d)--%s-- W: %d, L: %d' % (self. pid, self.name, self.win, self.loss)
