@@ -19,6 +19,6 @@
 	from attempt a, player p, match m
 	where a.player_id = p.id
 	and a.match_id = m.id
-	and m.tournament_id = ?
+	and m.tournament_id = 3
     ) group by pid
 ;
