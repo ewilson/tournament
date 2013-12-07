@@ -27,20 +27,12 @@ def enter_tournament(player_id, tournament_id):
     g.db.execute(insert_entry,[player_id,tournament_id])
     g.db.commit()
 
+# Not currently used, but tested and useful
 def find_in_tournament(tournament_id):
     select = '''
     select p.fname, p.id from player p, entry e
     where p.id = e.player_id and e.tournament_id = ? '''
     print select
-    cur = g.db.execute(select, tournament_id)
-    return [Player(*row) for row in cur.fetchall()]
-
-# Not currently used
-def find_not_in_tournament(tournament_id):
-    select = '''
-    select id, fname from player where id not in (
-    select player_id from entry e where tournament_id = ?)'''
-    print select
-    cur = g.db.execute(select, tournament_id)
+    cur = g.db.execute(select, [tournament_id])
     return [Player(*row) for row in cur.fetchall()]
 
