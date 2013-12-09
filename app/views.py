@@ -22,7 +22,7 @@ def index():
 def tournament(id):
     form = TourneyEntryForm()
     tournament = tournament_dao.find(id)
-    if not tournament.begun and not form.is_submitted():
+    if not tournament.begun and not form.validate_on_submit():
         players = player_dao.find_all()
         form.enter.choices = [(player.id, player.fname) for player in players]
         return render_template('edit-tournament.html', 
@@ -36,8 +36,7 @@ def tournament(id):
 @app.route('/play-tournament/<id>', methods = ['GET','POST'])
 def play_tournament(id):
     form = MatchForm()
-    print form
-    if request.method == 'POST': #NEED TO CLEAN UP VALIDATION
+    if form.validate_on_submit():
         tourney.update_match(form.id.data, form.player1_id.data,
                              form.player2_id.data, form.score1.data,
                              form.score2.data)

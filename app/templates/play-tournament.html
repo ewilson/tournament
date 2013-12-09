@@ -14,6 +14,7 @@
   {% for s_match in model['schedule'] %}
     <form action="{{tournament.id}}" method="post" name="match">
       <p>
+	{{ form.csrf_token }}
 	{{form.id(value=s_match.id)}}
 	{{form.player1_id(value=s_match.player1.id)}}
 	{{form.player2_id(value=s_match.player2.id)}}
