@@ -22,7 +22,7 @@ def index():
 def tournament(id):
     form = TourneyEntryForm()
     tournament = tournament_dao.find(id)
-    if not tournament.begun and not form.validate_on_submit():
+    if not tournament.begun and not form.is_submitted():
         players = player_dao.find_all()
         form.enter.choices = [(player.id, player.fname) for player in players]
         return render_template('edit-tournament.html', 
