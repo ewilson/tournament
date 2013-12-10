@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block body %}
+{% block content %}
 {% set tournament = model['tournament'] %}
 <h1>Tournament {{tournament.description}}</h1>
 <div style="float:left;margin:5px">
@@ -27,7 +27,7 @@
   {% endfor %}
 </div>
 <div style="float:left;margin:5px">
-  <table border="1">
+  <table class="table table-bordered">
     <thead>
       <tr>
 	<th>Team</th><th>W</th><th>L</th><th>T</th><th>%</th>

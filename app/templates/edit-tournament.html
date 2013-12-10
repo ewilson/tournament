@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block body %}
+{% block content %}
 <h1>Tournament {{tournament.description}}</h1>
   {% if players %}
     <form action="{{tournament.id}}" method="post" name="entries">
