@@ -1,17 +1,20 @@
+{% extends "bootstrap/base.html" %}
 <!doctype html>
 <html>
   <head>
-    <title>Pools &amp; Brackets</title>
+    {% block title %}Pools &amp; Brackets{% endblock %}
   </head>
-  <body>
+  {% block body %}
+    {% block navbar %}
     <a href="/"><h1>Pools &amp; Brackets</h1></a>
     <a href="/player"><h2>Players</h2></a>
     <hr/>
-    {% block body %}
+    {% endblock %}
+    {% block content %}
     {% endblock %}
     <div style="clear:left">
       <hr/>
       <p>Pools &amp; Brackets is a creation of Eric Wilson</p>
     </div>
-  </body>
+  {% endblock %}
 </html>
