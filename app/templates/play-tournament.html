@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 {% set tournament = model['tournament'] %}
-<h1>Tournament {{tournament.description}}</h1>
+<!--<h1>Tournament {{tournament.description}}</h1>-->
 <div class="container">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
       {% for c_match in model['completed'] %}
 	<p>{{c_match.player1.fname}}: {{c_match.score1}}</p>
 	<p>{{c_match.player2.fname}}: {{c_match.score2}}</p>
@@ -13,8 +13,10 @@
 		 match_id = c_match.id)}}">Undo!</a>
       <hr/>
       {% endfor %}
+    </div>
+    <div class="col-md-4">
       {% for s_match in model['schedule'] %}
-	<form action="{{tournament.id}}" method="post" name="match" role="form" class="form-inline">
+	<form action="{{tournament.id}}" method="post" name="match" role="form" class="form">
 	  {{ form.csrf_token }}
 	  {{form.id(value=s_match.id)}}
 	  {{form.player1_id(value=s_match.player1.id)}}
@@ -34,7 +36,7 @@
 	<hr/>
       {% endfor %}
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       <table class="table table-bordered">
 	<thead>
 	  <tr>
