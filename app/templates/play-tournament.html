@@ -14,16 +14,22 @@
       <hr/>
       {% endfor %}
       {% for s_match in model['schedule'] %}
-	<form action="{{tournament.id}}" method="post" name="match">
-	  <p>
-	    {{ form.csrf_token }}
-	    {{form.id(value=s_match.id)}}
-	    {{form.player1_id(value=s_match.player1.id)}}
-	    {{form.player2_id(value=s_match.player2.id)}}
-	    {{s_match.player1.fname}}: {{form.score1(size=4,value='')}}<br/>
-	    {{s_match.player2.fname}}: {{form.score2(size=4,value='')}}<br/>
-	  </p>
-	  <p><button type="submit" class="btn btn-primary">Add Match</button></p>
+	<form action="{{tournament.id}}" method="post" name="match" role="form" class="form-inline">
+	  {{ form.csrf_token }}
+	  {{form.id(value=s_match.id)}}
+	  {{form.player1_id(value=s_match.player1.id)}}
+	  {{form.player2_id(value=s_match.player2.id)}}
+	  <div class="form-group">
+	    <label for="score1">{{s_match.player1.fname}}</label>
+	    {{ form.score1(size=4,value='',class="form-control",
+	    placeholder="Enter Score") }}
+	  </div>
+	  <div class="form-group">
+	    <label for="score1">{{s_match.player2.fname}}</label>
+	    {{ form.score2(size=4,value='',class="form-control",
+	    placeholder="Enter Score") }}
+	  </div>
+          <button type="submit" class="btn btn-primary">Add Match</button>
 	</form>
 	<hr/>
       {% endfor %}
