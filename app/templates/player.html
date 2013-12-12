@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Players</h1>
-
-{% for player in players %}
-    <p>{{player.fname}}</p>
-{% endfor %}
-
-<h2>Add new player</h2>
-
-<form action="player" method="post" name="tournament">
-  {{form.hidden_tag()}}
-  <p>
-    Enter first name of new player: {{form.fname(size=25)}}<br/>
-  </p>
-  <p><button type="submit" class="btn btn-primary">Add</button></p>
-</form>
-
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Current Players</h2>
+      <ul class="list-unstyled">
+      {% for player in players %}
+        <li>{{player.fname}}</li>
+      {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h2>Add new player</h2>
+      <form action="player" method="post" name="tournament">
+	<div class="form-group">
+	  <label for="fname">First Name</label>
+	    {{ form.fname(class="form-control",
+			   placeholder="Enter Name") }}
+	</div>
+	{{form.hidden_tag()}}
+      <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
