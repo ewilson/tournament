@@ -1,15 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Tournament {{tournament.description}}</h1>
+<div class="container">
+<h1>{{tournament.description}}</h1>
   {% if players %}
     <form action="{{tournament.id}}" method="post" name="entries">
       {{form.hidden_tag()}}
-      <h2>Add Players</h2>
-      {{form.enter}}
+      <h3>Add Players</h3>
+    <!--  {{form.enter}}-->
+      {% for player in players %}
+        <div class="checkbox">        
+          <label for="enter-{{player.id}}">{{ player.fname }}</label> 
+	  <input id="enter-{{player.id}}" name="enter" type="checkbox" 
+		 value="{{player.id}}">
+	</div>
+      {% endfor %}
       <p><button type="submit" class="btn btn-primary">Add</button></p>
     </form>
   {% else %}
     <h2>No players to add</h2>
     <p>Maybe you want to <a href={{url_for('player')}}>add some</a>?
   {% endif %}
+</div>
 {% endblock %}

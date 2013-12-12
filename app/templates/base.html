@@ -6,9 +6,19 @@
   </head>
   {% block body %}
     {% block navbar %}
-    <a href="/"><h1>Pools &amp; Brackets</h1></a>
-    <a href="/player"><h2>Players</h2></a>
-    <hr/>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Pools &amp; Brackets</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/player">Players</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     {% endblock %}
     {% block content %}
     {% endblock %}
