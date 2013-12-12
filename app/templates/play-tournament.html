@@ -5,20 +5,6 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
-      <h2>Completed Matches</h2>
-      {% for c_match in model['completed'] %}
-	<div class="well">
-          <table class="table">
-	    <tr><td>{{c_match.player1.fname}}</td><td>{{c_match.score1}}</td></tr>
-            <tr><td>{{c_match.player2.fname}}</td><td>{{c_match.score2}}</td></tr>
-          </table>
-	  <a href="{{url_for('undo_match',
-		   tourn_id = tournament.id,
-		   match_id = c_match.id)}}">Undo!</a>
-	</div>
-      {% endfor %}
-    </div>
-    <div class="col-md-4">
       <h2>Scheduled Matches</h2>
       {% for s_match in model['schedule'] %}
         <div class="well">
@@ -39,6 +25,20 @@
 	    </div>
 	    <button type="submit" class="btn btn-primary">Add Match</button>
 	  </form>
+	</div>
+      {% endfor %}
+    </div>
+    <div class="col-md-4">
+      <h2>Completed Matches</h2>
+      {% for c_match in model['completed'] %}
+	<div class="well">
+          <table class="table">
+	    <tr><td>{{c_match.player1.fname}}</td><td>{{c_match.score1}}</td></tr>
+            <tr><td>{{c_match.player2.fname}}</td><td>{{c_match.score2}}</td></tr>
+          </table>
+	  <a href="{{url_for('undo_match',
+		   tourn_id = tournament.id,
+		   match_id = c_match.id)}}">Undo!</a>
 	</div>
       {% endfor %}
     </div>
