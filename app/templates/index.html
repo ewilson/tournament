@@ -13,12 +13,16 @@
     </div>
     <div class="col-md-6">
       <h2>Add new tournament</h2>  
-      <form action="" method="post" name="tournament">
+      <form action="" method="post" name="tournament" role="form" class="form">
 	{{form.hidden_tag()}}
-	<p>
-	  Enter name of new tournament: {{form.description(size=40)}}<br/>
-	  Tournament type: {{form.tourn_type(size=20)}}<br/>
-	</p>
+	<div class="form-group">
+	  <label for="description">Tournament name:</label>
+          {{ form.description(value='',class="form-control") }}
+	</div>
+	<div class="form-group">
+	  <label for="description">Tournament type:</label>
+          {{ form.tourn_type(value='',class="form-control") }}
+	</div>
 	<p><button type="submit" class="btn btn-primary">Add</button></p>
       </form>
     </div>
