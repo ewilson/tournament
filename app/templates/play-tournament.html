@@ -5,16 +5,21 @@
 <div class="container">
   <div class="row">
     <div class="col-md-4">
+      <h2>Completed Matches</h2>
       {% for c_match in model['completed'] %}
-	<p>{{c_match.player1.fname}}: {{c_match.score1}}</p>
-	<p>{{c_match.player2.fname}}: {{c_match.score2}}</p>
-	<a href="{{url_for('undo_match', 
-		 tourn_id = tournament.id, 
-		 match_id = c_match.id)}}">Undo!</a>
-      <hr/>
+	<div class="well">
+          <table class="table">
+	    <tr><td>{{c_match.player1.fname}}</td><td>{{c_match.score1}}</td></tr>
+            <tr><td>{{c_match.player2.fname}}</td><td>{{c_match.score2}}</td></tr>
+          </table>
+	  <a href="{{url_for('undo_match',
+		   tourn_id = tournament.id,
+		   match_id = c_match.id)}}">Undo!</a>
+	</div>
       {% endfor %}
     </div>
     <div class="col-md-4">
+      <h2>Scheduled Matches</h2>
       {% for s_match in model['schedule'] %}
         <div class="well">
 	  <form action="{{tournament.id}}" method="post" name="match" role="form" class="form">
@@ -38,6 +43,7 @@
       {% endfor %}
     </div>
     <div class="col-md-4">
+      <h2>Standings</h2>
       <table class="table table-bordered">
 	<thead>
 	  <tr>
