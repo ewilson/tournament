@@ -22,6 +22,11 @@ def create(tourn):
     g.db.execute(insert_tournament, [tourn.tourn_type, tourn.description])
     g.db.commit()
 
+def delete(id):
+    delete = "delete from tournament where id = ?"
+    g.db.execute(delete, [id])
+    g.db.commit()
+
 # Not currently used
 def update(tourn):
     update = """

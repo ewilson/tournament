@@ -25,6 +25,17 @@ def test_create_and_find_tournament(g):
 
     assert retreived_t.description == t.description
 
+def test_create_and_delete_tournament(g):
+    t = Tournament(0,description='test-tourn')
+    tournament_dao.create(t)
+    retreived_t = tournament_dao.find(1)
+    id = retreived_t.id
+
+    tournament_dao.delete(id)
+    all_tournaments = tournament_dao.find_all()
+
+    assert all_tournaments == []
+
 def test_begin_tournament(g):
     t = Tournament(0,description='test-tourn')
     tournament_dao.create(t)

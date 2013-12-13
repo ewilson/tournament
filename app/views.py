@@ -49,6 +49,11 @@ def play_tournament(id):
                            model=model,
                            form=form)
 
+@app.route('/tournament/delete/<id>')
+def delete_tournament(id):
+    tournament_dao.delete(id)
+    return redirect('/')
+
 @app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
 def undo_match(tourn_id, match_id):
     tourney.undo_match(match_id)
