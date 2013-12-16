@@ -38,8 +38,8 @@ class Standing(object):
         self.win = win
         self.loss = loss
         self.tie = tie
-        self.pf = pf if isinstance(pf,int) else 0
-        self.pa = pa if isinstance(pa,int) else 0
+        self.pf = pf if isinstance(pf,(int,float)) else 0
+        self.pa = pa if isinstance(pa,(int,float)) else 0
         self.perc = self.compute_percent()
         self.percent_display = "%.1f" % self.perc 
 
