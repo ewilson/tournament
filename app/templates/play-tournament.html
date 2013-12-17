@@ -82,6 +82,11 @@
 	{% endfor %}
 	</tbody>
       </table>
+      {% if not model['schedule'] %}
+        <a href="{{ url_for('conclude_tournament', id = tournament.id) }}">
+	  <button class="btn btn-danger">Complete Tournament</button>
+	</a>
+      {% endif %}
     </div>
   </div>
 </div>

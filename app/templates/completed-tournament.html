@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% set tournament = model['tournament'] %}
+{% set standings = model['standings'] %}
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Congratulations Winner!</h1>
+    <p>You have won the (smackdown) tournament</p>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Completed Matches</h2>
+      {% for c_match in model['matches'] %}
+	<div class="well">
+          <table class="table">
+	    <tr><td>{{c_match.player1.fname}}</td><td>{{c_match.score1}}</td></tr>
+            <tr><td>{{c_match.player2.fname}}</td><td>{{c_match.score2}}</td></tr>
+          </table>
+	</div>
+      {% endfor %}
+    </div>
+    <div class="col-md-6">
+      <h2>Standings</h2>
+      <table class="table table-bordered table-hover">
+	<thead>
+	  <tr>
+	    <th>Team</th><th>W</th><th>L</th><th>T</th><th>%</th>
+	    <th>PF</th><th>PA</th><th>+/-</th>
+	  </tr>
+	</thead>
+	<tbody>
+	{% for standing_row in model['standings'] %}
+	  <tr>
+	    <td>{{standing_row.name}}</td>
+	    <td>{{standing_row.win}}</td>
+	    <td>{{standing_row.loss}}</td>
+	    <td>{{standing_row.tie}}</td>
+	    <td>{{standing_row.percent_display}}</td> 
+	    <td>{{standing_row.pf}}</td>
+	    <td>{{standing_row.pa}}</td>
+	    <td>{{standing_row.pf - standing_row.pa}}</td> 
+	  </tr>
+	{% endfor %}
+	</tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
