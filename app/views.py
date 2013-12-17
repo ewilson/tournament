@@ -53,7 +53,12 @@ def play_tournament(id):
 
 @app.route('/conclude-tournament/<id>')
 def conclude_tournament(id):
-    return render_template('completed-tournament.html',model={})
+    tournament_dao.complete(id)
+    model = {}
+    model['tournament'] = tournament_dao.find(id)
+    model['matches'] = match_dao.find_completed_by_tournament(id)
+    model['standings'] = tourney.find_standings(id)
+    return render_template('completed-tournament.html',model=model)
 
 @app.route('/tournament/delete/<id>')
 def delete_tournament(id):
