@@ -44,7 +44,7 @@ def test_begin_tournament(g):
     retreived_t = tournament_dao.find(1)
 
     assert retreived_t.description == t.description
-    assert retreived_t.begun == 1
+    assert retreived_t.status == 1
 
 def test_find_all_tournaments(g):
     t = Tournament(0,description='test-tourn')

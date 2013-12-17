@@ -4,7 +4,7 @@ create table tournament (
        start_date text not null,
        description text not null,
        tourn_type text not null,
-       begun integer not null
+       status integer not null
 );
 
 drop table if exists match;

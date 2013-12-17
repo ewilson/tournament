@@ -4,7 +4,7 @@ import sqlite3
 from models import Tournament
 
 def find_all():
-    select = '''select id, start_date, description, tourn_type, begun
+    select = '''select id, start_date, description, tourn_type, status
                 from tournament'''
     cur = g.db.execute(select)
     return [Tournament(*row) for row in cur.fetchall()]
@@ -16,7 +16,7 @@ def find(id):
 
 def create(tourn):
     insert_tournament = """
-        insert into tournament (start_date, tourn_type, description, begun)
+        insert into tournament (start_date, tourn_type, description, status)
         values (date('now'), ?, ?, 0)"""
     print insert_tournament
     g.db.execute(insert_tournament, [tourn.tourn_type, tourn.description])
@@ -33,14 +33,14 @@ def update(tourn):
         update tournament set start_date = ?,
                               tourn_type = ?,
                               description = ?,
-                              begun = ? where id = ?"""
+                              status = ? where id = ?"""
     data = [tourn.start_date, tourn.tourn_type, tourn.description, 
-            tourn.begun, tourn.id]
+            tourn.status, tourn.id]
     g.db.execute(update, data)
     g.db.commit()
 
 def begin(tourn_id):
-    update = "update tournament set begun = ? where id = ?"
+    update = "update tournament set status = ? where id = ?"
     data = [1, tourn_id]
     g.db.execute(update, data)
     g.db.commit()

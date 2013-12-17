@@ -1,16 +1,16 @@
 class Tournament(object):
     def __init__(self, id=id, start_date='', description='', 
-                 tourn_type='', begun=0):
+                 tourn_type='', status=0):
         self.id = id
         self.start_date = start_date
         self.tourn_type = tourn_type
         self.description = description
-        self.begun = int(begun)
+        self.status = int(status)
     
     def __repr__(self):
-        return ('<(%d)%s:%s--%s, begun=%s>' % 
+        return ('<(%d)%s:%s--%s, status=%s>' % 
                 (self.id, self.description, 
-                 self.tourn_type, self.start_date,self.begun))
+                 self.tourn_type, self.start_date,self.status))
 
 class Player(object):
     def __init__(self, fname='', id = 0):
