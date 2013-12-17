@@ -6,7 +6,15 @@ from models import Tournament
 def find_all():
     select = '''select id, start_date, description, tourn_type, status
                 from tournament'''
+
     cur = g.db.execute(select)
+    return [Tournament(*row) for row in cur.fetchall()]
+
+def find_all_by_status(status):
+    select = '''select id, start_date, description, tourn_type, status
+                from tournament
+                where status = ?'''
+    cur = g.db.execute(select,[status])
     return [Tournament(*row) for row in cur.fetchall()]
 
 def find(id):
@@ -42,6 +50,12 @@ def update(tourn):
 def begin(tourn_id):
     update = "update tournament set status = ? where id = ?"
     data = [1, tourn_id]
+    g.db.execute(update, data)
+    g.db.commit()
+
+def complete(tourn_id):
+    update = "update tournament set status = ? where id = ?"
+    data = [2, tourn_id]
     g.db.execute(update, data)
     g.db.commit()
 

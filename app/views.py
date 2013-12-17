@@ -13,10 +13,9 @@ def index():
         tourney.create_tournament(form.description.data,form.tourn_type.data)
         form.description.data = ''
         form.tourn_type.data = ''
-    tournaments = tournament_dao.find_all()
-    model = {'new_tournaments':tournaments,
-              'active_tournaments':tournaments,
-              'completed_tournaments':tournaments}
+    model = {'new_tournaments':tournament_dao.find_all_by_status(0),
+              'active_tournaments':tournament_dao.find_all_by_status(1),
+              'completed_tournaments':tournament_dao.find_all_by_status(2)}
     return render_template('index.html', 
                            model=model,
                            form=form)
