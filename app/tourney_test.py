@@ -49,7 +49,6 @@ def test_breaks_perc_and_win_ties_with_plus_minus(inject):
     tourney.standings_dao.standings = [standing2,standing1,standing0]
     standings = tourney.find_standings(1)
     
-    print standings[0].pf, standing0.pf
     assert standings[0] == standing0
     assert standings[1] == standing1
     assert standings[2] == standing2

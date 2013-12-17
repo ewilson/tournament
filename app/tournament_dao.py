@@ -1,5 +1,5 @@
 from flask import g
-import sqlite3
+import sqlite3, logging
 
 from models import Tournament
 
@@ -26,7 +26,7 @@ def create(tourn):
     insert_tournament = """
         insert into tournament (start_date, tourn_type, description, status)
         values (date('now'), ?, ?, 0)"""
-    print insert_tournament
+    logging.debug(insert_tournament)
     g.db.execute(insert_tournament, [tourn.tourn_type, tourn.description])
     g.db.commit()
 

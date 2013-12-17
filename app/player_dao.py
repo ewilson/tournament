@@ -1,5 +1,5 @@
 from flask import g
-import sqlite3
+import sqlite3, logging
 
 from models import Player
 
@@ -15,15 +15,13 @@ def find(id):
 
 def create(player):
     insert_player = "insert into player (fname) values (?)"
-    print insert_player
+    logging.debug(insert_player)
     g.db.execute(insert_player,[player.fname])
     g.db.commit()
 
 def enter_tournament(player_id, tournament_id):
     insert_entry = "insert into entry (player_id, tournament_id) values (?, ?)"
-    print insert_entry
-    print player_id
-    print tournament_id
+    logging.debug(insert_entry)
     g.db.execute(insert_entry,[player_id,tournament_id])
     g.db.commit()
 
@@ -32,7 +30,6 @@ def find_in_tournament(tournament_id):
     select = '''
     select p.fname, p.id from player p, entry e
     where p.id = e.player_id and e.tournament_id = ? '''
-    print select
     cur = g.db.execute(select, [tournament_id])
     return [Player(*row) for row in cur.fetchall()]
 
