@@ -14,8 +14,11 @@ def index():
         form.description.data = ''
         form.tourn_type.data = ''
     tournaments = tournament_dao.find_all()
+    model = {'new_tournaments':tournaments,
+              'active_tournaments':tournaments,
+              'completed_tournaments':tournaments}
     return render_template('index.html', 
-                           tournaments=tournaments,
+                           model=model,
                            form=form)
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
