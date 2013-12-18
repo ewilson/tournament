@@ -22,8 +22,10 @@ def index():
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
-    form = TourneyEntryForm()
     tournament = tournament_dao.find(id)
+    if tournament.status == 2:
+        return redirect(url_for('conclude_tournament',id=id))
+    form = TourneyEntryForm()
     if not tournament.status and not form.is_submitted():
         players = player_dao.find_all()
         form.enter.choices = [(player.id, player.fname) for player in players]
