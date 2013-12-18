@@ -84,6 +84,11 @@ def player():
                            players=players,
                            form=form)
 
+@app.route('/login' , methods = ['GET','POST'])
+def login():
+    print request.form
+    return render_template('login.html')
+
 @app.before_request
 def before_request():
     g.db = connect_db()

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <form action="login" method="post" class="form-inline" role="form">
+    <div class="form-group">
+      <input type="password" class="form-control" id="password" 
+	     placeholder="Password" name="password">
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+{% endblock %}
