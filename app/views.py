@@ -8,6 +8,8 @@ import tournament_dao, player_dao, match_dao, tourney
 
 @app.route('/', methods = ['GET','POST'])
 def index():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     form = TournForm()
     if form.validate_on_submit():
         tourney.create_tournament(form.description.data,form.tourn_type.data)
@@ -22,6 +24,8 @@ def index():
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     tournament = tournament_dao.find(id)
     if tournament.status == 2:
         return redirect(url_for('conclude_tournament',id=id))
@@ -39,6 +43,8 @@ def tournament(id):
 
 @app.route('/play-tournament/<id>', methods = ['GET','POST'])
 def play_tournament(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     form = MatchForm()
     if form.validate_on_submit():
         tourney.update_match(form.id.data, form.player1_id.data,
@@ -55,6 +61,8 @@ def play_tournament(id):
 
 @app.route('/conclude-tournament/<id>')
 def conclude_tournament(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     tournament_dao.complete(id)
     model = {}
     model['tournament'] = tournament_dao.find(id)
@@ -64,6 +72,8 @@ def conclude_tournament(id):
 
 @app.route('/tournament/delete/<id>')
 def delete_tournament(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     tournament_dao.delete(id)
     return redirect('/')
 
@@ -74,6 +84,8 @@ def undo_match(tourn_id, match_id):
 
 @app.route('/player', methods = ['GET','POST'])
 def player():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     form = PlayerForm()
     if form.validate_on_submit():
         player = Player(form.fname.data)
@@ -95,6 +107,11 @@ def login():
             error = 'Invalid Password'
     return render_template('login.html', error=error)
 
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
+
 @app.before_request
 def before_request():
     g.db = connect_db()
@@ -106,6 +123,7 @@ def teardown_request(exception):
     db = getattr(g, 'db', None)
     if db is not None:
         db.close()
+
 
 def connect_db():
     return sqlite3.connect(config.DATABASE)
