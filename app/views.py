@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, g, request, url_for
+from flask import render_template, redirect, session, g, request, url_for
 import sqlite3
 import config
 from app import app
@@ -86,8 +86,14 @@ def player():
 
 @app.route('/login' , methods = ['GET','POST'])
 def login():
-    print request.form
-    return render_template('login.html')
+    error = None
+    if request.method == 'POST':
+        if request.form['password'] == config.PASSWORD:
+            session['logged_in'] = True
+            return redirect(url_for('index'))
+        else:
+            error = 'Invalid Password'
+    return render_template('login.html', error=error)
 
 @app.before_request
 def before_request():

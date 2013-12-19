@@ -6,3 +6,4 @@ SCHEMA = ROOT + '/data/schema.sql'
 TEST_DATABASE = ROOT + '/data/tourn_test.db'
 CSRF_ENABLED = True
 SECRET_KEY = 'super-secure-open-source-project'
+PASSWORD = 'ping-pong'
