@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
+  {% if error %}
+    <div class="alert alert-danger">Error: {{ error }}</div>
+  {% endif %}
   <form action="login" method="post" class="form-inline" role="form">
     <div class="form-group">
       <input type="password" class="form-control" id="password" 
