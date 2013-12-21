@@ -4,7 +4,7 @@ create table tournament (
        start_date text not null,
        description text not null,
        tourn_type text not null,
-       begun integer not null
+       status integer not null
 );
 
 drop table if exists match;
@@ -12,7 +12,7 @@ create table match (
        id integer primary key autoincrement,
        tournament_id integer not null,
        entered_time text,
-       foreign key (tournament_id) REFERENCES tournament (id)
+       foreign key (tournament_id) references tournament (id) on delete cascade
 );
 
 drop table if exists player;
@@ -29,8 +29,8 @@ create table attempt (
        score integer,
        opp_score integer,
        primary key (player_id, match_id),
-       foreign key (player_id) REFERENCES player (id),
-       foreign key (match_id) REFERENCES match (id)
+       foreign key (player_id) references player (id),
+       foreign key (match_id) references match (id) on delete cascade
 );
 
 -- "entry" could be called player_tournament
@@ -40,7 +40,7 @@ create table entry (
        tournament_id integer not null,
        champion integer,
        primary key (player_id, tournament_id),
-       foreign key (player_id) REFERENCES player (id),
-       foreign key (tournament_id) REFERENCES tournament (id)
+       foreign key (player_id) references player (id),
+       foreign key (tournament_id) references tournament (id) on delete cascade
 );
 

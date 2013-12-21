@@ -1,17 +1,31 @@
+{% extends "bootstrap/base.html" %}
 <!doctype html>
 <html>
   <head>
-    <title>Pools &amp; Brackets</title>
+    {% block title %}Pools &amp; Brackets{% endblock %}
   </head>
-  <body>
-    <a href="/"><h1>Pools &amp; Brackets</h1></a>
-    <a href="/player"><h2>Players</h2></a>
-    <hr/>
-    {% block body %}
-    {% endblock %}
-    <div style="clear:left">
-      <hr/>
-      <p>Pools &amp; Brackets is a creation of Eric Wilson</p>
+  {% block body %}
+    {% block navbar %}
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Pools &amp; Brackets</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/player">Players</a></li>
+	    {% if not session.logged_in %}
+	      <li><a href="{{ url_for('login') }}">Login</a></li>
+	    {% else %}
+	      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+	    {% endif %}
+          </ul>
+        </div>
+      </div>
     </div>
-  </body>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+  {% endblock %}
 </html>
