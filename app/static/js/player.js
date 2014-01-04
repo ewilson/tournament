@@ -10,8 +10,8 @@ Players.prototype.add = function(options) {
     });
 };
 
-$(document).ready(function() {
-    var players = new Players();
+var NewPlayerView = function(options) {
+    var players = options.players;
 
     $('#new-player form').submit(function(e) {
         e.preventDefault();
@@ -24,4 +24,10 @@ $(document).ready(function() {
             }
         });
     });
+};
+
+$(document).ready(function() {
+    var players = new Players();
+
+    new NewPlayerView({ players: players });
 });
