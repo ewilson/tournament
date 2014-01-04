@@ -1,4 +1,5 @@
 from flask import render_template, redirect, session, g, request, url_for
+from flask import jsonify
 import sqlite3
 import config
 from app import app
@@ -97,6 +98,12 @@ def player():
     return render_template('player.html', 
                            players=players,
                            form=form)
+
+@app.route('/_add_numbers')
+def add_numbers():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', 0, type=int)
+    return jsonify(result=a + b)
 
 @app.route('/login' , methods = ['GET','POST'])
 def login():
