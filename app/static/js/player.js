@@ -11,18 +11,19 @@ Players.prototype.add = function(options) {
 };
 
 var NewPlayerView = function(options) {
-    var players = options.players;
-
-    $('#new-player form').submit(function(e) {
-        e.preventDefault();
+    this.players = options.players;
+    var add = $.proxy(this.addPlayer, this)
+    $('#new-player form').submit(add);
+};
+NewPlayerView.prototype.addPlayer = function(e) {
+    e.preventDefault();
 	
-	players.add({
-	    fname: $('#fname').val(),
-            success: function(data) {
-		$('#players').append('<li>' + data.fname + '</li>');
-		$('#fname').val('');
-            }
-        });
+    this.players.add({
+        fname: $('#fname').val(),
+        success: function(data) {
+	    $('#players').append('<li>' + data.fname + '</li>');
+	    $('#fname').val('');
+        }
     });
 };
 
