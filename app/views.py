@@ -85,25 +85,19 @@ def undo_match(tourn_id, match_id):
     tourney.undo_match(match_id)
     return redirect(url_for('play_tournament',id=tourn_id))
 
-@app.route('/player', methods = ['GET','POST'])
+@app.route('/player')
 def player():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    form = PlayerForm()
-    if form.validate_on_submit():
-        player = Player(form.fname.data)
-        player_dao.create(player)
-        form.fname.data = ''
     players = player_dao.find_all()
     return render_template('player.html', 
-                           players=players,
-                           form=form)
+                           players=players)
 
-@app.route('/_add_numbers')
-def add_numbers():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', 0, type=int)
-    return jsonify(result=a + b)
+@app.route('/_add-player', methods = ['GET','POST'])
+def add_player():
+    fname = request.form['text']
+    player_dao.create(Player(fname)) 
+    return jsonify({'text':fname})
 
 @app.route('/login' , methods = ['GET','POST'])
 def login():
