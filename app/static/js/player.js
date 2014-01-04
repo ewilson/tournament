@@ -1,4 +1,6 @@
-function addPlayer(options) {
+var Players = function() {
+};
+Players.prototype.add = function(options) {
     $.ajax({
         url: $SCRIPT_ROOT + '/_add-player',
         type: 'POST',
@@ -6,13 +8,15 @@ function addPlayer(options) {
         data: { fname: options.fname },
         success: options.success
     });
-}
+};
 
 $(document).ready(function() {
+    var players = new Players();
+
     $('#new-player form').submit(function(e) {
         e.preventDefault();
-
-	addPlayer({
+	
+	players.add({
 	    fname: $('#fname').val(),
             success: function(data) {
 		$('#players').append('<li>' + data.fname + '</li>');
