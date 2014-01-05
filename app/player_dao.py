@@ -17,7 +17,9 @@ def create(player):
     insert_player = "insert into player (fname) values (?)"
     logging.debug(insert_player)
     g.db.execute(insert_player,[player.fname])
+    cur = g.db.execute('select last_insert_rowid() from player')
     g.db.commit()
+    return cur.fetchone()[0]
 
 def enter_tournament(player_id, tournament_id):
     insert_entry = "insert into entry (player_id, tournament_id) values (?, ?)"

@@ -96,8 +96,8 @@ def player():
 @app.route('/_add-player', methods = ['GET','POST'])
 def add_player():
     fname = request.form['fname']
-    player_dao.create(Player(fname)) 
-    return jsonify({'fname':fname})
+    id = player_dao.create(Player(fname)) 
+    return jsonify({'id':id,'fname':fname})
 
 @app.route('/login' , methods = ['GET','POST'])
 def login():

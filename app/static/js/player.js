@@ -23,15 +23,15 @@ NewPlayerView.prototype.addPlayer = function(e) {
     this.players.add({
         fname: $('#fname').val(),
         success: function(data) {
-	    that.appendPlayer(data.fname);
+	    that.appendPlayer(data);
 	    that.clearInput();
         }
     });
 };
-NewPlayerView.prototype.appendPlayer = function(fname) {
+NewPlayerView.prototype.appendPlayer = function(data) {
     player = $(".player-item").first().clone();
-    player.find('.fname').text(fname);
-    player.attr('id','444');
+    player.find('.fname').text(data.fname);
+    player.attr('id',"player_" + data.id);
     player.appendTo("#players");
 };
 NewPlayerView.prototype.clearInput = function() {
