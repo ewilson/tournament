@@ -17,18 +17,25 @@ var NewPlayerView = function(options) {
 };
 NewPlayerView.prototype.addPlayer = function(e) {
     e.preventDefault();
-	
+
+    var that = this;
+
     this.players.add({
         fname: $('#fname').val(),
         success: function(data) {
-	    $('#players').append('<li>' + data.fname + '</li>');
-	    $('#fname').val('');
+	    that.appendPlayer(data.fname);
+	    that.clearInput();
         }
     });
+};
+NewPlayerView.prototype.appendPlayer = function(fname) {
+    $('#players').append('<li>' +fname + '</li>');
+};
+NewPlayerView.prototype.clearInput = function() {
+    $('#fname').val('');
 };
 
 $(document).ready(function() {
     var players = new Players();
-
     new NewPlayerView({ players: players });
 });
