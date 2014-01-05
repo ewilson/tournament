@@ -29,7 +29,10 @@ NewPlayerView.prototype.addPlayer = function(e) {
     });
 };
 NewPlayerView.prototype.appendPlayer = function(fname) {
-    $('#players').append('<li>' +fname + '</li>');
+    player = $(".player-item").first().clone();
+    player.find('.fname').text(fname);
+    player.attr('id','444');
+    player.appendTo("#players");
 };
 NewPlayerView.prototype.clearInput = function() {
     $('#fname').val('');

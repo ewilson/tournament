@@ -7,9 +7,10 @@
       <h2>Current Players</h2>
       <ul class="list-group" id="players">
         {% for player in players %}
-	  <div class="list-group-item list-unstyled">
+	  <div class="list-group-item list-unstyled player-item" 
+	       id="player_{{player.id}}">
 	    <li>
-	      {{player.fname}}
+	      <span class="fname">{{player.fname}}</span>
 	      <span class="glyphicon glyphicon-trash pull-right"></span>
 	    </li>
 	  </div>
