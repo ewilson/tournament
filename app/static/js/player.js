@@ -2,10 +2,19 @@ var Players = function() {
 };
 Players.prototype.add = function(options) {
     $.ajax({
-        url: $SCRIPT_ROOT + '/_add-player',
+        url: $SCRIPT_ROOT + '/player',
         type: 'POST',
         dataType: 'json',
         data: { fname: options.fname },
+        success: options.success
+    });
+};
+Players.prototype.delete = function(options) {
+    $.ajax({
+        url: $SCRIPT_ROOT + '/player',
+        type: 'DELETE',
+        dataType: 'json',
+        data: { id: options.id },
         success: options.success
     });
 };
@@ -38,7 +47,21 @@ NewPlayerView.prototype.clearInput = function() {
     $('#fname').val('');
 };
 
+
 $(document).ready(function() {
     var players = new Players();
     new NewPlayerView({ players: players });
+
+    $('.player-item a').click(function() {
+	player_id = $(this).attr('player_id')
+        $.ajax({
+            url: $SCRIPT_ROOT + '/player-del/' + player_id,
+            type: 'DELETE',
+            dataType: 'json',  
+            success: function(data) {
+		$('#player_' + data.id).remove()
+            }
+        });
+    });
+
 });

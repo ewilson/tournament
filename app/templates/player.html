@@ -11,7 +11,9 @@
 	       id="player_{{player.id}}">
 	    <li>
 	      <span class="fname">{{player.fname}}</span>
-	      <span class="glyphicon glyphicon-trash pull-right"></span>
+	      <a href="#" player_id="{{player.id}}">
+		<span class="glyphicon glyphicon-trash pull-right"></span>
+	      </a>
 	    </li>
 	  </div>
 	{% endfor %}

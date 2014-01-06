@@ -21,6 +21,9 @@ def create(player):
     g.db.commit()
     return cur.fetchone()[0]
 
+def delete(id):
+    return True
+
 def enter_tournament(player_id, tournament_id):
     insert_entry = "insert into entry (player_id, tournament_id) values (?, ?)"
     logging.debug(insert_entry)

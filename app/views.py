@@ -3,7 +3,7 @@ from flask import jsonify
 import sqlite3
 import config
 from app import app
-from forms import TournForm, PlayerForm, TourneyEntryForm, MatchForm
+from forms import TournForm, TourneyEntryForm, MatchForm
 from models import Player, Standing
 import tournament_dao, player_dao, match_dao, tourney
 
@@ -93,7 +93,13 @@ def player():
     return render_template('player.html', 
                            players=players)
 
-@app.route('/_add-player', methods = ['GET','POST'])
+
+@app.route('/api/player-del/<id>', methods = ['DELETE'])
+def add_player_del(id):
+    player_dao.delete(id)
+    return jsonify({'success':True, 'id':id})
+
+@app.route('/api/player', methods = ['POST'])
 def add_player():
     fname = request.form['fname']
     id = player_dao.create(Player(fname))
