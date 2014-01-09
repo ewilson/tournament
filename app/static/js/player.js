@@ -41,6 +41,7 @@ NewPlayerView.prototype.appendPlayer = function(data) {
     player = $(".player-item").first().clone();
     player.find('.fname').text(data.fname);
     player.attr('id',"player_" + data.id);
+    player.find('a').attr('player_id',data.id);
     player.appendTo("#players");
 };
 NewPlayerView.prototype.clearInput = function() {
