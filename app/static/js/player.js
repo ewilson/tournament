@@ -53,7 +53,7 @@ $(document).ready(function() {
     var players = new Players();
     new NewPlayerView({ players: players });
 
-    $('.player-item a').click(function() {
+    $('#players').on('click', 'a', function() {
 	player_id = $(this).attr('player_id')
         $.ajax({
             url: $SCRIPT_ROOT + '/player-del/' + player_id,
