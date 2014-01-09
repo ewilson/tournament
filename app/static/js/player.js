@@ -40,8 +40,7 @@ NewPlayerView.prototype.addPlayer = function(e) {
 NewPlayerView.prototype.appendPlayer = function(data) {
     player = $(".player-item").first().clone();
     player.find('.fname').text(data.fname);
-    player.attr('id',"player_" + data.id);
-    player.find('a').attr('player_id',data.id);
+    player.attr('data-player_id',data.id);
     player.appendTo("#players");
 };
 NewPlayerView.prototype.clearInput = function() {
@@ -53,14 +52,16 @@ $(document).ready(function() {
     var players = new Players();
     new NewPlayerView({ players: players });
 
-    $('#players').on('click', 'a', function() {
-	player_id = $(this).attr('player_id')
+    $('#players').on('click', '.del-link', function(e) {
+	e.preventDefault();
+	player_id = $(this).closest('.player-item').data('player_id');
         $.ajax({
             url: $SCRIPT_ROOT + '/player-del/' + player_id,
             type: 'DELETE',
             dataType: 'json',  
             success: function(data) {
-		$('#player_' + data.id).remove()
+		var data_select = 'div[data-player_id=' + data.id + ']';
+		$('.player-item').filter(data_select).remove();
             }
         });
     });
