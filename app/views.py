@@ -93,11 +93,15 @@ def player():
     return render_template('player.html', 
                            players=players)
 
-
 @app.route('/api/player-del/<id>', methods = ['DELETE'])
 def add_player_del(id):
-    player_dao.delete(id)
-    return jsonify({'success':True, 'id':id})
+    try:
+        player_dao.delete(id)
+    except sqlite3.IntegrityError:
+        message = "Players in tournaments cannot be deleted."
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return jsonify({'success':True, 'id':id})
 
 @app.route('/api/player', methods = ['POST'])
 def add_player():
