@@ -14,8 +14,9 @@ class FakeG(object):
 
 @pytest.fixture
 def g():
-    player_dao.g = FakeG()
-    tournament_dao.g = FakeG()
+    fG = FakeG()
+    player_dao.g = fG
+    tournament_dao.g = fG
 
 def test_create_and_find_player(g):
     p = Player("test player")
@@ -54,12 +55,33 @@ def test_find_in_tournament(g):
     assert players[1].fname == p3.fname
     assert len(players) == 2
 
+def test_delete_player(g):
+    p = Player("Test1")
+    p2 = Player("Test2")
+    p3 = Player("Test3")
+    player_dao.create(p)
+    player_dao.create(p2)
+    player_dao.create(p3)
 
+    player_dao.delete(1)
+    players = player_dao.find_all()
 
+    assert len(players) == 2
+    assert players[0].id == 2
+    assert players[1].id == 3
 
+def test_delete_player_in_tournament_fails(g):
+    p = Player("Test1")
+    player_dao.create(p)
+    t = Tournament(description="Test Tourn")
+    tournament_dao.create(t)
+    player_dao.enter_tournament(1,1)
 
-
-
-
-
+    try:
+        player_dao.delete(1)
+    except sqlite3.IntegrityError:
+        player_dao.g.db.commit()
+        print "Can't delete"
+    else:
+        assert False
 

@@ -6,11 +6,13 @@ from models import Player
 def find_all():
     select = '''select fname, id from player'''
     cur = g.db.execute(select)
+    g.db.commit()
     return [Player(*row) for row in cur.fetchall()]
 
 def find(id):
     select = "select fname, id from player where id = ?"
     cur = g.db.execute(select,[id])
+    g.db.commit()
     return Player(*cur.fetchone())
 
 def create(player):
@@ -18,11 +20,15 @@ def create(player):
     logging.debug(insert_player)
     g.db.execute(insert_player,[player.fname])
     cur = g.db.execute('select last_insert_rowid() from player')
+    id = cur.fetchone()[0]
     g.db.commit()
-    return cur.fetchone()[0]
+    return id
 
 def delete(id):
-    return True
+    delete_player = "delete from player where id = ?"
+    logging.debug(delete_player)
+    g.db.execute(delete_player,[id])
+    g.db.commit()
 
 def enter_tournament(player_id, tournament_id):
     insert_entry = "insert into entry (player_id, tournament_id) values (?, ?)"
