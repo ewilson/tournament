@@ -93,8 +93,8 @@ def player():
     return render_template('player.html', 
                            players=players)
 
-@app.route('/api/player-del/<id>', methods = ['DELETE'])
-def add_player_del(id):
+@app.route('/api/player/<id>', methods = ['DELETE'])
+def delete_player(id):
     try:
         player_dao.delete(id)
     except sqlite3.IntegrityError:

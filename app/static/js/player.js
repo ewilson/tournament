@@ -56,7 +56,7 @@ $(document).ready(function() {
 	e.preventDefault();
 	player_id = $(this).closest('.player-item').data('player_id');
         $.ajax({
-            url: $SCRIPT_ROOT + '/player-del/' + player_id,
+            url: $SCRIPT_ROOT + '/player/' + player_id,
             type: 'DELETE',
             dataType: 'json',  
             success: function(data) {
