@@ -47,7 +47,10 @@ NewPlayerView.prototype.clearInput = function() {
     $('#fname').val('');
 };
 
-var del = function(e) {
+var DelPlayerView = function() {
+    $('#players').on('click', '.del-link', this.delPlayer);
+};
+DelPlayerView.prototype.delPlayer = function(e) {
     e.preventDefault();
     player_id = $(this).closest('.player-item').data('player_id');
     $.ajax({
@@ -61,11 +64,9 @@ var del = function(e) {
     });
 }
 
-
 $(document).ready(function() {
     var players = new Players();
     new NewPlayerView({ players: players });
-
-    $('#players').on('click', '.del-link', del);
+    new DelPlayerView();
 
 });
