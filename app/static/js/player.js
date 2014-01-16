@@ -47,23 +47,25 @@ NewPlayerView.prototype.clearInput = function() {
     $('#fname').val('');
 };
 
+var del = function(e) {
+    e.preventDefault();
+    player_id = $(this).closest('.player-item').data('player_id');
+    $.ajax({
+        url: $SCRIPT_ROOT + '/player/' + player_id,
+        type: 'DELETE',
+        dataType: 'json',  
+        success: function(data) {
+	    var data_select = 'div[data-player_id=' + data.id + ']';
+	    $('.player-item').filter(data_select).remove();
+        }
+    });
+}
+
 
 $(document).ready(function() {
     var players = new Players();
     new NewPlayerView({ players: players });
 
-    $('#players').on('click', '.del-link', function(e) {
-	e.preventDefault();
-	player_id = $(this).closest('.player-item').data('player_id');
-        $.ajax({
-            url: $SCRIPT_ROOT + '/player/' + player_id,
-            type: 'DELETE',
-            dataType: 'json',  
-            success: function(data) {
-		var data_select = 'div[data-player_id=' + data.id + ']';
-		$('.player-item').filter(data_select).remove();
-            }
-        });
-    });
+    $('#players').on('click', '.del-link', del);
 
 });
