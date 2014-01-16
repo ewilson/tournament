@@ -9,9 +9,9 @@ Players.prototype.add = function(options) {
         success: options.success
     });
 };
-Players.prototype.delete = function(options) {
+Players.prototype.del = function(options) {
     $.ajax({
-        url: $SCRIPT_ROOT + '/player',
+        url: $SCRIPT_ROOT + '/player' + options.player_id,
         type: 'DELETE',
         dataType: 'json',
         data: { id: options.id },
