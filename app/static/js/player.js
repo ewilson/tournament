@@ -1,3 +1,12 @@
+var helloHandlebars = function() {
+    var source   = $("#entry-template").html();
+    var template = Handlebars.compile(source);
+
+    var context = {title: "My New Post", body: "This is my first post!"}
+    var html    = template(context);
+    console.log('adding html',html)
+    $('#handle').html(html);
+};
 var Players = function() {
 };
 Players.prototype.add = function(options) {
@@ -49,6 +58,7 @@ NewPlayerView.prototype.clearInput = function() {
 
 
 $(document).ready(function() {
+    helloHandlebars();
     var players = new Players();
     new NewPlayerView({ players: players });
 
