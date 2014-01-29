@@ -1,12 +1,3 @@
-var helloHandlebars = function() {
-    var source   = $("#entry-template").html();
-    var template = Handlebars.compile(source);
-
-    var context = {title: "My New Post", body: "This is my first post!"}
-    var html    = template(context);
-    console.log('adding html',html)
-    $('#handle').html(html);
-};
 var Players = function() {
 };
 Players.prototype.add = function(options) {
@@ -47,10 +38,10 @@ NewPlayerView.prototype.addPlayer = function(e) {
     });
 };
 NewPlayerView.prototype.appendPlayer = function(data) {
-    player = $(".player-item").first().clone();
-    player.find('.fname').text(data.fname);
-    player.attr('data-player_id',data.id);
-    player.appendTo("#players");
+    var playerTemplate = Handlebars.compile($("#player-template").html());
+    var playerData = {id: data.id, fname: data.fname}
+    var player = playerTemplate(playerData);
+    $('#players').append(player);
 };
 NewPlayerView.prototype.clearInput = function() {
     $('#fname').val('');
@@ -58,7 +49,6 @@ NewPlayerView.prototype.clearInput = function() {
 
 
 $(document).ready(function() {
-    helloHandlebars();
     var players = new Players();
     new NewPlayerView({ players: players });
 
