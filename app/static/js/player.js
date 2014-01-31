@@ -13,10 +13,9 @@ jQuery(function ($) {
 	},
 	remove: function(options) {
 	    $.ajax({
-		url: $SCRIPT_ROOT + '/player',
+		url: $SCRIPT_ROOT + '/player/' + options.player_id,
 		type: 'DELETE',
 		dataType: 'json',
-		data: { id: options.id },
 		success: options.success
 	    });
 	}
@@ -25,16 +24,22 @@ jQuery(function ($) {
     var App = {
         init: function () {
 	    this.playerTemplate = Handlebars.compile($("#player-template").html());
-	    this.$newPlayerForm = $('#new-player form');
             this.$players = $('#players');
 	    this.$fname = $('#fname');
-	    this.$players.on('click','.del-link',this.removePlayer);
-	    this.$newPlayerForm.submit(this.addPlayer);
+	    this.$players.on('click','.del-link',this.deletePlayer);
+	    $('#new-player form').submit(this.addPlayer);
         },
-	removePlayer: function(e) {
+	deletePlayer: function(e) {
 	    e.preventDefault();
-	    var player_id = $(this).closest('.player-item').data('player_id');
-	    $(this).closest('.player-item').remove();
+	    var player = $(this).closest('.player-item');
+	    var player_id = player.data('player_id');
+	    PlayerDao.remove({
+		player: player,
+		player_id: player_id,
+		success: function() {
+		    player.remove();
+		}
+	    });
         },
 	addPlayer: function(e) {
 	    e.preventDefault();
