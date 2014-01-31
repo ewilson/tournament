@@ -18,6 +18,14 @@ jQuery(function ($) {
 		dataType: 'json',
 		success: options.success
 	    });
+	},
+	list: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/player',
+		type: 'GET',
+		dataType: 'json',
+		success: options.success
+	    })
 	}
     };
 
@@ -28,7 +36,13 @@ jQuery(function ($) {
 	    this.$fname = $('#fname');
 	    this.$players.on('click','.del-link',this.deletePlayer);
 	    $('#new-player form').submit(this.addPlayer);
+	    this.getPlayers();
         },
+	getPlayers: function() {
+	    PlayerDao.list({
+		success: App.appendPlayers
+	    });
+	},
 	deletePlayer: function(e) {
 	    e.preventDefault();
 	    var player = $(this).closest('.player-item');
@@ -52,6 +66,11 @@ jQuery(function ($) {
 	    var player = App.playerTemplate(data);
 	    App.$players.append(player);
 	    App.$fname.val('');
+	},
+	appendPlayers: function(data) {
+	    $.each(data.players, function(i, player) {
+		App.appendPlayer(player);
+	    });
 	}
     };
     App.init();

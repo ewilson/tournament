@@ -6,17 +6,6 @@
     <div class="col-md-6">
       <h2>Current Players</h2>
       <ul class="list-group" id="players">
-        {% for player in players %}
-	  <div class="list-group-item list-unstyled player-item" 
-	       data-player_id="{{player.id}}">
-	    <li>
-	      <span class="fname">{{player.fname}}</span>
-	      <a href="#" class="del-link">
-		<span class="glyphicon glyphicon-trash pull-right"></span>
-	      </a>
-	    </li>
-	  </div>
-	{% endfor %}
       </ul>
     </div>
     <div class="col-md-6" id="new-player">

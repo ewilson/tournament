@@ -89,9 +89,7 @@ def undo_match(tourn_id, match_id):
 def player():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    players = player_dao.find_all()
-    return render_template('player.html', 
-                           players=players)
+    return render_template('player.html')
 
 @app.route('/api/player/<id>', methods = ['DELETE'])
 def delete_player(id):
@@ -103,11 +101,15 @@ def delete_player(id):
     else:
         return jsonify({'success':True, 'id':id})
 
-@app.route('/api/player', methods = ['POST'])
-def add_player():
-    fname = request.form['fname']
-    id = player_dao.create(Player(fname))
-    return jsonify({'id':id,'fname':fname})
+@app.route('/api/player', methods = ['GET','POST'])
+def api_player():
+    if request.method == 'POST':
+        fname = request.form['fname']
+        id = player_dao.create(Player(fname))
+        return jsonify({'id':id,'fname':fname})
+    elif request.method == 'GET':
+        players = player_dao.find_all()
+        return jsonify({'players':[p.__dict__ for p in players]})
 
 @app.route('/login' , methods = ['GET','POST'])
 def login():
