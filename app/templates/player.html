@@ -32,4 +32,19 @@
     </div>
   </div>
 </div>
+<div id='handle'></div>
+<script id="player-template" type="text/x-handlebars-template">
+  {% raw %}
+  <div class="list-group-item list-unstyled player-item" 
+       data-player_id="{{id}}">
+    <li>
+      <span class="fname">{{fname}}</span>
+      <a href="#" class="del-link">
+	<span class="glyphicon glyphicon-trash pull-right"></span>
+      </a>
+    </li>
+  </div>
+  {% endraw %}
+</script>
+
 {% endblock %}

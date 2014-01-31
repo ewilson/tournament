@@ -1,72 +1,54 @@
-var Players = function() {
-};
-Players.prototype.add = function(options) {
-    $.ajax({
-        url: $SCRIPT_ROOT + '/player',
-        type: 'POST',
-        dataType: 'json',
-        data: { fname: options.fname },
-        success: options.success
-    });
-};
-Players.prototype.del = function(options) {
-    $.ajax({
-        url: $SCRIPT_ROOT + '/player' + options.player_id,
-        type: 'DELETE',
-        dataType: 'json',
-        data: { id: options.id },
-        success: options.success
-    });
-};
+jQuery(function ($) {
+    'use strict';
 
-var NewPlayerView = function(options) {
-    this.players = options.players;
-    var add = $.proxy(this.addPlayer, this)
-    $('#new-player form').submit(add);
-};
-NewPlayerView.prototype.addPlayer = function(e) {
-    e.preventDefault();
+    var PlayerDao = {
+	add: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/player',
+		type: 'POST',
+		dataType: 'json',
+		data: { fname: options.fname },
+		success: options.success
+	    });
+	},
+	remove: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/player',
+		type: 'DELETE',
+		dataType: 'json',
+		data: { id: options.id },
+		success: options.success
+	    });
+	}
+    };
 
-    var that = this;
-
-    this.players.add({
-        fname: $('#fname').val(),
-        success: function(data) {
-	    that.appendPlayer(data);
-	    that.clearInput();
-        }
-    });
-};
-NewPlayerView.prototype.appendPlayer = function(data) {
-    player = $(".player-item").first().clone();
-    player.find('.fname').text(data.fname);
-    player.attr('data-player_id',data.id);
-    player.appendTo("#players");
-};
-NewPlayerView.prototype.clearInput = function() {
-    $('#fname').val('');
-};
-
-var DelPlayerView = function() {
-    $('#players').on('click', '.del-link', this.delPlayer);
-};
-DelPlayerView.prototype.delPlayer = function(e) {
-    e.preventDefault();
-    player_id = $(this).closest('.player-item').data('player_id');
-    $.ajax({
-        url: $SCRIPT_ROOT + '/player/' + player_id,
-        type: 'DELETE',
-        dataType: 'json',  
-        success: function(data) {
-	    var data_select = 'div[data-player_id=' + data.id + ']';
-	    $('.player-item').filter(data_select).remove();
-        }
-    });
-}
-
-$(document).ready(function() {
-    var players = new Players();
-    new NewPlayerView({ players: players });
-    new DelPlayerView();
-
+    var App = {
+        init: function () {
+	    this.playerTemplate = Handlebars.compile($("#player-template").html());
+	    this.$newPlayerForm = $('#new-player form');
+            this.$players = $('#players');
+	    this.$fname = $('#fname');
+	    this.$players.on('click','.del-link',this.removePlayer);
+	    this.$newPlayerForm.submit(this.addPlayer);
+        },
+	removePlayer: function(e) {
+	    e.preventDefault();
+	    var player_id = $(this).closest('.player-item').data('player_id');
+	    $(this).closest('.player-item').remove();
+        },
+	addPlayer: function(e) {
+	    e.preventDefault();
+	    PlayerDao.add({
+		fname: App.$fname.val(),
+		success: App.appendPlayer
+	    });
+        },
+	appendPlayer: function(data) {
+	    var player = App.playerTemplate(data);
+	    App.$players.append(player);
+	    App.$fname.val('');
+	}
+    };
+    App.init();
 });
+
