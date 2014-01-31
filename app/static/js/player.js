@@ -1,4 +1,4 @@
-jQuery(function ($) {
+jQuery(functpppion ($) {
     'use strict';
 
     var PlayerDao = {
@@ -38,13 +38,15 @@ jQuery(function ($) {
         },
 	addPlayer: function(e) {
 	    e.preventDefault();
-	    var fname = App.$fname.val()
-	    App.appendPlayer({id:100, fname: fname});
-	    App.$fname.val('');
+	    PlayerDao.add({
+		fname: App.$fname.val(),
+		success: App.appendPlayer
+	    });
         },
 	appendPlayer: function(data) {
 	    var player = App.playerTemplate(data);
 	    App.$players.append(player);
+	    App.$fname.val('');
 	}
     };
     App.init();
