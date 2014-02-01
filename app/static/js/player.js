@@ -18,9 +18,8 @@ jQuery(function ($) {
 		dataType: 'json',
 		success: options.success,
 		error: function(jqXHR,textStatus,errorThrown) {
-		    console.log(jqXHR.responseText);
-//		    var errorAlert = App.errorTemplate(jqXHR.responseText);
-		    var errorAlert = App.errorTemplate({'message':'My Message'});
+		    var responseObj = $.parseJSON(jqXHR.responseText);
+		    var errorAlert = App.errorTemplate(responseObj);
 		    App.$errorContainer.append(errorAlert);
 		}
 	    });
