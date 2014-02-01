@@ -16,7 +16,13 @@ jQuery(function ($) {
 		url: $SCRIPT_ROOT + '/player/' + options.player_id,
 		type: 'DELETE',
 		dataType: 'json',
-		success: options.success
+		success: options.success,
+		error: function(jqXHR,textStatus,errorThrown) {
+		    console.log(jqXHR.responseText);
+//		    var errorAlert = App.errorTemplate(jqXHR.responseText);
+		    var errorAlert = App.errorTemplate({'message':'My Message'});
+		    App.$errorContainer.append(errorAlert);
+		}
 	    });
 	},
 	list: function(options) {
@@ -32,7 +38,9 @@ jQuery(function ($) {
     var App = {
         init: function () {
 	    this.playerTemplate = Handlebars.compile($("#player-template").html());
+	    this.errorTemplate = Handlebars.compile($("#error-template").html());
 	    this.$page = $('.container');
+	    this.$errorContainer = $('#errorContainer');
             this.$players = $('#players');
 	    this.$fname = $('#fname');
 	    this.$players.on('click','.del-link',this.deletePlayer);
