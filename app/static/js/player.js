@@ -17,11 +17,7 @@ jQuery(function ($) {
 		type: 'DELETE',
 		dataType: 'json',
 		success: options.success,
-		error: function(jqXHR,textStatus,errorThrown) {
-		    var responseObj = $.parseJSON(jqXHR.responseText);
-		    var errorAlert = App.errorTemplate(responseObj);
-		    App.$errorContainer.append(errorAlert);
-		}
+		error: options.error
 	    });
 	},
 	list: function(options) {
@@ -61,7 +57,8 @@ jQuery(function ($) {
 		player_id: player_id,
 		success: function() {
 		    player.remove();
-		}
+		},
+		error: App.displayError
 	    });
         },
 	addPlayer: function(e) {
@@ -83,6 +80,11 @@ jQuery(function ($) {
 	},
 	removeDiv: function(data) {
 	    $(this).closest('div').remove();
+	},
+	displayError: function(jqXHR) {
+	    var responseObj = $.parseJSON(jqXHR.responseText);
+	    var errorAlert = App.errorTemplate(responseObj);
+	    App.$errorContainer.append(errorAlert);
 	}
     };
     App.init();

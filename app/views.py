@@ -104,12 +104,18 @@ def delete_player(id):
 @app.route('/api/player', methods = ['GET','POST'])
 def api_player():
     if request.method == 'POST':
-        fname = request.form['fname']
-        id = player_dao.create(Player(fname))
-        return jsonify({'id':id,'fname':fname})
+        return _post_player(request)
     elif request.method == 'GET':
-        players = player_dao.find_all()
-        return jsonify({'players':[p.__dict__ for p in players]})
+        return _get_player()
+
+def _post_player(request):
+    fname = request.form['fname']
+    id = player_dao.create(Player(fname))
+    return jsonify({'id':id,'fname':fname})
+
+def _get_player():
+    players = player_dao.find_all()
+    return jsonify({'players':[p.__dict__ for p in players]})
 
 @app.route('/login' , methods = ['GET','POST'])
 def login():
