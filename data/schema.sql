@@ -18,7 +18,7 @@ create table match (
 drop table if exists player;
 create table player (
        id integer primary key autoincrement,
-       fname text not null
+       fname text unique not null
 );
 
 -- "attempt" could be called player_match

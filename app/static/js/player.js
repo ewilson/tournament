@@ -8,7 +8,8 @@ jQuery(function ($) {
 		type: 'POST',
 		dataType: 'json',
 		data: { fname: options.fname },
-		success: options.success
+		success: options.success,
+		error: options.error
 	    });
 	},
 	remove: function(options) {
@@ -65,7 +66,8 @@ jQuery(function ($) {
 	    e.preventDefault();
 	    PlayerDao.add({
 		fname: App.$fname.val(),
-		success: App.appendPlayer
+		success: App.appendPlayer,
+		error: App.displayError
 	    });
         },
 	appendPlayer: function(data) {
