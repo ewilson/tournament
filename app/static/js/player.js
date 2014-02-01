@@ -32,9 +32,11 @@ jQuery(function ($) {
     var App = {
         init: function () {
 	    this.playerTemplate = Handlebars.compile($("#player-template").html());
+	    this.$page = $('.container');
             this.$players = $('#players');
 	    this.$fname = $('#fname');
 	    this.$players.on('click','.del-link',this.deletePlayer);
+	    this.$page.on('click','.glyphicon-remove-circle',this.removeDiv);
 	    $('#new-player form').submit(this.addPlayer);
 	    this.getPlayers();
         },
@@ -71,6 +73,9 @@ jQuery(function ($) {
 	    $.each(data.players, function(i, player) {
 		App.appendPlayer(player);
 	    });
+	},
+	removeDiv: function(data) {
+	    $(this).closest('div').remove();
 	}
     };
     App.init();
