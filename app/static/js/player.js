@@ -64,16 +64,21 @@ jQuery(function ($) {
         },
 	addPlayer: function(e) {
 	    e.preventDefault();
-	    PlayerDao.add({
-		fname: App.$fname.val(),
-		success: App.appendPlayer,
-		error: App.displayError
-	    });
+	    var name = App.$fname.val().trim();
+	    if (name) {
+		PlayerDao.add({
+		    fname: name,
+		    success: App.appendPlayer,
+		    error: App.displayError
+		});
+		App.$fname.val('');
+	    } else {
+		alert('Name field is required.');
+	    }
         },
 	appendPlayer: function(data) {
 	    var player = App.playerTemplate(data);
 	    App.$players.append(player);
-	    App.$fname.val('');
 	},
 	appendPlayers: function(data) {
 	    $.each(data.players, function(i, player) {

@@ -113,7 +113,7 @@ def _post_player(request):
         fname = request.form['fname']
         id = player_dao.create(Player(fname))
     except sqlite3.IntegrityError:
-        message = "Players must have unique name."
+        message = "Player name must be unique."
         return jsonify({'success':False, 'message':message}),409
     else:
         return jsonify({'id':id,'fname':fname})
