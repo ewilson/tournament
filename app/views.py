@@ -23,7 +23,7 @@ def index():
 def post_tournament():
     try:
         description = request.form['description']
-        tourn_type = request.form['tourn_type']
+        tourn_type = ''
         id = tourney.create_tournament(description, tourn_type)
     except sqlite3.IntegrityError:
         message = "DB ERROR!"
