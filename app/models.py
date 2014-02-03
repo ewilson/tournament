@@ -17,7 +17,7 @@ class Player(object):
         self.id = id
         self.fname = fname
     
-    def __repr__(self):
+    def __str__(self):
         return '<(%d)%s>' % (self.id, self.fname)
 
 class Match(object):

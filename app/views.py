@@ -1,8 +1,9 @@
 from flask import render_template, redirect, session, g, request, url_for
+from flask import jsonify
 import sqlite3
 import config
 from app import app
-from forms import TournForm, PlayerForm, TourneyEntryForm, MatchForm
+from forms import TournForm, TourneyEntryForm, MatchForm
 from models import Player, Standing
 import tournament_dao, player_dao, match_dao, tourney
 
@@ -84,19 +85,42 @@ def undo_match(tourn_id, match_id):
     tourney.undo_match(match_id)
     return redirect(url_for('play_tournament',id=tourn_id))
 
-@app.route('/player', methods = ['GET','POST'])
+@app.route('/player')
 def player():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    form = PlayerForm()
-    if form.validate_on_submit():
-        player = Player(form.fname.data)
-        player_dao.create(player)
-        form.fname.data = ''
+    return render_template('player.html')
+
+@app.route('/api/player/<id>', methods = ['DELETE'])
+def delete_player(id):
+    try:
+        player_dao.delete(id)
+    except sqlite3.IntegrityError:
+        message = "Players in tournaments cannot be deleted."
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return jsonify({'success':True, 'id':id})
+
+@app.route('/api/player', methods = ['GET','POST'])
+def api_player():
+    if request.method == 'POST':
+        return _post_player(request)
+    elif request.method == 'GET':
+        return _get_player()
+
+def _post_player(request):
+    try:
+        fname = request.form['fname']
+        id = player_dao.create(Player(fname))
+    except sqlite3.IntegrityError:
+        message = "Player name must be unique."
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return jsonify({'id':id,'fname':fname})
+
+def _get_player():
     players = player_dao.find_all()
-    return render_template('player.html', 
-                           players=players,
-                           form=form)
+    return jsonify({'players':[p.__dict__ for p in players]})
 
 @app.route('/login' , methods = ['GET','POST'])
 def login():
