@@ -88,7 +88,9 @@ jQuery(function ($) {
 	    });
 	},
 	removeError: function() {
-	    $("#errorMsg").remove();
+	    $("#errorMsg").fadeOut(function() {
+		$(this).remove(); // need to remove after fadeOut
+	    });
 	},
 	displayError: function(jqXHR) {
 	    var responseObj = $.parseJSON(jqXHR.responseText);
