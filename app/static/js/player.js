@@ -38,10 +38,12 @@ jQuery(function ($) {
 	    this.$page = $('.container');
 	    this.$errorContainer = $('#errorContainer');
             this.$players = $('#players');
+	    this.$newPlayerForm = $('#new-player form');
 	    this.$fname = $('#fname');
 	    this.$players.on('click','.del-link',this.deletePlayer);
-	    this.$page.on('click','.glyphicon-remove-circle',this.removeDiv);
-	    $('#new-player form').submit(this.addPlayer);
+	    this.$page.on('click','.glyphicon-remove',this.removeError);
+	    this.$newPlayerForm.submit(this.addPlayer);
+	    this.$newPlayerForm.on('focus','input',this.removeError);
 	    this.getPlayers();
         },
 	getPlayers: function() {
@@ -85,8 +87,8 @@ jQuery(function ($) {
 		App.appendPlayer(player);
 	    });
 	},
-	removeDiv: function(data) {
-	    $(this).closest('div').remove();
+	removeError: function() {
+	    $("#errorMsg").remove();
 	},
 	displayError: function(jqXHR) {
 	    var responseObj = $.parseJSON(jqXHR.responseText);
