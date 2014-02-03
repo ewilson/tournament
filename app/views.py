@@ -1,6 +1,6 @@
 from flask import render_template, redirect, session, g, request, url_for
 from flask import jsonify
-import sqlite3
+import sqlite3, logging
 import config
 from app import app
 from forms import TournForm, TourneyEntryForm, MatchForm
@@ -44,6 +44,7 @@ def tournament(id):
 
 @app.route('/play-tournament/<id>', methods = ['GET','POST'])
 def play_tournament(id):
+    logging.debug('Play tourney: ' + str(id))
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     form = MatchForm()
