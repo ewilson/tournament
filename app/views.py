@@ -3,25 +3,33 @@ from flask import jsonify
 import sqlite3, logging
 import config
 from app import app
-from forms import TournForm, TourneyEntryForm, MatchForm
+from forms import TourneyEntryForm, MatchForm
 from models import Player, Standing
 import tournament_dao, player_dao, match_dao, tourney
 
-@app.route('/', methods = ['GET','POST'])
+
+@app.route('/', methods = ['GET'])
 def index():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    form = TournForm()
-    if form.validate_on_submit():
-        tourney.create_tournament(form.description.data,form.tourn_type.data)
-        form.description.data = ''
-        form.tourn_type.data = ''
     model = {'new_tournaments':tournament_dao.find_all_by_status(0),
               'active_tournaments':tournament_dao.find_all_by_status(1),
               'completed_tournaments':tournament_dao.find_all_by_status(2)}
     return render_template('index.html', 
-                           model=model,
-                           form=form)
+                           model=model)
+
+
+@app.route('/api/tournament', methods = ['POST'])
+def post_tournament():
+    try:
+        description = request.form['description']
+        tourn_type = request.form['tourn_type']
+        id = tourney.create_tournament(description, tourn_type)
+    except sqlite3.IntegrityError:
+        message = "DB ERROR!"
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return jsonify({'id':id,'description':description})
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
