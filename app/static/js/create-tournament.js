@@ -35,6 +35,7 @@ jQuery(function ($) {
 	    this.$page = $('.container');
 	    this.$newTournamentForm = $('.form');
 	    this.$description = $('#description');
+	    this.$newTourneys = $('#New');
 	    this.$newTournamentForm.submit(this.createTournament);
         },
 	createTournament: function(e) {
@@ -52,7 +53,7 @@ jQuery(function ($) {
 	    }
         },
 	appendNewTournament: function(data) {
-	    Page.$players.append('Hello');
+	    Page.$newTourneys.append('Hello');
 	}
     };
     Page.init();

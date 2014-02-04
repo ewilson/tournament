@@ -9,6 +9,7 @@
   <div class="row">
     <div class="col-md-6">
       {% for label, tournaments in pairs %}
+      <div id="{{ label }}">
 	{% if tournaments %}
 	  <h2>{{label}} Tournaments</h2>
 	  {% for tournament in tournaments %}
@@ -22,6 +23,7 @@
 	    </div>
 	  {% endfor %}
 	{% endif %}
+      </div>
       {% endfor %}
     </div>
     <div class="col-md-6">
