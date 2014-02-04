@@ -39,5 +39,16 @@
     </div>
   </div>
 </div>
-
+{% raw %}
+<script id="tournament-template" type="text/x-handlebars-template">
+  <div class="well well-sm">
+    <a href="/tournament/{{id}}">
+      {{description}} started on {{start_date}}
+    </a>
+    <a href="/tournament/delete/{{id}}">
+      <span class="glyphicon glyphicon-trash pull-right"></span>
+    </a>
+  </div>
+</script>
+{% endraw %}
 {% endblock %}
