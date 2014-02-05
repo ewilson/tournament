@@ -9,21 +9,23 @@
   <div class="row">
     <div class="col-md-6">
       {% for label, tournaments in pairs %}
-      <div id="{{ label }}">
+      <ul class="list-group" id="{{ label }}">
 	{% if tournaments %}
 	  <h2>{{label}} Tournaments</h2>
 	  {% for tournament in tournaments %}
-	    <div class="well well-sm tourney-item">
-	      <a href="{{url_for('tournament', id = tournament.id)}}">
-		{{tournament.description}} started on {{tournament.start_date}}
-	      </a>
-	      <a href="#" class="del-link">
-		<span class="glyphicon glyphicon-trash pull-right"></span>
-	      </a>
+	    <div class="list-group-item list-unstyled tourney-item">
+	      <li>
+		<a href="{{url_for('tournament', id = tournament.id)}}">
+		  {{tournament.description}} started on {{tournament.start_date}}
+		</a>
+		<a href="#" class="del-link">
+		  <span class="glyphicon glyphicon-trash pull-right"></span>
+		</a>
+	      </li>
 	    </div>
 	  {% endfor %}
 	{% endif %}
-      </div>
+      </ul>
       {% endfor %}
     </div>
     <div class="col-md-6">
@@ -41,13 +43,15 @@
 </div>
 {% raw %}
 <script id="tournament-template" type="text/x-handlebars-template">
-  <div class="well well-sm tourney-item" data-tourney_id="{{id}}">
-    <a href="/tournament/{{id}}">
-      {{description}} started on {{start_date}}
-    </a>
-    <a href="#" class="del-link">
-      <span class="glyphicon glyphicon-trash pull-right"></span>
-    </a>
+  <div class="list-group-item list-unstyled tourney-item" data-tourney_id="{{id}}">
+    <li>
+      <a href="/tournament/{{id}}">
+	{{description}} started on {{start_date}}
+      </a>
+      <a href="#" class="del-link">
+	<span class="glyphicon glyphicon-trash pull-right"></span>
+      </a>
+    </li>
   </div>
 </script>
 {% endraw %}
