@@ -46,8 +46,7 @@ jQuery(function ($) {
 	    TournamentDao.remove({
 		tournament_id: tournament_id,
 		success: function() {
-//		    tournament.remove();
-		    alert('deleting');
+		    tournament.remove();
 		}
 	    });
         },
