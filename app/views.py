@@ -31,6 +31,16 @@ def post_tournament():
     else:
         return jsonify(tournament.__dict__)
 
+@app.route('/api/tournament/<id>', methods = ['DELETE'])
+def delete_tournament2(id):
+    try:
+        tournament_dao.delete(id)
+    except sqlite3.IntegrityError:
+        message = "ERROR!"
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return jsonify({'success':True, 'id':id})
+
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):
     if not session.get('logged_in'):

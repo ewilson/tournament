@@ -42,7 +42,7 @@ jQuery(function ($) {
 	deleteTourney: function(e) {
 	    e.preventDefault();
 	    var tournament = $(this).closest('.tourney-item');
-	    var tourney_id = player.data('tourney_id');
+	    var tournament_id = tournament.data('tourney_id');
 	    TournamentDao.remove({
 		tournament_id: tournament_id,
 		success: function() {
