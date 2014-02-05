@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% set pairs = [('New',model['new_tournaments']),
-                ('Active',model['active_tournaments']),
+{% set pairs = [('Active',model['active_tournaments']),
                 ('Completed',model['completed_tournaments'])] %}
 <script src="/static/js/create-tournament.js"></script>
 <div class="container">
   <div class="row">
     <div class="col-md-6">
+      <ul class="list-group" id="New">
+      </ul>
       {% for label, tournaments in pairs %}
       <ul class="list-group" id="{{ label }}">
 	{% if tournaments %}
