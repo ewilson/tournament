@@ -22,7 +22,7 @@ def update_match(match_id, player1_id, player2_id, score1, score2):
 
 def create_tournament(description,tourn_type):
     tournament = Tournament(0,'',description,tourn_type,0)
-    tournament_dao.create(tournament)
+    return tournament_dao.create(tournament)
 
 def find_standings(tournament_id):
     standings = standings_dao.find(tournament_id)

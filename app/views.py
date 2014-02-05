@@ -24,12 +24,12 @@ def post_tournament():
     try:
         description = request.form['description']
         tourn_type = ''
-        id = tourney.create_tournament(description, tourn_type)
+        tournament = tourney.create_tournament(description, tourn_type)
     except sqlite3.IntegrityError:
         message = "DB ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify({'id':id,'description':description})
+        return jsonify(tournament.__dict__)
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):

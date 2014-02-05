@@ -17,6 +17,15 @@ def g():
     fG = FakeG()
     tournament_dao.g = fG
 
+def test_create_tournament(g):
+    t = Tournament(0,description='test-tourn')
+
+    created_t = tournament_dao.create(t)
+
+    assert t.description == created_t.description
+    assert created_t.start_date != None
+    assert created_t.id == 1
+
 def test_create_and_find_tournament(g):
     t = Tournament(0,description='test-tourn')
 
