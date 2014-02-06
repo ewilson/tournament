@@ -7,11 +7,11 @@
 ## Vendor Conventions ##
 
 # Bootstrap 
-- app/static/css/bootstrap.*.(js|css)$
+- static.*bootstrap.*.(js|css)$
 
 # jQuery
-- app/static/js/jquery.*.js$
+- static.*jquery.*.js$
 
 # Handlebars
-- handlebars.*.js$
+- static.*handlebars.*.js$
 

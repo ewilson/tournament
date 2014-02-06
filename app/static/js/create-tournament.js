@@ -34,12 +34,13 @@ jQuery(function ($) {
 	    this.$page = $('.container');
 	    this.$newTournamentForm = $('.form');
 	    this.$description = $('#description');
+	    this.$tourneys = $('.tourneys');
 	    this.$newTourneys = $('#new-tournaments');
 	    this.$activeTourneys = $('#active-tournaments');
 	    this.$completedTourneys = $('#completed-tournaments');
 	    this.$tournamentTemplate = Handlebars.compile($("#tournament-template").html());
 	    this.$newTournamentForm.submit(this.createTournament);
-	    this.$newTourneys.on('click','.del-link',this.deleteTourney);
+	    this.$tourneys.on('click','.del-link',this.deleteTourney);
 	    this.getNewTournaments();
 	    this.getActiveTournaments();
 	    this.getCompletedTournaments();
@@ -70,12 +71,17 @@ jQuery(function ($) {
 	},
 	deleteTourney: function(e) {
 	    e.preventDefault();
-	    var tournament = $(this).closest('.tourney-item');
-	    var tournament_id = tournament.data('tourney_id');
-	    TournamentDao.remove({
-		tournament_id: tournament_id,
-		success: function() {
-		    tournament.remove();
+	    var that = $(this);
+	    bootbox.confirm('Are you sure? There is no undelete!', function(value) {
+		if (value) {		
+		    var tournament = that.closest('.tourney-item');
+		    var tournament_id = tournament.data('tourney_id');
+		    TournamentDao.remove({
+			tournament_id: tournament_id,
+			success: function() {
+			    tournament.remove();
+			}
+		    });
 		}
 	    });
         },
