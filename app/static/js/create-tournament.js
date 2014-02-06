@@ -47,19 +47,25 @@ jQuery(function ($) {
 	getNewTournaments: function() {
 	    TournamentDao.findByStatus({
 		status: 0,
-		success: Page.appendNewTournaments
+		success: function(data) {
+		    Page.appendTournaments(data, Page.$newTourneys);
+		}
 	    });
 	},
 	getActiveTournaments: function() {
 	    TournamentDao.findByStatus({
 		status: 1,
-		success: Page.appendActiveTournaments
+		success: function(data) {
+		    Page.appendTournaments(data, Page.$activeTourneys);
+		}
 	    });
 	},
 	getCompletedTournaments: function() {
 	    TournamentDao.findByStatus({
 		status: 2,
-		success: Page.appendCompletedTournaments
+		success: function(data) {
+		    Page.appendTournaments(data, Page.$completedTourneys);
+		}
 	    });
 	},
 	deleteTourney: function(e) {
@@ -91,21 +97,10 @@ jQuery(function ($) {
 	    var tourney = Page.$tournamentTemplate(data)
 	    Page.$newTourneys.append(tourney);
 	},
-	appendNewTournaments: function(data) {
-	    $.each(data.tournaments, function(i, tournament) {
-		Page.appendNewTournament(tournament);
-	    });
-	},
-	appendActiveTournaments: function(data) {
+	appendTournaments: function(data, div) {
 	    $.each(data.tournaments, function(i, tournament) {
 		var tourney = Page.$tournamentTemplate(tournament)
-		Page.$activeTourneys.append(tourney);
-	    });
-	},
-	appendCompletedTournaments: function(data) {
-	    $.each(data.tournaments, function(i, tournament) {
-		var tourney = Page.$tournamentTemplate(tournament)
-		Page.$completedTourneys.append(tourney);
+		div.append(tourney);
 	    });
 	}
     };
