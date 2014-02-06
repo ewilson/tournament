@@ -19,9 +19,9 @@ jQuery(function ($) {
 		success: options.success
 	    });
 	},
-	list: function(options) {
+	findByStatus: function(options) {
 	    $.ajax({
-		url: $SCRIPT_ROOT + '/player',
+		url: $SCRIPT_ROOT + '/tournament/status/' + options.status,
 		type: 'GET',
 		dataType: 'json',
 		success: options.success
@@ -34,11 +34,18 @@ jQuery(function ($) {
 	    this.$page = $('.container');
 	    this.$newTournamentForm = $('.form');
 	    this.$description = $('#description');
-	    this.$newTourneys = $('#New');
+	    this.$newTourneys = $('#new-tournaments');
 	    this.$tournamentTemplate = Handlebars.compile($("#tournament-template").html());
 	    this.$newTournamentForm.submit(this.createTournament);
 	    this.$newTourneys.on('click','.del-link',this.deleteTourney);
+	    this.getNewTournaments();
         },
+	getNewTournaments: function() {
+	    TournamentDao.findByStatus({
+		status: 0,
+		success: Page.appendNewTournaments
+	    });
+	},
 	deleteTourney: function(e) {
 	    e.preventDefault();
 	    var tournament = $(this).closest('.tourney-item');
@@ -67,6 +74,11 @@ jQuery(function ($) {
 	appendNewTournament: function(data) {
 	    var tourney = Page.$tournamentTemplate(data)
 	    Page.$newTourneys.append(tourney);
+	},
+	appendNewTournaments: function(data) {
+	    $.each(data.new_tournaments, function(i, tournament) {
+		Page.appendNewTournament(tournament);
+	    });
 	}
     };
     Page.init();
