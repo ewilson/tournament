@@ -34,7 +34,7 @@ def post_tournament():
 @app.route('/api/tournament/status/<status>', methods = ['GET'])
 def get_new_tournaments(status):
     tourneys = tournament_dao.find_all_by_status(status)
-    return jsonify({'new_tournaments':[t.__dict__ for t in tourneys]})
+    return jsonify({'tournaments':[t.__dict__ for t in tourneys]})
 
 @app.route('/api/tournament/<id>', methods = ['DELETE'])
 def delete_tournament2(id):

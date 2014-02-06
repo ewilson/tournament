@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% set pairs = [('Active',model['active_tournaments']),
-                ('Completed',model['completed_tournaments'])] %}
+{% set pairs = [('Completed',model['completed_tournaments'])] %}
 <script src="/static/js/create-tournament.js"></script>
 <div class="container">
   <div class="row">
     <div class="col-md-6">
       <ul class="list-group" id="new-tournaments">
-	<h2> New Tournaments</h2>
+	<h2>New Tournaments</h2>
+      </ul>
+      <ul class="list-group" id="active-tournaments">
+	<h2>Active Tournaments</h2>
       </ul>
       {% for label, tournaments in pairs %}
       <ul class="list-group" id="{{ label }}">
