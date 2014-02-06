@@ -10,11 +10,7 @@ import tournament_dao, player_dao, match_dao, tourney
 def index():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    model = {'new_tournaments':tournament_dao.find_all_by_status(0),
-              'active_tournaments':tournament_dao.find_all_by_status(1),
-              'completed_tournaments':tournament_dao.find_all_by_status(2)}
-    return render_template('index.html', 
-                           model=model)
+    return render_template('index.html')
 
 @app.route('/tournament/<id>', methods = ['GET','POST'])
 def tournament(id):

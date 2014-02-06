@@ -36,11 +36,13 @@ jQuery(function ($) {
 	    this.$description = $('#description');
 	    this.$newTourneys = $('#new-tournaments');
 	    this.$activeTourneys = $('#active-tournaments');
+	    this.$completedTourneys = $('#completed-tournaments');
 	    this.$tournamentTemplate = Handlebars.compile($("#tournament-template").html());
 	    this.$newTournamentForm.submit(this.createTournament);
 	    this.$newTourneys.on('click','.del-link',this.deleteTourney);
 	    this.getNewTournaments();
 	    this.getActiveTournaments();
+	    this.getCompletedTournaments();
         },
 	getNewTournaments: function() {
 	    TournamentDao.findByStatus({
@@ -52,6 +54,12 @@ jQuery(function ($) {
 	    TournamentDao.findByStatus({
 		status: 1,
 		success: Page.appendActiveTournaments
+	    });
+	},
+	getCompletedTournaments: function() {
+	    TournamentDao.findByStatus({
+		status: 2,
+		success: Page.appendCompletedTournaments
 	    });
 	},
 	deleteTourney: function(e) {
@@ -92,6 +100,12 @@ jQuery(function ($) {
 	    $.each(data.tournaments, function(i, tournament) {
 		var tourney = Page.$tournamentTemplate(tournament)
 		Page.$activeTourneys.append(tourney);
+	    });
+	},
+	appendCompletedTournaments: function(data) {
+	    $.each(data.tournaments, function(i, tournament) {
+		var tourney = Page.$tournamentTemplate(tournament)
+		Page.$completedTourneys.append(tourney);
 	    });
 	}
     };
