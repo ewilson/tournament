@@ -28,7 +28,10 @@ def create(tourn):
         values (date('now'), ?, ?, 0)"""
     logging.debug(insert_tournament)
     g.db.execute(insert_tournament, [tourn.tourn_type, tourn.description])
+    cur = g.db.execute('select last_insert_rowid() from tournament')
+    id = cur.fetchone()[0]
     g.db.commit()
+    return find(id)
 
 def delete(id):
     delete = "delete from tournament where id = ?"

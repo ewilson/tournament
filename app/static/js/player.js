@@ -34,9 +34,7 @@ jQuery(function ($) {
     var App = {
         init: function () {
 	    this.playerTemplate = Handlebars.compile($("#player-template").html());
-	    this.errorTemplate = Handlebars.compile($("#error-template").html());
 	    this.$page = $('.container');
-	    this.$errorContainer = $('#errorContainer');
             this.$players = $('#players');
 	    this.$newPlayerForm = $('#new-player form');
 	    this.$fname = $('#fname');
@@ -75,7 +73,7 @@ jQuery(function ($) {
 		});
 		App.$fname.val('');
 	    } else {
-		alert('Name field is required.');
+		bootbox.alert('Name field is required.');
 	    }
         },
 	appendPlayer: function(data) {
@@ -94,8 +92,7 @@ jQuery(function ($) {
 	},
 	displayError: function(jqXHR) {
 	    var responseObj = $.parseJSON(jqXHR.responseText);
-	    var errorAlert = App.errorTemplate(responseObj);
-	    App.$errorContainer.append(errorAlert);
+	    bootbox.alert(responseObj.message);
 	}
     };
     App.init();

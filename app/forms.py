@@ -3,10 +3,6 @@ from wtforms import TextField, BooleanField, SelectMultipleField, HiddenField
 from wtforms.widgets import CheckboxInput, ListWidget
 from wtforms.validators import Required
 
-class TournForm(Form):
-    description = TextField('description', validators=[Required()])
-    tourn_type = TextField('tourn_type')
-
 class TourneyEntryForm(Form):
     enter = SelectMultipleField(
         'Enter',
