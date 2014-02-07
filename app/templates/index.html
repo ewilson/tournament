@@ -6,13 +6,19 @@
   <div class="row">
     <div class="col-md-6">
       <ul class="list-group tourneys" id="new-tournaments">
-	<h2>New Tournaments</h2>
+	<li class="list-group-item list-group-item-info">
+	  <h3 class="list-group-item-heading">New Tournaments</h3>
+	</li>
       </ul>
       <ul class="list-group tourneys" id="active-tournaments">
-	<h2>Active Tournaments</h2>
+	<li class="list-group-item list-group-item-info">
+	  <h3 class="list-group-item-heading">Active Tournaments</h3>
+	</li>
       </ul>
       <ul class="list-group tourneys" id="completed-tournaments">
-	<h2>Completed Tournaments</h2>
+	<li class="list-group-item list-group-item-info">
+	  <h3 class="list-group-item-heading">Completed Tournaments</h3>
+	</li>
       </ul>
     </div>
     <div class="col-md-6">
@@ -30,16 +36,14 @@
 </div>
 {% raw %}
 <script id="tournament-template" type="text/x-handlebars-template">
-  <div class="list-group-item list-unstyled tourney-item" data-tourney_id="{{id}}">
-    <li>
-      <a href="/tournament/{{id}}">
-	{{description}} started on {{start_date}}
-      </a>
-      <a href="#" class="del-link">
-	<span class="glyphicon glyphicon-trash pull-right"></span>
-      </a>
-    </li>
-  </div>
+  <li class="list-group-item list-unstyled tourney-item" data-tourney_id="{{id}}">
+    <a href="/tournament/{{id}}">
+      {{description}} started on {{start_date}}
+    </a>
+    <a href="#" class="del-link">
+      <span class="glyphicon glyphicon-trash pull-right"></span>
+    </a>
+  </li>
 </script>
 {% endraw %}
 {% endblock %}
