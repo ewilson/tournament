@@ -109,6 +109,9 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 def connect_db():
     return sqlite3.connect(config.DATABASE)
