@@ -21,11 +21,8 @@ def tournament(id):
         return redirect(url_for('conclude_tournament',id=id))
     form = TourneyEntryForm()
     if not tournament.status and not form.is_submitted():
-        players = player_dao.find_all()
-        form.enter.choices = [(player.id, player.fname) for player in players]
         return render_template('edit-tournament.html', 
                                tournament=tournament,
-                               players=players,
                                form=form)
     if form.is_submitted():
         tourney.setup_round_robin(form.enter.data, id)
