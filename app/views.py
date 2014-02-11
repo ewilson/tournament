@@ -58,13 +58,6 @@ def conclude_tournament(id):
     model['standings'] = tourney.find_standings(id)
     return render_template('completed-tournament.html',model=model)
 
-@app.route('/tournament/delete/<id>')
-def delete_tournament(id):
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    tournament_dao.delete(id)
-    return redirect('/')
-
 @app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
 def undo_match(tourn_id, match_id):
     if not session.get('logged_in'):
