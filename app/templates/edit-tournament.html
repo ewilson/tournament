@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
+<script src="/static/js/dao.js"></script>
+<script src="/static/js/edit-tournament.js"></script>
 <div class="container">
 <h1>{{tournament.description}}</h1>
-  {% if players %}
-    <form action="{{tournament.id}}" method="post" name="entries">
-      {{form.hidden_tag()}}
-      <h3>Add Players</h3>
-    <!--  {{form.enter}}-->
-      {% for player in players %}
-        <div class="checkbox">        
-          <label for="enter-{{player.id}}">{{ player.fname }}</label> 
-	  <input id="enter-{{player.id}}" name="enter" type="checkbox" 
-		 value="{{player.id}}">
-	</div>
-      {% endfor %}
-      <p><button type="submit" class="btn btn-primary">Add</button></p>
-    </form>
-  {% else %}
-    <h2>No players to add</h2>
-    <p>Maybe you want to <a href={{url_for('player')}}>add some</a>?
-  {% endif %}
+<form action="{{tournament.id}}" method="post" name="entries">
+  {{form.hidden_tag()}}
+  <h3>Add Players</h3>
+  <div class="player-list"></div>
+  <p><button type="submit" class="btn btn-primary">Add</button></p>
+</form>
 </div>
+{% raw %}
+<script id="add-player-template" type="text/x-handlebars-template">
+  <div class="checkbox">        
+    <label for="enter-{{id}}">{{ fname }}</label> 
+    <input id="enter-{{id}}" name="enter" type="checkbox" 
+	   value="{{id}}">
+  </div>
+</script>
+{% endraw %}
+
 {% endblock %}
