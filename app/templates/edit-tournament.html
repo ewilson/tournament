@@ -5,20 +5,13 @@
 <div class="container">
 <h1>{{tournament.description}}</h1>
 <form action="{{tournament.id}}" method="post" name="entries">
-  {{form.hidden_tag()}}
-  <h3>Add Players</h3>
-  <div class="player-list"></div>
+  <div class="player-list list-group"></div>
   <p><button type="submit" class="btn btn-primary">Add</button></p>
 </form>
 </div>
 {% raw %}
 <script id="add-player-template" type="text/x-handlebars-template">
-  <div class="checkbox">        
-    <label for="enter-{{id}}">{{ fname }}</label> 
-    <input id="enter-{{id}}" name="enter" type="checkbox" 
-	   value="{{id}}">
-  </div>
+  <a class="list-group-item" data-player_id="{{id}}" href="#">{{fname}}</a>
 </script>
 {% endraw %}
-
 {% endblock %}

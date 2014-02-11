@@ -6,7 +6,8 @@ jQuery(function ($) {
 	    this.$page = $('.container');
 	    this.$playerList = $('.player-list');
 	    this.$addPlayerTemplate = Handlebars.compile($("#add-player-template").html());
-	    this.$addPlayerForm = $('.form');
+	    this.$addForm = $('.form');
+	    this.$playerList.on('click','.list-group-item',this.togglePlayer);
 	    this.getPlayers();
         },
 	getPlayers: function() {
@@ -21,6 +22,10 @@ jQuery(function ($) {
 		var playerHtml = Page.$addPlayerTemplate(player)
 		Page.$playerList.append(playerHtml);
 	    });
+	},
+	togglePlayer: function(e) {
+	    e.preventDefault();
+	    $(this).toggleClass('active');
 	}
     };
     Page.init();
