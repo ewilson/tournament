@@ -2,7 +2,7 @@ from flask import render_template, redirect, session, g, request, url_for
 import sqlite3, logging
 import config
 from app import app
-from forms import TourneyEntryForm, MatchForm
+from forms import MatchForm
 from models import Player, Standing
 import tournament_dao, player_dao, match_dao, tourney
 
@@ -19,13 +19,11 @@ def tournament(id):
     tournament = tournament_dao.find(id)
     if tournament.status == 2:
         return redirect(url_for('conclude_tournament',id=id))
-    form = TourneyEntryForm()
-    if not tournament.status and not form.is_submitted():
+    if not tournament.status:
         return render_template('edit-tournament.html', 
-                               tournament=tournament,
-                               form=form)
-    if form.is_submitted():
-        tourney.setup_round_robin(form.enter.data, id)
+                               tournament=tournament)
+#    if form.is_submitted():
+#        tourney.setup_round_robin(form.enter.data, id)
     return redirect(url_for('play_tournament', id=id))
 
 @app.route('/play-tournament/<id>', methods = ['GET','POST'])

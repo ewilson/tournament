@@ -21,8 +21,24 @@ def get_new_tournaments(status):
     tourneys = tournament_dao.find_all_by_status(status)
     return jsonify({'tournaments':[t.__dict__ for t in tourneys]})
 
-@app.route('/api/tournament/<id>', methods = ['DELETE'])
-def delete_tournament2(id):
+@app.route('/api/tournament/<id>', methods = ['POST','DELETE'])
+def tournament2(id):
+    if request.method == 'POST':
+        return _post_tourney_entries(id, request)
+    elif request.method == 'DELETE':
+        return _delete_tournament(id)
+
+def _post_tourney_entries(id, request):
+    try:
+        player_ids = request.form['entries']
+        tourney.setup_round_robin(player_ids, id)
+    except sqlite3.IntegrityError:
+        message = "ERROR!"
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return jsonify({'success':True, 'id':id})
+
+def _delete_tournament(id):
     try:
         tournament_dao.delete(id)
     except sqlite3.IntegrityError:
