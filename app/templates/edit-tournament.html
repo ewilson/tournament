@@ -3,8 +3,8 @@
 <script src="/static/js/dao.js"></script>
 <script src="/static/js/edit-tournament.js"></script>
 <div class="container">
-<h1>{{tournament.description}}</h1>
-<form action="{{tournament.id}}" method="post" name="entries">
+<h1 data-tournament_id={{tournament.id}}>{{tournament.description}}</h1>
+<form>
   <div class="player-list list-group"></div>
   <p><button type="submit" class="btn btn-primary">Add</button></p>
 </form>
