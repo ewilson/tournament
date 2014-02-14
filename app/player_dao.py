@@ -36,6 +36,12 @@ def enter_tournament(player_id, tournament_id):
     g.db.execute(insert_entry,[player_id,tournament_id])
     g.db.commit()
 
+def unenter_tournament(player_id, tournament_id):
+    delete_entry = "delete from entry where player_id = ? and tournament_id= ?"
+    logging.debug(delete_entry)
+    g.db.execute(delete_entry,[player_id,tournament_id])
+    g.db.commit()
+
 def find_in_tournament(tournament_id):
     select = '''
     select p.fname, p.id from player p, entry e

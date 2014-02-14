@@ -53,10 +53,13 @@ def get_entries(id):
     return jsonify({'players':[p.__dict__ for p in players]})
 
 @app.route('/api/tournament/<tournament_id>/player/<player_id>', 
-           methods = ['POST'])
-def add_entry(tournament_id, player_id):
+           methods = ['POST','DELETE'])
+def add_or_delete_entry(tournament_id, player_id):
     try:
-        player_dao.enter_tournament(player_id, tournament_id)
+        if request.method == 'POST':
+            player_dao.enter_tournament(player_id, tournament_id)
+        elif request.method == 'DELETE':
+            player_dao.unenter_tournament(player_id, tournament_id)
     except sqlite3.IntegrityError:
         message = "ERROR!"
         return jsonify({'success':False, 'message':message}),409
