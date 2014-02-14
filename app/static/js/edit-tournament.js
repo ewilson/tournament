@@ -11,21 +11,27 @@ jQuery(function ($) {
 	    this.$omittedPlayers.on('click','.list-group-item',this.enter);
 	    this.getPlayers();
 	    this.tournament_id = $('h1').data('tournament_id');
-	    this.getPlayersInTournament();
 	    this.$addForm.submit(this.addPlayers);
         },
 	getPlayers: function() {
 	    Dao.Player.list({
-		success: function(data) {
-		    Page.appendPlayers(data);
-		}
+		success: Page.getAddedPlayers
 	    });
         },
-	getPlayersInTournament: function() {
+	getAddedPlayers: function(allPlayers) {
 	    Dao.Tournament.findPlayers({
 		tournament_id: Page.tournament_id,
 		success: function(data) {
-		    Page.appendAddedPlayers(data);
+		    var all = allPlayers.players;
+		    var added = data.players;
+		    var added_ids = $.map(added, function(player, i) {
+			return player.id;
+		    });
+		    var omitted = $.grep(all, function(player, i){
+			return $.inArray(player.id, added_ids) == -1
+		    });
+		    Page.appendPlayers(added,Page.$addedPlayers);
+		    Page.appendPlayers(omitted,Page.$omittedPlayers);
 		}
 	    });
 	},
@@ -47,10 +53,10 @@ jQuery(function ($) {
 	    Page.$addedPlayers.append(playerHtml);
 	    player.remove();
 	},
-	appendPlayers: function(data) {
-	    $.each(data.players, function(i, player) {
+	appendPlayers: function(data,list) {
+	    $.each(data, function(i, player) {
 		var playerHtml = Page.$playerTemplate(player);
-		Page.$omittedPlayers.append(playerHtml);
+		list.append(playerHtml);
 	    });
 	},
 	addPlayers: function(e) {

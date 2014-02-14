@@ -49,7 +49,7 @@ def _delete_tournament(id):
 
 @app.route('/api/tournament/<id>/player', methods = ['GET'])
 def get_entries(id):
-    players = player_dao.find_all()
+    players = player_dao.find_in_tournament(id)
     return jsonify({'players':[p.__dict__ for p in players]})
 
 @app.route('/api/tournament/<tournament_id>/player/<player_id>', 
