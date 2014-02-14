@@ -57,12 +57,21 @@ var Dao = (function($) {
 	},
 	findPlayers: function(options) {
 	    $.ajax({
-		url: $SCRIPT_ROOT+'/tournament/'+options.tournament_id+'/player',
+		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id + 
+		    '/player',
 		type: 'GET',
 		dataType: 'json',
 		success: options.success
 	    })
-	}
+	},
+	addPlayer: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id +
+		     '/player/' + options.player_id,
+		type: 'POST',
+		dataType: 'json',
+		success: options.success
+	    });
 	}
     };
 
