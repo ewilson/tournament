@@ -47,6 +47,11 @@ def _delete_tournament(id):
     else:
         return jsonify({'success':True, 'id':id})
 
+@app.route('/api/tournament/<id>/player', methods = ['GET'])
+def get_entries(id):
+    players = player_dao.find_all()
+    return jsonify({'players':[p.__dict__ for p in players]})
+
 @app.route('/api/player/<id>', methods = ['DELETE'])
 def delete_player(id):
     try:
@@ -77,3 +82,4 @@ def _post_player(request):
 def _get_player():
     players = player_dao.find_all()
     return jsonify({'players':[p.__dict__ for p in players]})
+

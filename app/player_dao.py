@@ -36,7 +36,6 @@ def enter_tournament(player_id, tournament_id):
     g.db.execute(insert_entry,[player_id,tournament_id])
     g.db.commit()
 
-# Not currently used, but tested and useful
 def find_in_tournament(tournament_id):
     select = '''
     select p.fname, p.id from player p, entry e

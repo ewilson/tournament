@@ -54,6 +54,15 @@ var Dao = (function($) {
 		dataType: 'json',
 		success: options.success
 	    })
+	},
+	findPlayers: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT+'/tournament/'+options.tournament_id+'/player',
+		type: 'GET',
+		dataType: 'json',
+		success: options.success
+	    })
+	}
 	}
     };
 
