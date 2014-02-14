@@ -4,11 +4,14 @@ jQuery(function ($) {
     var Page = {
         init: function () {
 	    this.$page = $('.container');
-	    this.$playerList = $('.player-list');
-	    this.$addPlayerTemplate = Handlebars.compile($("#add-player-template").html());
+	    this.$omittedPlayers = $('.omitted-players');
+	    this.$addedPlayers = $('.added-players');
+	    this.$playerTemplate = Handlebars.compile($("#player-template").html());
 	    this.$addForm = $('form');
-	    this.$playerList.on('click','.list-group-item',this.togglePlayer);
+	    this.$omittedPlayers.on('click','.list-group-item',this.enter);
 	    this.getPlayers();
+	    this.tournament_id = $('h1').data('tournament_id');
+	    this.getPlayersInTournament();
 	    this.$addForm.submit(this.addPlayers);
         },
 	getPlayers: function() {
@@ -17,26 +20,47 @@ jQuery(function ($) {
 		    Page.appendPlayers(data);
 		}
 	    });
+        },
+	getPlayersInTournament: function() {
+	    Dao.Tournament.findPlayers({
+		tournament_id: Page.tournament_id,
+		success: function(data) {
+		    Page.appendAddedPlayers(data);
+		}
+	    });
+	},
+	enter: function(e) {
+	    e.preventDefault();
+	    var player = $(this);
+	    Dao.Tournament.updatePlayer({
+		tournament_id: Page.tournament_id,
+		player_id: player.data('player_id'),
+		player: player,
+		httpVerb: 'POST',
+		success: function(data) {
+		    Page.toRightList(data,player);
+		}
+	    });
+	},
+	toRightList: function(data,player) {
+	    var playerHtml = Page.$playerTemplate(data.player);
+	    Page.$addedPlayers.append(playerHtml);
+	    player.remove();
 	},
 	appendPlayers: function(data) {
 	    $.each(data.players, function(i, player) {
-		var playerHtml = Page.$addPlayerTemplate(player)
-		Page.$playerList.append(playerHtml);
+		var playerHtml = Page.$playerTemplate(player);
+		Page.$omittedPlayers.append(playerHtml);
 	    });
-	},
-	togglePlayer: function(e) {
-	    e.preventDefault();
-	    $(this).toggleClass('active');
 	},
 	addPlayers: function(e) {
 	    e.preventDefault();
-	    var players = $('.active')
+	    var players = $('.active');
 	    var ids = players.map(function() {
 		return $(this).data("player_id");
 	    });
 	    console.log(JSON.stringify(ids.get()));
-	    var id = $('h1').data('tournament_id');
-	    console.log(id);
+	    console.log(Page.tournament_id);
 	}
     };
     Page.init();

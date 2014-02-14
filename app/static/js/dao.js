@@ -64,11 +64,11 @@ var Dao = (function($) {
 		success: options.success
 	    })
 	},
-	addPlayer: function(options) {
+	updatePlayer: function(options) {
 	    $.ajax({
 		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id +
 		     '/player/' + options.player_id,
-		type: 'POST',
+		type: options.httpVerb,
 		dataType: 'json',
 		success: options.success
 	    });
