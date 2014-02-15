@@ -8,7 +8,8 @@ jQuery(function ($) {
 	    this.$addedPlayers = $('.added-players');
 	    this.$playerTemplate = Handlebars.compile($("#player-template").html());
 	    this.$addForm = $('form');
-	    this.$omittedPlayers.on('click','.list-group-item',this.enter);
+	    this.$omittedPlayers.on('click','.list-group-item',this.enterT);
+	    this.$addedPlayers.on('click','.list-group-item',this.exitT);
 	    this.getPlayers();
 	    this.tournament_id = $('h1').data('tournament_id');
 	    this.$addForm.submit(this.addPlayers);
@@ -35,7 +36,7 @@ jQuery(function ($) {
 		}
 	    });
 	},
-	enter: function(e) {
+	enterT: function(e) {
 	    e.preventDefault();
 	    var player = $(this);
 	    Dao.Tournament.updatePlayer({
@@ -48,9 +49,27 @@ jQuery(function ($) {
 		}
 	    });
 	},
+	exitT: function(e) {
+	    e.preventDefault();
+	    var player = $(this);
+	    Dao.Tournament.updatePlayer({
+		tournament_id: Page.tournament_id,
+		player_id: player.data('player_id'),
+		player: player,
+		httpVerb: 'DELETE',
+		success: function(data) {
+		    Page.toLeftList(data,player);
+		}
+	    });
+	},
 	toRightList: function(data,player) {
 	    var playerHtml = Page.$playerTemplate(data.player);
 	    Page.$addedPlayers.append(playerHtml);
+	    player.remove();
+	},
+	toLeftList: function(data,player) {
+	    var playerHtml = Page.$playerTemplate(data.player);
+	    Page.$omittedPlayers.append(playerHtml);
 	    player.remove();
 	},
 	appendPlayers: function(data,list) {
