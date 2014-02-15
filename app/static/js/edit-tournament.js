@@ -38,38 +38,26 @@ jQuery(function ($) {
 	},
 	enterT: function(e) {
 	    e.preventDefault();
-	    var player = $(this);
-	    Dao.Tournament.updatePlayer({
-		tournament_id: Page.tournament_id,
-		player_id: player.data('player_id'),
-		player: player,
-		httpVerb: 'POST',
-		success: function(data) {
-		    Page.toRightList(data,player);
-		}
-	    });
+	    Page.toggleEntry($(this),'POST',Page.$addedPlayers);
 	},
 	exitT: function(e) {
 	    e.preventDefault();
-	    var player = $(this);
+	    Page.toggleEntry($(this),'DELETE',Page.$omittedPlayers);
+	},
+	toggleEntry: function(player,verb,target) {
 	    Dao.Tournament.updatePlayer({
 		tournament_id: Page.tournament_id,
 		player_id: player.data('player_id'),
 		player: player,
-		httpVerb: 'DELETE',
+		httpVerb: verb,
 		success: function(data) {
-		    Page.toLeftList(data,player);
+		    Page.movePlayer(data,player,target);
 		}
 	    });
 	},
-	toRightList: function(data,player) {
+	movePlayer: function(data,player,target) {
 	    var playerHtml = Page.$playerTemplate(data.player);
-	    Page.$addedPlayers.append(playerHtml);
-	    player.remove();
-	},
-	toLeftList: function(data,player) {
-	    var playerHtml = Page.$playerTemplate(data.player);
-	    Page.$omittedPlayers.append(playerHtml);
+	    target.append(playerHtml);
 	    player.remove();
 	},
 	appendPlayers: function(data,list) {
