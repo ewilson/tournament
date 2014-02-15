@@ -50,15 +50,9 @@ def update(tourn):
     g.db.execute(update, data)
     g.db.commit()
 
-def begin(tourn_id):
+def update_status(tourn_id, status):
     update = "update tournament set status = ? where id = ?"
-    data = [1, tourn_id]
-    g.db.execute(update, data)
-    g.db.commit()
-
-def complete(tourn_id):
-    update = "update tournament set status = ? where id = ?"
-    data = [2, tourn_id]
+    data = [status, tourn_id]
     g.db.execute(update, data)
     g.db.commit()
 

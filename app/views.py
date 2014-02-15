@@ -12,7 +12,7 @@ def index():
         return redirect(url_for('login'))
     return render_template('index.html')
 
-@app.route('/tournament/<id>', methods = ['GET','POST'])
+@app.route('/tournament/<id>', methods = ['GET'])
 def tournament(id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
@@ -22,6 +22,7 @@ def tournament(id):
     if not tournament.status:
         return render_template('edit-tournament.html', 
                                tournament=tournament)
+    tourney.setup_round_robin(id)
     return redirect(url_for('play_tournament', id=id))
 
 @app.route('/play-tournament/<id>', methods = ['GET','POST'])
@@ -47,7 +48,7 @@ def play_tournament(id):
 def conclude_tournament(id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    tournament_dao.complete(id)
+    tournament_dao.update_status(id,2)
     model = {}
     model['tournament'] = tournament_dao.find(id)
     model['matches'] = match_dao.find_completed_by_tournament(id)

@@ -66,6 +66,17 @@ def add_or_delete_entry(tournament_id, player_id):
     else:
         return jsonify({'success':True, 'player':player.__dict__})
 
+@app.route('/api/tournament/<tournament_id>/status/<status>', 
+           methods = ['POST'])
+def update_status(tournament_id, status):
+    try:
+        tournament_dao.update_status(tournament_id, status)
+    except sqlite3.IntegrityError:
+        message = "ERROR!"
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return jsonify({'success':True, 'id':tournament_id})
+
 @app.route('/api/player/<id>', methods = ['DELETE'])
 def delete_player(id):
     try:

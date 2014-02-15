@@ -12,7 +12,7 @@ jQuery(function ($) {
 	    this.$addedPlayers.on('click','.list-group-item',this.exitT);
 	    this.getPlayers();
 	    this.tournament_id = $('h1').data('tournament_id');
-	    this.$addForm.submit(this.addPlayers);
+	    this.$addForm.submit(this.startTourney);
         },
 	getPlayers: function() {
 	    Dao.Player.list({
@@ -66,14 +66,16 @@ jQuery(function ($) {
 		list.append(playerHtml);
 	    });
 	},
-	addPlayers: function(e) {
+	startTourney: function(e) {
 	    e.preventDefault();
-	    var players = $('.active');
-	    var ids = players.map(function() {
-		return $(this).data("player_id");
+	    Dao.Tournament.updateStatus({
+		tournament_id: Page.tournament_id,
+		status: 1,
+		success: function(data) {
+		    window.location.href = $APP_ROOT + "/tournament/" +
+			Page.tournament_id;
+		}
 	    });
-	    console.log(JSON.stringify(ids.get()));
-	    console.log(Page.tournament_id);
 	}
     };
     Page.init();
