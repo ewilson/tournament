@@ -7,12 +7,12 @@ jQuery(function ($) {
 	    this.$newTournamentForm = $('.form');
 	    this.$description = $('#description');
 	    this.$tourneys = $('.tourneys');
-	    this.$newTourneys = $('#new-tournaments');
-	    this.$activeTourneys = $('#active-tournaments');
-	    this.$completedTourneys = $('#completed-tournaments');
+	    this.$newTourneys = $('#new-tournaments .list-group');
+	    this.$activeTourneys = $('#active-tournaments .list-group');
+	    this.$completedTourneys = $('#completed-tournaments .list-group');
 	    this.$tournamentTemplate = Handlebars.compile($("#tournament-template").html());
 	    this.$newTournamentForm.submit(this.createTournament);
-	    this.$tourneys.on('click','.del-link',this.deleteTourney);
+	    this.$tourneys.on('click','.glyphicon-trash',this.deleteTourney);
 	    this.$tourneys.hide();
 	    this.getNewTournaments();
 	    this.getActiveTournaments();
@@ -79,13 +79,13 @@ jQuery(function ($) {
 	appendNewTournament: function(data) {
 	    var tourney = Page.$tournamentTemplate(data)
 	    Page.$newTourneys.append(tourney);
-	    Page.$newTourneys.show();
+	    Page.$newTourneys.closest('.tourneys').show();
 	},
 	appendTournaments: function(data, div) {
 	    $.each(data.tournaments, function(i, tournament) {
 		var tourney = Page.$tournamentTemplate(tournament)
 		div.append(tourney);
-		div.show();
+		div.closest('.tourneys').show();
 	    });
 	}
     };
