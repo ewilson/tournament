@@ -8,8 +8,8 @@ jQuery(function ($) {
             this.$players = $('#players');
 	    this.$newPlayerForm = $('#new-player form');
 	    this.$fname = $('#fname');
-	    this.$players.on('click','.del-link',this.deletePlayer);
-	    this.$page.on('click','.glyphicon-remove',this.removeError);
+	    this.$players.on('click','.glyphicon-trash',this.deletePlayer);
+	    this.$players.on('click',function(e) { e.preventDefault(); });
 	    this.$newPlayerForm.submit(this.addPlayer);
 	    this.$newPlayerForm.on('focus','input',this.removeError);
 	    this.getPlayers();
@@ -21,6 +21,7 @@ jQuery(function ($) {
 	},
 	deletePlayer: function(e) {
 	    e.preventDefault();
+	    e.stopPropagation();
 	    var player = $(this).closest('.player-item');
 	    var player_id = player.data('player_id');
 	    Dao.Player.remove({
