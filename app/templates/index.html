@@ -25,15 +25,16 @@
       </div>
     </div>
     <div class="col-md-6">
-      <h2>Add new tournament</h2>  
-      <form action="" method="post" name="tournament" role="form" class="form">
-	<div class="form-group">
-	  <label for="description">Tournament name:</label>
-	  <input type="text" class="form-control" id="description" 
-		 placeholder="Enter Tournament Description" value="">
-	</div>
-	<button type="submit" class="btn btn-primary">Add</button>
-      </form>
+      <div class="well well-lg">
+	<h3>Add new tournament</h3>  
+	<form action="" method="post" name="tournament" role="form" class="form">
+	  <div class="form-group">
+	    <input type="text" class="form-control" id="description" 
+		   placeholder="Enter Tournament Description" value="">
+	  </div>
+	  <button type="submit" class="btn btn-primary">Add</button>
+	</form>
+      </div>
     </div>
   </div>
 </div>
@@ -41,7 +42,7 @@
 <script id="tournament-template" type="text/x-handlebars-template">
   <a class="list-group-item tourney-item" 
      data-tourney_id="{{id}}" href="/tournament/{{id}}">
-    <span>{{description}} started on {{start_date}}</span>
+    <span><strong>{{description}}</strong> <em>{{start_date}}</em></span>
     <span class="glyphicon glyphicon-trash pull-right"></span>
   </a>
 </script>
