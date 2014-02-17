@@ -13,6 +13,7 @@ jQuery(function ($) {
 	    this.getPlayers();
 	    this.tournament_id = $('h1').data('tournament_id');
 	    this.$addForm.submit(this.startTourney);
+	    this.$button = $('button');
         },
 	getPlayers: function() {
 	    Dao.Player.list({
@@ -35,6 +36,10 @@ jQuery(function ($) {
 		    Page.appendPlayers(omitted,Page.$omittedPlayers);
 		}
 	    });
+	},
+	toggleButton: function() {
+	    Page.$button.prop('disabled', 
+			      Page.$addedPlayers.find('a').length < 3);
 	},
 	enterT: function(e) {
 	    e.preventDefault();
@@ -59,12 +64,14 @@ jQuery(function ($) {
 	    var playerHtml = Page.$playerTemplate(data.player);
 	    target.append(playerHtml);
 	    player.remove();
+	    Page.toggleButton();
 	},
 	appendPlayers: function(data,list) {
 	    $.each(data, function(i, player) {
 		var playerHtml = Page.$playerTemplate(player);
 		list.append(playerHtml);
 	    });
+	    Page.toggleButton();
 	},
 	startTourney: function(e) {
 	    e.preventDefault();
