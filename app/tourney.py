@@ -1,11 +1,10 @@
+import logging
 import player_dao, tournament_dao, match_dao, standings_dao, scheduler
 from models import Player, Match, Tournament
 
-def setup_round_robin(player_ids, tournament_id):
-    for player_id in player_ids:
-        player_dao.enter_tournament(player_id, tournament_id)
-    tournament_dao.begin(tournament_id)
-    pairs = scheduler.round_robin(player_ids)
+def setup_round_robin(tournament_id):
+    players = player_dao.find_in_tournament(tournament_id)
+    pairs = scheduler.round_robin([p.id for p in players])
     for pair in pairs:
         match_dao.create(list(pair), tournament_id)
 

@@ -1,49 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<script src="/static/js/dao.js"></script>
 <script src="/static/js/create-tournament.js"></script>
 <div class="container">
   <div class="row">
     <div class="col-md-6">
-      <ul class="list-group tourneys" id="new-tournaments">
-	<li class="list-group-item list-group-item-info">
-	  <h3 class="list-group-item-heading">New Tournaments</h3>
-	</li>
-      </ul>
-      <ul class="list-group tourneys" id="active-tournaments">
-	<li class="list-group-item list-group-item-info">
-	  <h3 class="list-group-item-heading">Active Tournaments</h3>
-	</li>
-      </ul>
-      <ul class="list-group tourneys" id="completed-tournaments">
-	<li class="list-group-item list-group-item-info">
-	  <h3 class="list-group-item-heading">Completed Tournaments</h3>
-	</li>
-      </ul>
+      <div class="panel panel-primary tourneys" id="new-tournaments">
+	<div class="panel-heading">
+	  <h3 class="panel-title">New Tournaments</h3>
+	</div>
+	<div class="panel-body list-group"></div>
+      </div>
+      <div class="panel panel-primary tourneys" id="active-tournaments">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Active Tournaments</h3>
+	</div>
+	<div class="panel-body list-group"></div>
+      </div>
+      <div class="panel panel-primary tourneys" id="completed-tournaments">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Completed Tournaments</h3>
+	</div>
+	<div class="panel-body list-group"></div>
+      </div>
     </div>
     <div class="col-md-6">
-      <h2>Add new tournament</h2>  
-      <form action="" method="post" name="tournament" role="form" class="form">
-	<div class="form-group">
-	  <label for="description">Tournament name:</label>
-	  <input type="text" class="form-control" id="description" 
-		 placeholder="Enter Tournament Description" value="">
-	</div>
-	<button type="submit" class="btn btn-primary">Add</button>
-      </form>
+      <div class="well well-lg">
+	<h3>Add new tournament</h3>  
+	<form action="" method="post" name="tournament" role="form" class="form">
+	  <div class="form-group">
+	    <input type="text" class="form-control" id="description" 
+		   placeholder="Enter Tournament Description" value="">
+	  </div>
+	  <button type="submit" class="btn btn-primary">Add</button>
+	</form>
+      </div>
     </div>
   </div>
 </div>
 {% raw %}
 <script id="tournament-template" type="text/x-handlebars-template">
-  <li class="list-group-item tourney-item" data-tourney_id="{{id}}">
-    <a href="/tournament/{{id}}">
-      {{description}} started on {{start_date}}
-    </a>
-    <a href="#" class="del-link">
-      <span class="glyphicon glyphicon-trash pull-right"></span>
-    </a>
-  </li>
+  <a class="list-group-item tourney-item" 
+     data-tourney_id="{{id}}" href="/tournament/{{id}}">
+    <span><strong>{{description}}</strong> <em>{{start_date}}</em></span>
+    <span class="glyphicon glyphicon-trash pull-right"></span>
+  </a>
 </script>
 {% endraw %}
 {% endblock %}

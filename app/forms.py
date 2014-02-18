@@ -1,13 +1,6 @@
 from flask.ext.wtf import Form
-from wtforms import TextField, BooleanField, SelectMultipleField, HiddenField
-from wtforms.widgets import CheckboxInput, ListWidget
+from wtforms import TextField, HiddenField
 from wtforms.validators import Required
-
-class TourneyEntryForm(Form):
-    enter = SelectMultipleField(
-        'Enter',
-        option_widget=CheckboxInput(),
-        widget=ListWidget(prefix_label=True))
 
 class MatchForm(Form):
     id = HiddenField('id', validators=[Required()])

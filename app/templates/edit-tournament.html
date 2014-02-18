@@ -1,24 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
+<script src="/static/js/dao.js"></script>
+<script src="/static/js/edit-tournament.js"></script>
 <div class="container">
-<h1>{{tournament.description}}</h1>
-  {% if players %}
-    <form action="{{tournament.id}}" method="post" name="entries">
-      {{form.hidden_tag()}}
-      <h3>Add Players</h3>
-    <!--  {{form.enter}}-->
-      {% for player in players %}
-        <div class="checkbox">        
-          <label for="enter-{{player.id}}">{{ player.fname }}</label> 
-	  <input id="enter-{{player.id}}" name="enter" type="checkbox" 
-		 value="{{player.id}}">
-	</div>
-      {% endfor %}
-      <p><button type="submit" class="btn btn-primary">Add</button></p>
-    </form>
-  {% else %}
-    <h2>No players to add</h2>
-    <p>Maybe you want to <a href={{url_for('player')}}>add some</a>?
-  {% endif %}
+<div class="page-header">
+  <h1 data-tournament_id={{tournament.id}}>
+    {{tournament.description}}
+    <small>Select players</small>
+  </h1>
 </div>
+
+<form>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+	<div class="panel-heading">
+	  <h2 class="panel-title">Players to add</h2>
+	</div>
+	<div class="panel-body omitted-players list-group"></div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Added players</h3>
+	</div>
+	<div class="panel-body added-players list-group"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <p>
+	<button type="submit" class="btn btn-lg btn-primary">
+	  Begin Tournament
+	</button>
+      </p>
+    </div>
+  </div>
+</form>
+</div>
+{% raw %}
+<script id="player-template" type="text/x-handlebars-template">
+  <a class="list-group-item" data-player_id="{{id}}" href="#">{{fname}}</a>
+</script>
+{% endraw %}
 {% endblock %}
