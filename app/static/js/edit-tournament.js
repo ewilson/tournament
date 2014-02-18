@@ -20,6 +20,11 @@ jQuery(function ($) {
 		success: Page.getAddedPlayers
 	    });
         },
+	resetPlayers: function() {
+	    Page.$addedPlayers.find('a').remove();
+	    Page.$omittedPlayers.find('a').remove();
+	    Page.getPlayers();
+	},
 	getAddedPlayers: function(allPlayers) {
 	    Dao.Tournament.findPlayers({
 		tournament_id: Page.tournament_id,
@@ -57,7 +62,8 @@ jQuery(function ($) {
 		httpVerb: verb,
 		success: function(data) {
 		    Page.movePlayer(data,player,target);
-		}
+		},
+		error: Page.resetPlayers
 	    });
 	},
 	movePlayer: function(data,player,target) {
