@@ -70,7 +70,8 @@ var Dao = (function($) {
 		     '/player/' + options.player_id,
 		type: options.httpVerb,
 		dataType: 'json',
-		success: options.success
+		success: options.success,
+		error: options.error
 	    });
 	},
 	updateStatus: function(options) {
