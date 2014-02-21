@@ -1,3 +1,9 @@
+import json
+
+class JsonRepr(object):
+    def reprJSON(self):
+        return self.__dict__
+
 class Tournament(object):
     def __init__(self, id=id, start_date='', description='', 
                  tourn_type='', status=0):
@@ -12,7 +18,7 @@ class Tournament(object):
                 (self.id, self.description, 
                  self.tourn_type, self.start_date,self.status))
 
-class Player(object):
+class Player(JsonRepr):
     def __init__(self, fname='', id = 0):
         self.id = id
         self.fname = fname
@@ -20,7 +26,7 @@ class Player(object):
     def __str__(self):
         return '<(%d)%s>' % (self.id, self.fname)
 
-class Match(object):
+class Match(JsonRepr):
     def __init__(self, player1=None, player2=None, score1=0, score2=0, id = 0):
         self.id = id
         self.player1 = player1
@@ -53,3 +59,11 @@ class Standing(object):
 
     def __repr__(self):
         return '(%d)--%s-- W: %d, L: %d' % (self. pid, self.name, self.win, self.loss)
+
+class ComplexEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if hasattr(obj,'reprJSON'):
+            return obj.reprJSON()
+        else:
+            return json.JSONEncoder.default(self, obj)
+

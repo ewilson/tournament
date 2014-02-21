@@ -1,7 +1,8 @@
 from flask import request, jsonify
+import json
 import sqlite3
 from app import app
-from models import Player
+from models import Player, ComplexEncoder
 import tournament_dao, player_dao, match_dao, tourney
 
 @app.route('/api/tournament', methods = ['POST'])
@@ -46,6 +47,34 @@ def _delete_tournament(id):
         return jsonify({'success':False, 'message':message}),409
     else:
         return jsonify({'success':True, 'id':id})
+
+@app.route('/api/match/<id>', methods = ['POST','DELETE'])
+def match(id):
+    if request.method == 'POST':
+        return _post_match(id, request)
+    elif request.method == 'DELETE':
+        return _delete_match(id)
+
+def _post_match(id, request):
+    try:
+        params = request.form
+        match = tourney.update_match(id, params['player1_id'], 
+                                     params['player2_id'],
+                                     params['score1'], params['score2'])
+    except sqlite3.IntegrityError:
+        message = "ERROR!"
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return json.dumps(match.reprJSON(), cls=ComplexEncoder)
+
+def _delete_match(id):
+    try:
+        match = tourney.undo_match(id)
+    except sqlite3.IntegrityError:
+        message = "ERROR!"
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        return json.dumps(match.reprJSON(), cls=ComplexEncoder)
 
 @app.route('/api/tournament/<id>/player', methods = ['GET'])
 def get_entries(id):
