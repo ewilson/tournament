@@ -65,7 +65,7 @@ def _post_match(id, request):
         message = "ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify(match.reprJSON(), cls=ComplexEncoder)
+        return json.dumps(match.reprJSON(), cls=ComplexEncoder)
 
 def _delete_match(id):
     try:
