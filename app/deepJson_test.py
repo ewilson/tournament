@@ -28,9 +28,9 @@ def test_jsonify_obj_with_primatives():
     f.st = 'hello'
     f.b = False
 
-    json = dictify(f)
+    json = jsonify(f)
 
-    assert str(json) == "{'b': False, 'num1': 3, 'num2': 2.0, 'st': 'hello'}"
+    assert json == '{"b": false, "num1": 3, "num2": 2.0, "st": "hello"}'
 
 def test_dictify_obj_with_other_primatives():
     f = Foo()
@@ -44,14 +44,13 @@ def test_dictify_obj_with_other_primatives():
     assert jd['num2'] == '(3+4j)'
     assert jd['null'] == None
 
-def test2_jsonify_obj_with_primatives():
+def test_jsonify_obj_with_other_primatives():
     f = Foo()
-    f.num1 = 3
-    f.num2 = 2.0
-    f.st = 'hello'
-    f.b = False
+    f.num1 = 1L
+    f.num2 = 3+4j
+    f.null = None
 
-    json = dictify(f)
+    json = jsonify(f)
 
-    assert str(json) == "{'b': False, 'num1': 3, 'num2': 2.0, 'st': 'hello'}"
+    assert str(json) == '{"null": null, "num1": 1, "num2": "(3+4j)"}'
 
