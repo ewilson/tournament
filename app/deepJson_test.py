@@ -54,7 +54,7 @@ def test_jsonify_obj_with_other_primatives():
 
     assert str(json) == '{"null": null, "num1": 1, "num2": "(3+4j)"}'
 
-def test_jsonify_obj_with_collections():
+def test_dictify_obj_with_collections():
     f = Foo()
     f.li = [1,2,'three',4.0]
     f.di = {'one':1,'two':'2.0'}
@@ -62,6 +62,16 @@ def test_jsonify_obj_with_collections():
 
     jd = dictify(f)
 
-    jd['li'] == [1,2,'three',4.0]
-    jd['di'] == {'one':1,'two':'2.0'}
-    jd['li'] == (5,6,'seven',8.0)
+    assert jd['li'] == [1,2,'three',4.0]
+    assert jd['di'] == {'one':1,'two':'2.0'}
+    assert jd['tu'] == [5,6,'seven',8.0]
+
+def test_jsonify_obj_with_collections():
+    f = Foo()
+    f.li = [1,2,'three',4.0]
+    f.di = {'one':1,'two':'2.0'}
+    f.tu = (5,6,'seven',8.0)
+
+    json = jsonify(f)
+
+    assert json == '{"li": [1, 2, "three", 4.0], "tu": [5, 6, "seven", 8.0], "di": {"two": "2.0", "one": 1}}'
