@@ -1,9 +1,10 @@
-from flask import request, jsonify
+from flask import request
 import json
 import sqlite3
 from app import app
-from models import Player, ComplexEncoder
+from models import Player
 import tournament_dao, player_dao, match_dao, tourney
+from deepJson import jsonify
 
 @app.route('/api/tournament', methods = ['POST'])
 def post_tournament():
@@ -65,7 +66,7 @@ def _post_match(id, request):
         message = "ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify(match.reprJSON(), cls=ComplexEncoder)
+        return jsonify(match)
 
 def _delete_match(id):
     try:
@@ -74,7 +75,7 @@ def _delete_match(id):
         message = "ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify(match.reprJSON(), cls=ComplexEncoder)
+        return jsonify(match)
 
 @app.route('/api/tournament/<id>/player', methods = ['GET'])
 def get_entries(id):
