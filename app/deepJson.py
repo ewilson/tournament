@@ -4,7 +4,7 @@ def jsonify(obj):
     return json.dumps(dictify(obj))
  
 def dictify(val):
-    if type(val) in [int, bool, str, float, long, types.NoneType]:
+    if type(val) in [int, bool, str, unicode, float, long, types.NoneType]:
         return val
     elif type(val) in [list, tuple]:
         return [dictify(item) for item in val]

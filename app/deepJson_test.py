@@ -25,12 +25,13 @@ def test_jsonify_obj_with_other_primatives():
     f.num1 = 1L
     f.num2 = 3+4j
     f.null = None
+    f.u = u"uni"
 
     jd = dictify(f)
     json = jsonify(f)
 
-    assert jd == {"null": None, "num1": 1, "num2": "(3+4j)"}
-    assert json == '{"null": null, "num1": 1, "num2": "(3+4j)"}'
+    assert jd == {"null": None, "num1": 1, "num2": "(3+4j)", "u": "uni"}
+    assert json == '{"null": null, "u": "uni", "num1": 1, "num2": "(3+4j)"}'
 
 
 def test_jsonify_obj_with_collections():
