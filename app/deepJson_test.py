@@ -40,7 +40,7 @@ def test_jsonify_obj_with_collections():
     f.di = {'one':1,'two':'2.0'}
     f.tu = (5,6,'seven',8.0)
 
-    jd = dictify(f)
+    jd = _dictify(f)
     json = jsonify(f)
 
     assert jd['li'] == [1,2,'three',4.0]
@@ -48,13 +48,13 @@ def test_jsonify_obj_with_collections():
     assert jd['tu'] == [5,6,'seven',8.0]
     assert json == '{"li": [1, 2, "three", 4.0], "tu": [5, 6, "seven", 8.0], "di": {"two": "2.0", "one": 1}}'
 
-def test_dictify_with_nested_obj():
+def test__dictify_with_nested_obj():
     f = Foo()
     b = Bar()
     b.num = 3
     f.bar = b
 
-    jd = dictify(f)
+    jd = _dictify(f)
     json = jsonify(f)
 
     assert jd == {"bar": {"num": 3}}
@@ -66,7 +66,7 @@ def test_list():
     b = Bar()
     li = [f,b,'three']
 
-    jd = dictify(li)
+    jd = _dictify(li)
     json = jsonify(li)
 
     assert jd == [{"num": 1}, {}, "three"]
@@ -78,7 +78,7 @@ def test_tuple():
     b = Bar()
     tu = (f,b,'three')
 
-    jd = dictify(tu)
+    jd = _dictify(tu)
     json = jsonify(tu)
 
     assert jd == [{"num": 1}, {}, "three"]
@@ -90,7 +90,7 @@ def test_dict():
     b = Bar()
     di = {"foo":f, "bar":b, "three": 3.0}
 
-    jd = dictify(di)
+    jd = _dictify(di)
     json = jsonify(di)
 
     assert jd == {"foo": {"num": 1}, "bar": {}, "three": 3.0}
