@@ -1,8 +1,11 @@
+from json import loads
+
 from deepJson import jsonify
-from deepJson import dictify
 
 class Foo(object):
-    pass
+    def fuzz():
+        """To show that methods don't show up in resulting JSON"""
+        return "FUZZ"
 
 class Bar(object):
     pass
@@ -14,11 +17,9 @@ def test_jsonify_obj_with_primatives():
     f.st = 'hello'
     f.b = False
 
-    jd = dictify(f)
     json = jsonify(f)
 
-    assert jd == {"b": False, "num1": 3, "num2": 2.0, "st": "hello"}
-    assert json == '{"b": false, "num1": 3, "num2": 2.0, "st": "hello"}'
+    assert loads(json) == {"b": False, "num1": 3, "num2": 2.0, "st": "hello"}
 
 def test_jsonify_obj_with_other_primatives():
     f = Foo()
@@ -27,12 +28,10 @@ def test_jsonify_obj_with_other_primatives():
     f.null = None
     f.u = u"uni"
 
-    jd = dictify(f)
     json = jsonify(f)
 
-    assert jd == {"null": None, "num1": 1, "num2": "(3+4j)", "u": "uni"}
-    assert json == '{"null": null, "u": "uni", "num1": 1, "num2": "(3+4j)"}'
-
+    assert loads(json) == {"null": None, "num1": 1, "u": "uni",
+                           "num2": {"real": 3.0, "imag": 4.0}}
 
 def test_jsonify_obj_with_collections():
     f = Foo()
@@ -40,13 +39,11 @@ def test_jsonify_obj_with_collections():
     f.di = {'one':1,'two':'2.0'}
     f.tu = (5,6,'seven',8.0)
 
-    jd = _dictify(f)
     json = jsonify(f)
 
-    assert jd['li'] == [1,2,'three',4.0]
-    assert jd['di'] == {'one':1,'two':'2.0'}
-    assert jd['tu'] == [5,6,'seven',8.0]
-    assert json == '{"li": [1, 2, "three", 4.0], "tu": [5, 6, "seven", 8.0], "di": {"two": "2.0", "one": 1}}'
+    assert loads(json)['li'] == [1,2,'three',4.0]
+    assert loads(json)['di'] == {'one':1,'two':'2.0'}
+    assert loads(json)['tu'] == [5,6,'seven',8.0]
 
 def test__dictify_with_nested_obj():
     f = Foo()
@@ -54,11 +51,9 @@ def test__dictify_with_nested_obj():
     b.num = 3
     f.bar = b
 
-    jd = _dictify(f)
     json = jsonify(f)
 
-    assert jd == {"bar": {"num": 3}}
-    assert json == '{"bar": {"num": 3}}'
+    assert loads(json) == {"bar": {"num": 3}}
 
 def test_list():
     f = Foo()
@@ -66,11 +61,9 @@ def test_list():
     b = Bar()
     li = [f,b,'three']
 
-    jd = _dictify(li)
     json = jsonify(li)
 
-    assert jd == [{"num": 1}, {}, "three"]
-    assert json == '[{"num": 1}, {}, "three"]'
+    assert loads(json) == [{"num": 1}, {}, "three"]
 
 def test_tuple():
     f = Foo()
@@ -78,11 +71,9 @@ def test_tuple():
     b = Bar()
     tu = (f,b,'three')
 
-    jd = _dictify(tu)
     json = jsonify(tu)
 
-    assert jd == [{"num": 1}, {}, "three"]
-    assert json == '[{"num": 1}, {}, "three"]'
+    assert loads(json) == [{"num": 1}, {}, "three"]
 
 def test_dict():
     f = Foo()
@@ -90,11 +81,9 @@ def test_dict():
     b = Bar()
     di = {"foo":f, "bar":b, "three": 3.0}
 
-    jd = _dictify(di)
     json = jsonify(di)
 
-    assert jd == {"foo": {"num": 1}, "bar": {}, "three": 3.0}
-    assert json == '{"foo": {"num": 1}, "bar": {}, "three": 3.0}'
+    assert loads(json) == {"foo": {"num": 1}, "bar": {}, "three": 3.0}
 
 def test_primatives():
     assert "3" == jsonify(3)
@@ -103,5 +92,5 @@ def test_primatives():
     assert '"three"' == jsonify("three")
     assert "false" == jsonify(False)
     assert "null" == jsonify(None)
-    assert '"3j"' == jsonify(3j)
-    assert '"(2-3j)"' == jsonify(2-3j)
+    assert '{"real": 3.0, "imag": 4.0}' == jsonify(3+4j)
+
