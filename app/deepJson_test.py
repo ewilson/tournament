@@ -94,3 +94,13 @@ def test_primatives():
     assert "null" == jsonify(None)
     assert '{"real": 3.0, "imag": 4.0}' == jsonify(3+4j)
 
+def test_non_supported_attr():
+    f = Foo()
+    f.bar = slice(-3) # sorry, slice objects can't be jsonified
+    caught = False
+    try:
+        jsonify(f)
+        assert False
+    except AttributeError:
+        caught = True
+    assert caught

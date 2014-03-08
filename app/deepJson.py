@@ -8,12 +8,14 @@ def jsonify(obj):
     through the fields, items, and values and replace all objects with
     dictionaries. The resulting collection is then passed into json.dumps()
     which produces a JSON representation of the input.
- 
+
     Most Python types map in an obvious way to JS types. For example, both
     list and tuple will produce an array in JS, None maps to null, etc.
 
     The complex type is a notable exception. I have chosen the following:
         3 + 4j -> {"real":3.0, "imag":4.0}
+    This seems the most natural choice, since the keys are named by the fields
+    present in the Python complex type.
     """
     def _dictify(val):
         if type(val) in [int, long, float, bool, str, unicode, types.NoneType]:
@@ -24,8 +26,10 @@ def jsonify(obj):
             return {k: _dictify(val[k]) for k in val}
         elif type(val) == complex:
             return {"real": val.real, "imag": val.imag}
-        else:
+        elif hasattr(val,'__dict__'):
             return {k: _dictify(getattr(val, k)) for k in val.__dict__}
+        else:
+            raise AttributeError('Attribute %s not supported' % type(val))
 
     return json.dumps(_dictify(obj))
  
