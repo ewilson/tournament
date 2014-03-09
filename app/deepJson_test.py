@@ -101,6 +101,6 @@ def test_non_supported_attr():
     try:
         jsonify(f)
         assert False
-    except AttributeError:
+    except TypeError:
         caught = True
     assert caught
