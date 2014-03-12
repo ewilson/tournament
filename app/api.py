@@ -77,10 +77,15 @@ def _delete_match(id):
     else:
         return jsonify(match)
 
+@app.route('/api/tournament/<id>/match', methods = ['GET'])
+def get_matches(id):
+    matches = match_dao.find_by_tournament(id)
+    return jsonify({'matches':matches})
+
 @app.route('/api/tournament/<id>/player', methods = ['GET'])
 def get_entries(id):
     players = player_dao.find_in_tournament(id)
-    return jsonify({'players':[p.__dict__ for p in players]})
+    return jsonify({'players':players})
 
 @app.route('/api/tournament/<tournament_id>/player/<player_id>', 
            methods = ['POST','DELETE'])
@@ -94,7 +99,7 @@ def add_or_delete_entry(tournament_id, player_id):
         message = "ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify({'success':True, 'player':player.__dict__})
+        return jsonify({'success':True, 'player':player})
 
 @app.route('/api/tournament/<tournament_id>/status/<status>', 
            methods = ['POST'])
@@ -136,5 +141,5 @@ def _post_player(request):
 
 def _get_player():
     players = player_dao.find_all()
-    return jsonify({'players':[p.__dict__ for p in players]})
+    return jsonify({'players':players})
 
