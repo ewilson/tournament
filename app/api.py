@@ -16,12 +16,12 @@ def post_tournament():
         message = "DB ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify(tournament.__dict__)
+        return jsonify(tournament)
 
 @app.route('/api/tournament/status/<status>', methods = ['GET'])
 def get_new_tournaments(status):
     tourneys = tournament_dao.find_all_by_status(status)
-    return jsonify({'tournaments':[t.__dict__ for t in tourneys]})
+    return jsonify({'tournaments':tourneys})
 
 @app.route('/api/tournament/<id>', methods = ['POST','DELETE'])
 def tournament2(id):
