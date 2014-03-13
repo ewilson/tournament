@@ -3,22 +3,13 @@ jQuery(function ($) {
 
     var Page = {
         init: function () {
-	    this.$omittedPlayers = $('.omitted-players');
-	    this.$addedPlayers = $('.added-players');
-	    this.$playerTemplate = Handlebars.compile($("#player-template").html());
-	    this.$newTournamentForm.submit(this.createTournament);
-	    this.$addForm = $('form');
-	    this.$omittedPlayers.on('click','.list-group-item',this.enterT);
-	    this.$addedPlayers.on('click','.list-group-item',this.exitT);
-	    this.getPlayers();
-	    this.tournament_id = $('h1').data('tournament_id');
-	    this.$addForm.submit(this.startTourney);
-	    this.$button = $('button');
+	    this.$matchForms = $('form');
+	    this.$matchForms.submit(this.addMatch);
         },
-	createTournament: function(e) {
-	    console.log('createTournament');
+	addMatch: function(e) {
+	    console.log('addMatch');
 	    e.preventDefault();
-	    var description = Page.$description.val().trim();
+/*	    var description = Page.$description.val().trim();
 	    if (description) {
 		Dao.Tournament.add({
 		    description: description,
@@ -27,7 +18,7 @@ jQuery(function ($) {
 		Page.$description.val('');
 	    } else {
 		alert('Description field is required.');
-	    }
+	    }*/
         },
 	getPlayers: function() {
 	    Dao.Player.list({
