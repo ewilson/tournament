@@ -87,8 +87,41 @@ var Dao = (function($) {
 	}
     };
 
+    var Match = {
+	add: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/match/' + options.match_id,
+		type: 'POST',
+		dataType: 'json',
+		data: { player1_id: options.player1_id,
+			player2_id: options.player2_id,
+			score1: options.score1,
+			score2: options.score2 },
+		success: options.success
+	    });
+	},
+	remove: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/match/' + options.match_id,
+		type: 'DELETE',
+		dataType: 'json',
+		success: options.success
+	    });
+	},
+	findByTournament: function(options) {
+	    var url = $SCRIPT_ROOT + '/tournament/' + options.tournament_id + '/match'
+	    $.ajax({
+		url: url,
+		type: 'GET',
+		dataType: 'json',
+		success: options.success
+	    })
+	}
+    };
+
     return {
 	Player: Player,
-	Tournament: Tournament
+	Tournament: Tournament,
+	Match: Match
     }
 }(jQuery));

@@ -31,7 +31,7 @@ def play_tournament(id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     form = MatchForm()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         tourney.update_match(form.id.data, form.player1_id.data,
                              form.player2_id.data, form.score1.data,
                              form.score2.data)
