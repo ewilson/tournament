@@ -7,18 +7,18 @@ jQuery(function ($) {
 	    this.$matchForms.submit(this.addMatch);
         },
 	addMatch: function(e) {
-	    console.log('addMatch');
 	    e.preventDefault();
-/*	    var description = Page.$description.val().trim();
-	    if (description) {
-		Dao.Tournament.add({
-		    description: description,
-		    success: Page.appendNewTournament,
-		});
-		Page.$description.val('');
-	    } else {
-		alert('Description field is required.');
-	    }*/
+	    var $matchForm = $(this).closest('form');
+	    var options = {};
+	    options = {
+		'match_id': $matchForm.find('#id').val().trim(),
+		'player1_id': $matchForm.find('#player1_id').val().trim(),
+		'player2_id': $matchForm.find('#player2_id').val().trim(),
+		'score1': $matchForm.find('#score1').val().trim(),
+		'score2': $matchForm.find('#score2').val().trim(),
+		'success': function() { alert('SUCCESS'); }
+	    };
+	    Dao.Match.add(options);
         },
 	getPlayers: function() {
 	    Dao.Player.list({
