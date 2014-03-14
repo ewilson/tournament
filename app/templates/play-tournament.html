@@ -7,17 +7,18 @@
 <div class="container">
   <h1>{{tournament.description}}</h1>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <h2>Scheduled Matches</h2>
-      {% for s_match in model['schedule'] %}
+      {% for match in model['matches'] %}
+        {% if not match.entered_time %}
         <div class="well">
 	  <form action="{{tournament.id}}" method="post" name="match" role="form" class="form-horizontal">
-	    <input id="id" name="id" type="hidden" value="{{s_match.id}}">
-	    <input id="player1_id" name="player1_id" type="hidden" value="{{s_match.player1.id}}">
-	    <input id="player2_id" name="player2_id" type="hidden" value="{{s_match.player2.id}}">
+	    <input id="id" name="id" type="hidden" value="{{match.id}}">
+	    <input id="player1_id" name="player1_id" type="hidden" value="{{match.player1.id}}">
+	    <input id="player2_id" name="player2_id" type="hidden" value="{{match.player2.id}}">
 	    <div class="form-group">
 	      <label for="score1" class="col-sm-3 control-label">
-		{{s_match.player1.fname}}
+		{{match.player1.fname}}
 	      </label>
 	      <div class="col-sm-9">
 		<input class="form-control" id="score1" name="score1" placeholder="Enter Score" size="4" type="text" value="">
@@ -25,7 +26,7 @@
 	    </div>
 	    <div class="form-group">
 	      <label for="score2" class="col-sm-3 control-label">
-		{{s_match.player2.fname}}
+		{{match.player2.fname}}
 	      </label>
 	      <div class="col-sm-9">
 		<input class="form-control" id="score2" name="score2" placeholder="Enter Score" size="4" type="text" value="">
@@ -40,23 +41,20 @@
 	    </div>
 	  </form>
 	</div>
-      {% endfor %}
-    </div>
-    <div class="col-md-4">
-      <h2>Completed Matches</h2>
-      {% for c_match in model['completed'] %}
+	{% else %}
 	<div class="well">
           <table class="table">
-	    <tr><td>{{c_match.player1.fname}}</td><td>{{c_match.score1}}</td></tr>
-            <tr><td>{{c_match.player2.fname}}</td><td>{{c_match.score2}}</td></tr>
+	    <tr><td>{{match.player1.fname}}</td><td>{{match.score1}}</td></tr>
+            <tr><td>{{match.player2.fname}}</td><td>{{match.score2}}</td></tr>
           </table>
 	  <a href="{{url_for('undo_match',
 		   tourn_id = tournament.id,
-		   match_id = c_match.id)}}"><span class="glyphicon glyphicon-remove"></span></a>
+		   match_id = match.id)}}"><span class="glyphicon glyphicon-remove"></span></a>
 	</div>
+	{% endif %}
       {% endfor %}
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <h2>Standings</h2>
       <table class="table table-bordered table-hover">
 	<thead>

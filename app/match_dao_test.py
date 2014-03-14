@@ -58,7 +58,7 @@ def test_create_and_find_scheduled_by_tournament(g):
     match_dao.create([p.id,p2.id], t.id)
     match_dao.create([p.id,p2.id], t2.id)
     match_dao.create([p.id,p3.id], t2.id)
-    retrieved_matches = match_dao.find_scheduled_by_tournament(t2.id)
+    retrieved_matches = match_dao.find_by_tournament(t2.id)
 
     assert len(retrieved_matches) == 2
     assert retrieved_matches[0].player2.fname == p2.fname
@@ -82,8 +82,7 @@ def test_update_match_with_result(g):
 
     match_dao.update(match)
     retrieved_match = match_dao.find(match_id)
-    scheduled_matches = match_dao.find_scheduled_by_tournament(t.id)
-    completed_matches = match_dao.find_completed_by_tournament(t.id)
+    matches = match_dao.find_by_tournament(t.id)
 
     assert retrieved_match.score1 == 19
     assert retrieved_match.score2 == 21
@@ -91,8 +90,7 @@ def test_update_match_with_result(g):
     assert retrieved_match.player2.fname == p2.fname
     assert retrieved_match.player1.id == p.id
     assert retrieved_match.player2.id == p2.id
-    assert len(scheduled_matches) == 0
-    assert len(completed_matches) == 1
+    assert matches[0].entered_time
 
 def test_undo_match(g):
     p = Player("test player")
@@ -113,8 +111,7 @@ def test_undo_match(g):
 
     match_dao.undo(match)
     retrieved_match = match_dao.find(match_id)
-    scheduled_matches = match_dao.find_scheduled_by_tournament(t.id)
-    completed_matches = match_dao.find_completed_by_tournament(t.id)
+    matches = match_dao.find_by_tournament(t.id)
 
     assert retrieved_match.score1 == 0
     assert retrieved_match.score2 == 0
@@ -122,6 +119,5 @@ def test_undo_match(g):
     assert retrieved_match.player2.fname == p2.fname
     assert retrieved_match.player1.id == p.id
     assert retrieved_match.player2.id == p2.id
-    assert len(scheduled_matches) == 1
-    assert len(completed_matches) == 0
+    assert not matches[0].entered_time
 

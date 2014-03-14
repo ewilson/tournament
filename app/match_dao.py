@@ -30,19 +30,6 @@ def find_by_tournament(tournament_id):
     matches = [find(row[0]) for row in cur.fetchall()]
     return matches
 
-# Maybe this and next unecessary?
-def find_scheduled_by_tournament(tournament_id):
-    select = "select id from match where tournament_id = ? and entered_time is null"
-    cur = g.db.execute(select, [tournament_id])
-    matches = [find(row[0]) for row in cur.fetchall()]
-    return matches
-
-def find_completed_by_tournament(tournament_id):
-    select = "select id from match where tournament_id = ? and entered_time is not null"
-    cur = g.db.execute(select, [tournament_id])
-    matches = [find(row[0]) for row in cur.fetchall()]
-    return matches
-
 def create(player_ids, tournament_id):
     insert_match = "insert into match (tournament_id) values (?)"
     insert_entry = """

@@ -37,8 +37,7 @@ def play_tournament(id):
                              form.score2.data)
     model = {}
     model['tournament'] = tournament_dao.find(id)
-    model['schedule'] = match_dao.find_scheduled_by_tournament(id)
-    model['completed'] = match_dao.find_completed_by_tournament(id)
+    model['matches'] = match_dao.find_by_tournament(id)
     model['standings'] = tourney.find_standings(id)
     return render_template('play-tournament.html', 
                            model=model,
