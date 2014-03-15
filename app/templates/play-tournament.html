@@ -86,4 +86,15 @@
     </div>
   </div>
 </div>
+{% raw %}
+<script id="complete-match-template" type="text/x-handlebars-template">
+  <div class="well">
+    <table class="table">
+      <tr><td>{{match.player1.fname}}</td><td>{{match.score1}}</td></tr>
+      <tr><td>{{match.player2.fname}}</td><td>{{match.score2}}</td></tr>
+    </table>
+    <span class="glyphicon glyphicon-remove"></span>
+  </div>
+</script>
+{% endraw %}
 {% endblock %}

@@ -5,6 +5,7 @@ jQuery(function ($) {
         init: function () {
 	    this.$matchForms = $('form');
 	    this.$matchForms.submit(this.addMatch);
+	    this.$completeMatchTemplate = Handlebars.compile($("#complete-match-template").html());
         },
 	addMatch: function(e) {
 	    e.preventDefault();
@@ -16,10 +17,13 @@ jQuery(function ($) {
 		'player2_id': $matchForm.find('#player2_id').val().trim(),
 		'score1': $matchForm.find('#score1').val().trim(),
 		'score2': $matchForm.find('#score2').val().trim(),
-		'success': function() { alert('SUCCESS'); }
+		'success': Page.displayAddedMatch
 	    };
 	    Dao.Match.add(options);
         },
+	displayAddedMatch: function(data) {
+	    console.log("data",JSON.stringify(data))
+	},
 	getPlayers: function() {
 	    Dao.Player.list({
 		success: Page.getAddedPlayers
