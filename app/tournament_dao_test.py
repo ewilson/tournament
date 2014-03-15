@@ -47,9 +47,9 @@ def test_create_and_delete_tournament(g):
 
 def test_begin_tournament(g):
     t = Tournament(0,description='test-tourn')
-    tournament_dao.create(t)
+    t = tournament_dao.create(t)
 
-    tournament_dao.begin(1)
+    tournament_dao.update_status(t.id, 1)
     retreived_t = tournament_dao.find_all_by_status(1)
 
     assert retreived_t[0].description == t.description
@@ -70,9 +70,9 @@ def test_find_all_new_tournaments(g):
 
 def test_complete_tournament(g):
     t = Tournament(0,description='test-tourn')
-    tournament_dao.create(t)
+    t = tournament_dao.create(t)
 
-    tournament_dao.complete(1)
+    tournament_dao.update_status(t.id, 2)
     retreived_t = tournament_dao.find_all_by_status(2)
 
     assert retreived_t[0].description == t.description
