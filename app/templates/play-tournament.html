@@ -8,7 +8,7 @@
   <h1>{{tournament.description}}</h1>
   <div class="row">
     <div class="col-md-6">
-      <h2>Scheduled Matches</h2>
+      <h2>Matches</h2>
       {% for match in model['matches'] %}
         {% if not match.entered_time %}
         <div class="well">
@@ -88,13 +88,11 @@
 </div>
 {% raw %}
 <script id="complete-match-template" type="text/x-handlebars-template">
-  <div class="well">
-    <table class="table">
-      <tr><td>{{match.player1.fname}}</td><td>{{match.score1}}</td></tr>
-      <tr><td>{{match.player2.fname}}</td><td>{{match.score2}}</td></tr>
-    </table>
-    <span class="glyphicon glyphicon-remove"></span>
-  </div>
+  <table class="table">
+    <tr><td>{{player1.fname}}</td><td>{{score1}}</td></tr>
+    <tr><td>{{player2.fname}}</td><td>{{score2}}</td></tr>
+  </table>
+  <span class="glyphicon glyphicon-remove"></span>
 </script>
 {% endraw %}
 {% endblock %}

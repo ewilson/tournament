@@ -10,6 +10,7 @@ jQuery(function ($) {
 	addMatch: function(e) {
 	    e.preventDefault();
 	    var $matchForm = $(this).closest('form');
+	    var $matchWell = $(this).closest('.well');
 	    var options = {};
 	    options = {
 		'match_id': $matchForm.find('#id').val().trim(),
@@ -17,12 +18,16 @@ jQuery(function ($) {
 		'player2_id': $matchForm.find('#player2_id').val().trim(),
 		'score1': $matchForm.find('#score1').val().trim(),
 		'score2': $matchForm.find('#score2').val().trim(),
-		'success': Page.displayAddedMatch
+		'success': function(data) {
+		    Page.displayAddedMatch(data,$matchWell);
+		}
 	    };
 	    Dao.Match.add(options);
         },
-	displayAddedMatch: function(data) {
-	    console.log("data",JSON.stringify(data))
+	displayAddedMatch: function(data, matchDiv) {
+	    var completedMatchHtml = Page.$completeMatchTemplate(data.match);
+	    matchDiv.html(completedMatchHtml);
+	    console.log("data",JSON.stringify(data));
 	},
 	getPlayers: function() {
 	    Dao.Player.list({

@@ -66,7 +66,7 @@ def _post_match(id, request):
         message = "ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify(match)
+        return jsonify({'match':match})
 
 def _delete_match(id):
     try:
@@ -75,7 +75,7 @@ def _delete_match(id):
         message = "ERROR!"
         return jsonify({'success':False, 'message':message}),409
     else:
-        return jsonify(match)
+        return jsonify({'match':match})
 
 @app.route('/api/tournament/<id>/match', methods = ['GET'])
 def get_matches(id):
