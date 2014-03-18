@@ -7,13 +7,12 @@
 <div class="container">
   <h1>{{tournament.description}}</h1>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" id="matches">
       <h2>Matches</h2>
       {% for match in model['matches'] %}
         {% if not match.entered_time %}
-        <div class="well">
+        <div class="well" data-match_id={{match.id}}>
 	  <form action="{{tournament.id}}" method="post" name="match" role="form" class="form-horizontal">
-	    <input id="id" name="id" type="hidden" value="{{match.id}}">
 	    <input id="player1_id" name="player1_id" type="hidden" value="{{match.player1.id}}">
 	    <input id="player2_id" name="player2_id" type="hidden" value="{{match.player2.id}}">
 	    <div class="form-group">
@@ -42,14 +41,12 @@
 	  </form>
 	</div>
 	{% else %}
-	<div class="well">
+        <div class="well" data-match_id={{match.id}}>
           <table class="table">
 	    <tr><td>{{match.player1.fname}}</td><td>{{match.score1}}</td></tr>
             <tr><td>{{match.player2.fname}}</td><td>{{match.score2}}</td></tr>
           </table>
-	  <a href="{{url_for('undo_match',
-		   tourn_id = tournament.id,
-		   match_id = match.id)}}"><span class="glyphicon glyphicon-remove"></span></a>
+	  <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
 	</div>
 	{% endif %}
       {% endfor %}
@@ -92,7 +89,7 @@
     <tr><td>{{player1.fname}}</td><td>{{score1}}</td></tr>
     <tr><td>{{player2.fname}}</td><td>{{score2}}</td></tr>
   </table>
-  <span class="glyphicon glyphicon-remove"></span>
+  <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
 </script>
 {% endraw %}
 {% endblock %}

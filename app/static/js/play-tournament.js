@@ -3,17 +3,18 @@ jQuery(function ($) {
 
     var Page = {
         init: function () {
+	    this.$matches = $('#matches');
 	    this.$matchForms = $('form');
 	    this.$matchForms.submit(this.addMatch);
+	    this.$matches.on('click','.glyphicon-remove',this.undoMatch);
 	    this.$completeMatchTemplate = Handlebars.compile($("#complete-match-template").html());
         },
 	addMatch: function(e) {
 	    e.preventDefault();
 	    var $matchForm = $(this).closest('form');
 	    var $matchWell = $(this).closest('.well');
-	    var options = {};
-	    options = {
-		'match_id': $matchForm.find('#id').val().trim(),
+	    var options = {
+		'match_id': $matchWell.data('match_id'),
 		'player1_id': $matchForm.find('#player1_id').val().trim(),
 		'player2_id': $matchForm.find('#player2_id').val().trim(),
 		'score1': $matchForm.find('#score1').val().trim(),
@@ -27,11 +28,15 @@ jQuery(function ($) {
 	displayAddedMatch: function(data, matchDiv) {
 	    var completedMatchHtml = Page.$completeMatchTemplate(data.match);
 	    matchDiv.html(completedMatchHtml);
-	    console.log("data",JSON.stringify(data));
 	},
-	getPlayers: function() {
-	    Dao.Player.list({
-		success: Page.getAddedPlayers
+	undoMatch: function(e) {
+	    e.preventDefault();
+	    var match_id = $(this).closest('.well').data('match_id');
+	    Dao.Match.remove({
+		'match_id': match_id,
+		'success': function() {
+		    console.log('success');
+		}
 	    });
         },
 	resetPlayers: function() {
