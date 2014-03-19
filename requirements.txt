@@ -1,5 +1,3 @@
 Flask==0.10.1
-Flask-WTF==0.9.3
-WTForms==1.0.5
 numpy==1.6.1
 

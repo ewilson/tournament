@@ -12,7 +12,7 @@
       {% for match in model['matches'] %}
         {% if not match.entered_time %}
         <div class="well" data-match_id={{match.id}}>
-	  <form action="{{tournament.id}}" method="post" name="match" role="form" class="form-horizontal">
+	  <form action="" method="post" name="match" role="form" class="form-horizontal match-form">
 	    <input id="player1_id" name="player1_id" type="hidden" value="{{match.player1.id}}">
 	    <input id="player2_id" name="player2_id" type="hidden" value="{{match.player2.id}}">
 	    <div class="form-group">

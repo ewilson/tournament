@@ -1,8 +1,9 @@
-from flask import render_template, redirect, session, g, request, url_for
 import sqlite3, logging
+
+from flask import render_template, redirect, session, g, request, url_for
+
 import config
 from app import app
-from forms import MatchForm
 from models import Player, Standing
 import tournament_dao, player_dao, match_dao, tourney
 
@@ -25,23 +26,17 @@ def tournament(id):
     tourney.setup_round_robin(id)
     return redirect(url_for('play_tournament', id=id))
 
-@app.route('/play-tournament/<id>', methods = ['GET','POST'])
+@app.route('/play-tournament/<id>')
 def play_tournament(id):
     logging.debug('Play tourney: ' + str(id))
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    form = MatchForm()
-    if request.method == 'POST':
-        tourney.update_match(form.id.data, form.player1_id.data,
-                             form.player2_id.data, form.score1.data,
-                             form.score2.data)
     model = {}
     model['tournament'] = tournament_dao.find(id)
     model['matches'] = match_dao.find_by_tournament(id)
     model['standings'] = tourney.find_standings(id)
     return render_template('play-tournament.html', 
-                           model=model,
-                           form=form)
+                           model=model)
 
 @app.route('/conclude-tournament/<id>')
 def conclude_tournament(id):
