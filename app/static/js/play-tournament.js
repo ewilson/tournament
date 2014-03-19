@@ -5,9 +5,10 @@ jQuery(function ($) {
         init: function () {
 	    this.$matches = $('#matches');
 	    this.$matchForms = $('form');
-	    this.$matchForms.submit(this.addMatch);
+	    this.$matches.on('submit', '.match-form', this.addMatch);
 	    this.$matches.on('click','.glyphicon-remove',this.undoMatch);
 	    this.$completeMatchTemplate = Handlebars.compile($("#complete-match-template").html());
+	    this.$matchFormTemplate = Handlebars.compile($("#match-form-template").html());
         },
 	addMatch: function(e) {
 	    e.preventDefault();
@@ -20,7 +21,7 @@ jQuery(function ($) {
 		'score1': $matchForm.find('#score1').val().trim(),
 		'score2': $matchForm.find('#score2').val().trim(),
 		'success': function(data) {
-		    Page.displayAddedMatch(data,$matchWell);
+		    Page.displayAddedMatch(data, $matchWell);
 		}
 	    };
 	    Dao.Match.add(options);
@@ -31,35 +32,18 @@ jQuery(function ($) {
 	},
 	undoMatch: function(e) {
 	    e.preventDefault();
-	    var match_id = $(this).closest('.well').data('match_id');
+	    var $matchWell = $(this).closest('.well');
+	    var match_id = $matchWell.data('match_id');
 	    Dao.Match.remove({
 		'match_id': match_id,
-		'success': function() {
-		    console.log('success');
+		'success': function(data) {
+		    Page.displayMatchForm(data, $matchWell);
 		}
 	    });
         },
-	resetPlayers: function() {
-	    Page.$addedPlayers.find('a').remove();
-	    Page.$omittedPlayers.find('a').remove();
-	    Page.getPlayers();
-	},
-	getAddedPlayers: function(allPlayers) {
-	    Dao.Tournament.findPlayers({
-		tournament_id: Page.tournament_id,
-		success: function(data) {
-		    var all = allPlayers.players;
-		    var added = data.players;
-		    var added_ids = $.map(added, function(player, i) {
-			return player.id;
-		    });
-		    var omitted = $.grep(all, function(player, i){
-			return $.inArray(player.id, added_ids) == -1
-		    });
-		    Page.appendPlayers(added,Page.$addedPlayers);
-		    Page.appendPlayers(omitted,Page.$omittedPlayers);
-		}
-	    });
+	displayMatchForm: function(data, matchDiv) {
+	    var matchFormHtml = Page.$matchFormTemplate(data.match);
+	    matchDiv.html(matchFormHtml);
 	},
 	toggleButton: function() {
 	    Page.$button.prop('disabled', 
