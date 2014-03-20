@@ -115,7 +115,7 @@ var Dao = (function($) {
 		type: 'GET',
 		dataType: 'json',
 		success: options.success
-	    })
+	    });
 	}
     };
 
@@ -127,7 +127,7 @@ var Dao = (function($) {
 		type: 'GET',
 		dataType: 'json',
 		success: options.success
-	    })
+	    });
 	}
     };
 
@@ -135,6 +135,6 @@ var Dao = (function($) {
 	Player: Player,
 	Tournament: Tournament,
 	Match: Match,
-	Standings, Standings
+	Standings: Standings
     }
 }(jQuery));

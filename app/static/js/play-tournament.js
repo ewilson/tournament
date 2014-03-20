@@ -9,6 +9,8 @@ jQuery(function ($) {
 	    this.$matches.on('click','.glyphicon-remove',this.undoMatch);
 	    this.$completeMatchTemplate = Handlebars.compile($("#complete-match-template").html());
 	    this.$matchFormTemplate = Handlebars.compile($("#match-form-template").html());
+	    this.$standingsBody = $('#standings');
+	    this.$standingRowsTemplate = Handlebars.compile($("#standing-rows-template").html());
         },
 	addMatch: function(e) {
 	    e.preventDefault();
@@ -22,6 +24,13 @@ jQuery(function ($) {
 		'score2': $matchForm.find('#score2').val().trim(),
 		'success': function(data) {
 		    Page.displayAddedMatch(data, $matchWell);
+		    var standings = Dao.Standings.findByTournament({
+			tournament_id: 3,
+			'success': function(data) {
+			    var standingsHtml = Page.$standingRowsTemplate(data);
+			    Page.$standingsBody.html(standingsHtml);
+			}
+		    });
 		}
 	    };
 	    Dao.Match.add(options);

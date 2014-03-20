@@ -108,17 +108,19 @@
     </div>
   </form>
 </script>
-<script id="standing-row-template" type="text/x-handlebars-template">
+<script id="standing-rows-template" type="text/x-handlebars-template">
+  {{#each standings}}
   <tr>
-    <td>{{name}}</td>
-    <td>{{win}}</td>
-    <td>{{loss}}</td>
-    <td>{{tie}}</td>
-    <td>{{percent_display}}</td> 
-    <td>{{pf}}</td>
-    <td>{{pa}}</td>
-    <td>{{pf - pa}}</td> 
+    <td>{{this.name}}</td>
+    <td>{{this.win}}</td>
+    <td>{{this.loss}}</td>
+    <td>{{this.tie}}</td>
+    <td>{{this.percent_display}}</td> 
+    <td>{{this.pf}}</td>
+    <td>{{this.pa}}</td>
+    <td>{{this.pf - this.pa}}</td> 
   </tr>
+  {{/each}}
 </script>
 {% endraw %}
 {% endblock %}
