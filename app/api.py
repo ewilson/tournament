@@ -82,6 +82,11 @@ def get_matches(id):
     matches = match_dao.find_by_tournament(id)
     return jsonify({'matches':matches})
 
+@app.route('/api/tournament/<id>/standings', methods = ['GET'])
+def get_standings(id):
+    standings = tourney.find_standings(id)
+    return jsonify({'standings':standings})
+
 @app.route('/api/tournament/<id>/player', methods = ['GET'])
 def get_entries(id):
     players = player_dao.find_in_tournament(id)

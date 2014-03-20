@@ -60,19 +60,7 @@
 	    <th>PF</th><th>PA</th><th>+/-</th>
 	  </tr>
 	</thead>
-	<tbody>
-	{% for standing_row in model['standings'] %}
-	  <tr>
-	    <td>{{standing_row.name}}</td>
-	    <td>{{standing_row.win}}</td>
-	    <td>{{standing_row.loss}}</td>
-	    <td>{{standing_row.tie}}</td>
-	    <td>{{standing_row.percent_display}}</td> 
-	    <td>{{standing_row.pf}}</td>
-	    <td>{{standing_row.pa}}</td>
-	    <td>{{standing_row.pf - standing_row.pa}}</td> 
-	  </tr>
-	{% endfor %}
+	<tbody id="standings">
 	</tbody>
       </table>
       {% if not model['schedule'] %}
@@ -119,6 +107,18 @@
       </div>
     </div>
   </form>
+</script>
+<script id="standing-row-template" type="text/x-handlebars-template">
+  <tr>
+    <td>{{name}}</td>
+    <td>{{win}}</td>
+    <td>{{loss}}</td>
+    <td>{{tie}}</td>
+    <td>{{percent_display}}</td> 
+    <td>{{pf}}</td>
+    <td>{{pa}}</td>
+    <td>{{pf - pa}}</td> 
+  </tr>
 </script>
 {% endraw %}
 {% endblock %}

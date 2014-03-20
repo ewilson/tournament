@@ -119,9 +119,22 @@ var Dao = (function($) {
 	}
     };
 
+    var Standings = {
+	findByTournament: function(options) {
+	    var url = $SCRIPT_ROOT + '/tournament/' + options.tournament_id + '/standings'
+	    $.ajax({
+		url: url,
+		type: 'GET',
+		dataType: 'json',
+		success: options.success
+	    })
+	}
+    };
+
     return {
 	Player: Player,
 	Tournament: Tournament,
-	Match: Match
+	Match: Match,
+	Standings, Standings
     }
 }(jQuery));
