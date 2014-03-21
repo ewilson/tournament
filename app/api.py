@@ -110,6 +110,8 @@ def add_or_delete_entry(tournament_id, player_id):
            methods = ['POST'])
 def update_status(tournament_id, status):
     try:
+        if status == '1':
+            tourney.setup_round_robin(tournament_id)
         tournament_dao.update_status(tournament_id, status)
     except sqlite3.IntegrityError:
         message = "ERROR!"

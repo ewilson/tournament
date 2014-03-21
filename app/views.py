@@ -23,7 +23,6 @@ def tournament(id):
     if not tournament.status:
         return render_template('edit-tournament.html', 
                                tournament=tournament)
-    tourney.setup_round_robin(id)
     return redirect(url_for('play_tournament', id=id))
 
 @app.route('/play-tournament/<id>')
