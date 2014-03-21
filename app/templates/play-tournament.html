@@ -4,8 +4,7 @@
 <script src="/static/js/play-tournament.js"></script>
 
 <div class="container">
-  <div id="head">
-    <h1 data-tournament_id={{tournament.id}}>{{tournament.description}}</h1>
+  <div id="head" data-tournament_id={{tournament_id}}>
   </div>
   <div class="row">
     <div class="col-md-6" id="matches">
@@ -81,6 +80,9 @@
     <td>{{this.pf - this.pa}}</td> 
   </tr>
   {{/each}}
+</script>
+<script id="head-template" type="text/x-handlebars-template">
+  <h1>{{description}}</h1>
 </script>
 <script id="congrats-template" type="text/x-handlebars-template">
   <div class="jumbotron">

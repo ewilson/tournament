@@ -47,10 +47,11 @@ var Dao = (function($) {
 		success: options.success
 	    });
 	},
-	findById: function(options) {
+	find: function(options) {
 	    $.ajax({
 		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id,
 		type: 'GET',
+		dataType: 'json',
 		success: options.success
 	    });
 	},

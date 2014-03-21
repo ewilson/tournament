@@ -27,9 +27,8 @@ def tournament(id):
 def play_tournament(id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    tournament = tournament_dao.find(id)
     return render_template('play-tournament.html', 
-                           tournament=tournament)
+                           tournament_id=id)
 
 @app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
 def undo_match(tourn_id, match_id):

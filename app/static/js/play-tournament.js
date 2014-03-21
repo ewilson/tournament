@@ -6,6 +6,7 @@ jQuery(function ($) {
 	    this.$matches = $('#matches');
 	    this.$matchForms = $('form');
 	    this.$completeButton = $('#complete');
+	    this.$completeButton.hide();
 	    this.$head = $('#head');
 	    this.$matches.on('submit', '.match-form', this.addMatch);
 	    this.$matches.on('click','.glyphicon-remove',this.undoMatch);
@@ -14,9 +15,11 @@ jQuery(function ($) {
 	    this.$matchFormTemplate = Handlebars.compile($("#match-form-template").html());
 	    this.$matchWellTemplate = Handlebars.compile($("#match-well-template").html());
 	    this.$congratsTemplate = Handlebars.compile($("#congrats-template").html());
+	    this.$headTemplate = Handlebars.compile($("#head-template").html());
 	    this.$standingsBody = $('#standings');
 	    this.$standingRowsTemplate = Handlebars.compile($("#standing-rows-template").html());
-	    this.tournament_id = $('h1').data('tournament_id');
+	    this.tournament_id = this.$head.data('tournament_id');
+	    this.getHeader();
 	    this.getMatches();
 	    this.displayStandings();
         },
@@ -88,6 +91,21 @@ jQuery(function ($) {
 	    Page.$completeButton.remove();
 	    var congratsHtml = Page.$congratsTemplate(); 
 	    Page.$head.html(congratsHtml);
+	},
+	getHeader: function() {
+	    Dao.Tournament.find({
+		tournament_id: Page.tournament_id,
+		success: Page.renderHeader
+	    });
+	},
+	renderHeader: function(data) {
+	    if (data.tournament.status == 1) {
+		var head = Page.$headTemplate(data.tournament);
+		Page.$completeButton.show();
+	    } else {
+		var head = Page.$congratsTemplate(data.tournament);
+	    }
+	    Page.$head.html(head);
 	}
     };
     Page.init();
