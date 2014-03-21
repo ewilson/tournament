@@ -4,7 +4,9 @@
 <script src="/static/js/play-tournament.js"></script>
 
 <div class="container">
-  <h1 data-tournament_id={{tournament.id}}>{{tournament.description}}</h1>
+  <div id="head">
+    <h1 data-tournament_id={{tournament.id}}>{{tournament.description}}</h1>
+  </div>
   <div class="row">
     <div class="col-md-6" id="matches">
       <h2>Matches</h2>
@@ -21,8 +23,7 @@
 	<tbody id="standings">
 	</tbody>
       </table>
-      <a href="{{ url_for('conclude_tournament', id = tournament.id) }}">
-	<button class="btn btn-danger">Complete Tournament</button>
+      <button id="complete" class="btn btn-danger">Complete Tournament</button>
       </a>
     </div>
   </div>
@@ -80,6 +81,12 @@
     <td>{{this.pf - this.pa}}</td> 
   </tr>
   {{/each}}
+</script>
+<script id="congrats-template" type="text/x-handlebars-template">
+  <div class="jumbotron">
+    <h1>Congratulations {{ name }}!</h1>
+    <p>You have won the "{{ description }}" tournament</p>
+  </div>
 </script>
 {% endraw %}
 {% endblock %}

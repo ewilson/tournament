@@ -5,11 +5,15 @@ jQuery(function ($) {
         init: function () {
 	    this.$matches = $('#matches');
 	    this.$matchForms = $('form');
+	    this.$completeButton = $('#complete');
+	    this.$head = $('#head');
 	    this.$matches.on('submit', '.match-form', this.addMatch);
 	    this.$matches.on('click','.glyphicon-remove',this.undoMatch);
+	    this.$completeButton.click(this.completeTournament);
 	    this.$completeMatchTemplate = Handlebars.compile($("#complete-match-template").html());
 	    this.$matchFormTemplate = Handlebars.compile($("#match-form-template").html());
 	    this.$matchWellTemplate = Handlebars.compile($("#match-well-template").html());
+	    this.$congratsTemplate = Handlebars.compile($("#congrats-template").html());
 	    this.$standingsBody = $('#standings');
 	    this.$standingRowsTemplate = Handlebars.compile($("#standing-rows-template").html());
 	    this.tournament_id = $('h1').data('tournament_id');
@@ -79,6 +83,11 @@ jQuery(function ($) {
 		matchTemplate.html(matchHtml);
 		Page.$matches.append(matchTemplate);
 	    });
+	},
+	completeTournament: function() {
+	    Page.$completeButton.remove();
+	    var congratsHtml = Page.$congratsTemplate(); 
+	    Page.$head.html(congratsHtml);
 	}
     };
     Page.init();
