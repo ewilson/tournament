@@ -28,15 +28,11 @@ def tournament(id):
 
 @app.route('/play-tournament/<id>')
 def play_tournament(id):
-    logging.debug('Play tourney: ' + str(id))
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    model = {}
-    model['tournament'] = tournament_dao.find(id)
-    model['matches'] = match_dao.find_by_tournament(id)
-    model['standings'] = tourney.find_standings(id)
+    tournament = tournament_dao.find(id)
     return render_template('play-tournament.html', 
-                           model=model)
+                           tournament=tournament)
 
 @app.route('/conclude-tournament/<id>')
 def conclude_tournament(id):
@@ -45,7 +41,7 @@ def conclude_tournament(id):
     tournament_dao.update_status(id,2)
     model = {}
     model['tournament'] = tournament_dao.find(id)
-    model['matches'] = match_dao.find_completed_by_tournament(id)
+    model['matches'] = match_dao.find_by_tournament(id)
     model['standings'] = tourney.find_standings(id)
     return render_template('completed-tournament.html',model=model)
 

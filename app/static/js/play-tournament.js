@@ -9,8 +9,12 @@ jQuery(function ($) {
 	    this.$matches.on('click','.glyphicon-remove',this.undoMatch);
 	    this.$completeMatchTemplate = Handlebars.compile($("#complete-match-template").html());
 	    this.$matchFormTemplate = Handlebars.compile($("#match-form-template").html());
+	    this.$matchWellTemplate = Handlebars.compile($("#match-well-template").html());
 	    this.$standingsBody = $('#standings');
 	    this.$standingRowsTemplate = Handlebars.compile($("#standing-rows-template").html());
+	    this.tournament_id = $('h1').data('tournament_id');
+	    this.getMatches();
+	    this.displayStandings();
         },
 	addMatch: function(e) {
 	    e.preventDefault();
@@ -51,59 +55,29 @@ jQuery(function ($) {
 	},
 	displayStandings: function() {
 	    Dao.Standings.findByTournament({
-		tournament_id: 3,
+		tournament_id: Page.tournament_id,
 		'success': function(data) {
 		    var standingsHtml = Page.$standingRowsTemplate(data);
 		    Page.$standingsBody.html(standingsHtml);
 		}
 	    });
 	},
-	toggleButton: function() {
-	    Page.$button.prop('disabled', 
-			      Page.$addedPlayers.find('a').length < 3);
-	},
-	enterT: function(e) {
-	    e.preventDefault();
-	    Page.toggleEntry($(this),'POST',Page.$addedPlayers);
-	},
-	exitT: function(e) {
-	    e.preventDefault();
-	    Page.toggleEntry($(this),'DELETE',Page.$omittedPlayers);
-	},
-	toggleEntry: function(player,verb,target) {
-	    Dao.Tournament.updatePlayer({
+	getMatches: function() {
+	    Dao.Match.findByTournament({
 		tournament_id: Page.tournament_id,
-		player_id: player.data('player_id'),
-		player: player,
-		httpVerb: verb,
-		success: function(data) {
-		    Page.movePlayer(data,player,target);
-		},
-		error: Page.resetPlayers
+		success: Page.displayAllMatches
 	    });
 	},
-	movePlayer: function(data,player,target) {
-	    var playerHtml = Page.$playerTemplate(data.player);
-	    target.append(playerHtml);
-	    player.remove();
-	    Page.toggleButton();
-	},
-	appendPlayers: function(data,list) {
-	    $.each(data, function(i, player) {
-		var playerHtml = Page.$playerTemplate(player);
-		list.append(playerHtml);
-	    });
-	    Page.toggleButton();
-	},
-	startTourney: function(e) {
-	    e.preventDefault();
-	    Dao.Tournament.updateStatus({
-		tournament_id: Page.tournament_id,
-		status: 1,
-		success: function(data) {
-		    window.location.href = $APP_ROOT + "/tournament/" +
-			Page.tournament_id;
+	displayAllMatches: function(data) {
+	    $.each(data.matches, function(i, match) {
+		var matchTemplate = $(Page.$matchWellTemplate({'id':match.id}));
+		if (match.entered_time) {
+		    var matchHtml = Page.$completeMatchTemplate(match);
+		} else {
+		    var matchHtml = Page.$matchFormTemplate(match);
 		}
+		matchTemplate.html(matchHtml);
+		Page.$matches.append(matchTemplate);
 	    });
 	}
     };
