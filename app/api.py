@@ -23,12 +23,14 @@ def get_new_tournaments(status):
     tourneys = tournament_dao.find_all_by_status(status)
     return jsonify({'tournaments':tourneys})
 
-@app.route('/api/tournament/<id>', methods = ['POST','DELETE'])
+@app.route('/api/tournament/<id>', methods = ['GET','POST','DELETE'])
 def tournament2(id):
     if request.method == 'POST':
         return _post_tourney_entries(id, request)
     elif request.method == 'DELETE':
         return _delete_tournament(id)
+    elif request.method == 'GET':
+        return _get_tournament(id)
 
 def _post_tourney_entries(id, request):
     try:
@@ -48,6 +50,18 @@ def _delete_tournament(id):
         return jsonify({'success':False, 'message':message}),409
     else:
         return jsonify({'success':True, 'id':id})
+
+def _get_tournament(id):
+    try:
+        tournament = tournament_dao.find(id)
+    except sqlite3.IntegrityError:
+        message = "ERROR!"
+        return jsonify({'success':False, 'message':message}),409
+    else:
+        if tournament:
+            return jsonify({'success':True, 'tournament':tournament})
+        else:
+            return jsonify({'success':False, 'message':'Not Found'}),404
 
 @app.route('/api/match/<id>', methods = ['POST','DELETE'])
 def match(id):

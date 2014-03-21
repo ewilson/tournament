@@ -47,6 +47,13 @@ var Dao = (function($) {
 		success: options.success
 	    });
 	},
+	findById: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id,
+		type: 'GET',
+		success: options.success
+	    });
+	},
 	findByStatus: function(options) {
 	    $.ajax({
 		url: $SCRIPT_ROOT + '/tournament/status/' + options.status,
