@@ -19,6 +19,7 @@ jQuery(function ($) {
 	    this.$standingsBody = $('#standings');
 	    this.$standingRowsTemplate = Handlebars.compile($("#standing-rows-template").html());
 	    this.tournament_id = this.$head.data('tournament_id');
+	    this.tournament_name = '';
 	    this.getHeader();
 	    this.getMatches();
 	    this.displayStandings();
@@ -88,14 +89,24 @@ jQuery(function ($) {
 	    });
 	},
 	completeTournament: function() {
+	    Dao.Tournament.updateStatus({
+		tournament_id: Page.tournament_id,
+		status: 2,
+		success: Page.renderCompletePage
+	    });
+	},
+	renderCompletePage: function() {
 	    Page.$completeButton.remove();
-	    var congratsHtml = Page.$congratsTemplate(); 
+	    var congratsHtml = Page.$congratsTemplate({'description':Page.tournament_name}); 
 	    Page.$head.html(congratsHtml);
 	},
 	getHeader: function() {
 	    Dao.Tournament.find({
 		tournament_id: Page.tournament_id,
-		success: Page.renderHeader
+		success: function(data) {
+		    Page.tournament_name = data.tournament.description;
+		    Page.renderHeader(data);
+		}
 	    });
 	},
 	renderHeader: function(data) {
