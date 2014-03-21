@@ -18,8 +18,6 @@ def tournament(id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     tournament = tournament_dao.find(id)
-    if tournament.status == 2:
-        return redirect(url_for('conclude_tournament',id=id))
     if not tournament.status:
         return render_template('edit-tournament.html', 
                                tournament=tournament)
@@ -32,17 +30,6 @@ def play_tournament(id):
     tournament = tournament_dao.find(id)
     return render_template('play-tournament.html', 
                            tournament=tournament)
-
-@app.route('/conclude-tournament/<id>')
-def conclude_tournament(id):
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    tournament_dao.update_status(id,2)
-    model = {}
-    model['tournament'] = tournament_dao.find(id)
-    model['matches'] = match_dao.find_by_tournament(id)
-    model['standings'] = tourney.find_standings(id)
-    return render_template('completed-tournament.html',model=model)
 
 @app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
 def undo_match(tourn_id, match_id):
