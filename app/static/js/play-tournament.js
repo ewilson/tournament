@@ -92,13 +92,18 @@ jQuery(function ($) {
 	    Dao.Tournament.updateStatus({
 		tournament_id: Page.tournament_id,
 		status: 2,
+		type: 'POST',
 		success: Page.renderCompletePage
 	    });
 	},
 	renderCompletePage: function() {
 	    Page.$completeButton.remove();
-	    var congratsHtml = Page.$congratsTemplate({'description':Page.tournament_name}); 
+	    var winner = Page.findWinner();
+	    var congratsHtml = Page.$congratsTemplate({'description':Page.tournament_name, 'winner':winner}); 
 	    Page.$head.html(congratsHtml);
+	},
+	findWinner: function() {
+	    return Page.$standingsBody.find('.name').first().text();
 	},
 	getHeader: function() {
 	    Dao.Tournament.find({
@@ -114,6 +119,8 @@ jQuery(function ($) {
 		var head = Page.$headTemplate(data.tournament);
 		Page.$completeButton.show();
 	    } else {
+		var winner = Page.findWinner();
+		data.tournament.winner = winner;
 		var head = Page.$congratsTemplate(data.tournament);
 	    }
 	    Page.$head.html(head);

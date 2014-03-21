@@ -70,7 +70,7 @@
 <script id="standing-rows-template" type="text/x-handlebars-template">
   {{#each standings}}
   <tr>
-    <td>{{this.name}}</td>
+    <td class="name">{{this.name}}</td>
     <td>{{this.win}}</td>
     <td>{{this.loss}}</td>
     <td>{{this.tie}}</td>
@@ -86,7 +86,7 @@
 </script>
 <script id="congrats-template" type="text/x-handlebars-template">
   <div class="jumbotron">
-    <h1>Congratulations {{ name }}!</h1>
+    <h1>Congratulations {{ winner }}!</h1>
     <p>You have won the "{{ description }}" tournament</p>
   </div>
 </script>
