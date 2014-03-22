@@ -20,9 +20,9 @@ jQuery(function ($) {
 	    this.$standingRowsTemplate = Handlebars.compile($("#standing-rows-template").html());
 	    this.tournament_id = this.$head.data('tournament_id');
 	    this.tournament_name = '';
-	    this.getHeader();
 	    this.getMatches();
 	    this.displayStandings();
+	    this.getHeader();
         },
 	addMatch: function(e) {
 	    e.preventDefault();
