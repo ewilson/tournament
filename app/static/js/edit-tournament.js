@@ -3,7 +3,6 @@ jQuery(function ($) {
 
     var Page = {
         init: function () {
-	    this.$page = $('.container');
 	    this.$omittedPlayers = $('.omitted-players');
 	    this.$addedPlayers = $('.added-players');
 	    this.$playerTemplate = Handlebars.compile($("#player-template").html());

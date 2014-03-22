@@ -63,7 +63,6 @@ jQuery(function ($) {
 	    });
         },
 	createTournament: function(e) {
-	    console.log('createTournament');
 	    e.preventDefault();
 	    var description = Page.$description.val().trim();
 	    if (description) {

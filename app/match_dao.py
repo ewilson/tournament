@@ -6,28 +6,26 @@ from models import Match, Player
 
 def find(id):
     select = """
-    select p.fname, p.id, a.score from player p, attempt a
-    where p.id = a.player_id and a.match_id = ?
+    select p.fname, p.id, a.score, m.entered_time 
+    from player p, attempt a, match m
+    where p.id = a.player_id 
+    and a.match_id = ?
+    and m.id = a.match_id
     """
     m = Match(id=id)
     cur = g.db.execute(select, [id])
     attempts = cur.fetchall()
-    player1 = Player(*attempts[0][:-1])
+    player1 = Player(*attempts[0][:2])
     m.player1 = player1
-    m.score1 = attempts[0][-1]
-    player2 = Player(*attempts[1][:-1])
+    m.score1 = attempts[0][2]
+    player2 = Player(*attempts[1][:2])
     m.player2 = player2
-    m.score2 = attempts[1][-1]
+    m.score2 = attempts[1][2]
+    m.entered_time = attempts[0][-1]
     return m
 
-def find_scheduled_by_tournament(tournament_id):
-    select = "select id from match where tournament_id = ? and entered_time is null"
-    cur = g.db.execute(select, [tournament_id])
-    matches = [find(row[0]) for row in cur.fetchall()]
-    return matches
-
-def find_completed_by_tournament(tournament_id):
-    select = "select id from match where tournament_id = ? and entered_time is not null"
+def find_by_tournament(tournament_id):
+    select = "select id from match where tournament_id = ?"
     cur = g.db.execute(select, [tournament_id])
     matches = [find(row[0]) for row in cur.fetchall()]
     return matches

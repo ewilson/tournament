@@ -47,6 +47,14 @@ var Dao = (function($) {
 		success: options.success
 	    });
 	},
+	find: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id,
+		type: 'GET',
+		dataType: 'json',
+		success: options.success
+	    });
+	},
 	findByStatus: function(options) {
 	    $.ajax({
 		url: $SCRIPT_ROOT + '/tournament/status/' + options.status,
@@ -77,7 +85,6 @@ var Dao = (function($) {
 	updateStatus: function(options) {
 	    var url = $SCRIPT_ROOT + '/tournament/' + options.tournament_id +
 		'/status/' + options.status;
-	    console.log('URL',url);
 	    $.ajax({
 		url: url,
 		type: 'POST',
@@ -87,8 +94,54 @@ var Dao = (function($) {
 	}
     };
 
+    var Match = {
+	add: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/match/' + options.match_id,
+		type: 'POST',
+		dataType: 'json',
+		data: { player1_id: options.player1_id,
+			player2_id: options.player2_id,
+			score1: options.score1,
+			score2: options.score2 },
+		success: options.success
+	    });
+	},
+	remove: function(options) {
+	    $.ajax({
+		url: $SCRIPT_ROOT + '/match/' + options.match_id,
+		type: 'DELETE',
+		dataType: 'json',
+		success: options.success
+	    });
+	},
+	findByTournament: function(options) {
+	    var url = $SCRIPT_ROOT + '/tournament/' + options.tournament_id + '/match'
+	    $.ajax({
+		url: url,
+		type: 'GET',
+		dataType: 'json',
+		success: options.success
+	    });
+	}
+    };
+
+    var Standings = {
+	findByTournament: function(options) {
+	    var url = $SCRIPT_ROOT + '/tournament/' + options.tournament_id + '/standings'
+	    $.ajax({
+		url: url,
+		type: 'GET',
+		dataType: 'json',
+		success: options.success
+	    });
+	}
+    };
+
     return {
 	Player: Player,
-	Tournament: Tournament
+	Tournament: Tournament,
+	Match: Match,
+	Standings: Standings
     }
 }(jQuery));

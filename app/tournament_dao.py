@@ -20,7 +20,11 @@ def find_all_by_status(status):
 def find(id):
     select = "select * from tournament where id = ?"
     cur = g.db.execute(select, [id])
-    return Tournament(*cur.fetchone())
+    row = cur.fetchone()
+    if row:
+        return Tournament(*row)
+    else:
+        return None
 
 def create(tourn):
     insert_tournament = """

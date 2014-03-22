@@ -1,8 +1,9 @@
-from flask import render_template, redirect, session, g, request, url_for
 import sqlite3, logging
+
+from flask import render_template, redirect, session, g, request, url_for
+
 import config
 from app import app
-from forms import MatchForm
 from models import Player, Standing
 import tournament_dao, player_dao, match_dao, tourney
 
@@ -17,43 +18,17 @@ def tournament(id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     tournament = tournament_dao.find(id)
-    if tournament.status == 2:
-        return redirect(url_for('conclude_tournament',id=id))
     if not tournament.status:
         return render_template('edit-tournament.html', 
                                tournament=tournament)
-    tourney.setup_round_robin(id)
     return redirect(url_for('play_tournament', id=id))
 
-@app.route('/play-tournament/<id>', methods = ['GET','POST'])
+@app.route('/play-tournament/<id>')
 def play_tournament(id):
-    logging.debug('Play tourney: ' + str(id))
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    form = MatchForm()
-    if form.validate_on_submit():
-        tourney.update_match(form.id.data, form.player1_id.data,
-                             form.player2_id.data, form.score1.data,
-                             form.score2.data)
-    model = {}
-    model['tournament'] = tournament_dao.find(id)
-    model['schedule'] = match_dao.find_scheduled_by_tournament(id)
-    model['completed'] = match_dao.find_completed_by_tournament(id)
-    model['standings'] = tourney.find_standings(id)
     return render_template('play-tournament.html', 
-                           model=model,
-                           form=form)
-
-@app.route('/conclude-tournament/<id>')
-def conclude_tournament(id):
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    tournament_dao.update_status(id,2)
-    model = {}
-    model['tournament'] = tournament_dao.find(id)
-    model['matches'] = match_dao.find_completed_by_tournament(id)
-    model['standings'] = tourney.find_standings(id)
-    return render_template('completed-tournament.html',model=model)
+                           tournament_id=id)
 
 @app.route('/tournament/undo/<tourn_id>/<match_id>' , methods = ['GET','POST'])
 def undo_match(tourn_id, match_id):
