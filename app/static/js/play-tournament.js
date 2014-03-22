@@ -101,6 +101,14 @@ jQuery(function ($) {
 	    var winner = Page.findWinner();
 	    var congratsHtml = Page.$congratsTemplate({'description':Page.tournament_name, 'winner':winner}); 
 	    Page.$head.html(congratsHtml);
+	    Page.removeUplayedGames();
+	    Page.removeUndo();
+	},
+	removeUplayedGames: function() {
+	    $('.match-form').closest('div').remove();
+	},
+	removeUndo: function() {
+	    $('.glyphicon-remove').closest('a').remove();
 	},
 	findWinner: function() {
 	    return Page.$standingsBody.find('.name').first().text();
@@ -119,12 +127,11 @@ jQuery(function ($) {
 		var head = Page.$headTemplate(data.tournament);
 		Page.$completeButton.show();
 	    } else {
-		var winner = Page.findWinner();
-		data.tournament.winner = winner;
-		var head = Page.$congratsTemplate(data.tournament);
+		Page.renderCompletePage();
 	    }
 	    Page.$head.html(head);
-	}
+	},
+	
     };
     Page.init();
 });
