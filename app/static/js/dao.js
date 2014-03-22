@@ -85,7 +85,6 @@ var Dao = (function($) {
 	updateStatus: function(options) {
 	    var url = $SCRIPT_ROOT + '/tournament/' + options.tournament_id +
 		'/status/' + options.status;
-	    console.log('URL',url);
 	    $.ajax({
 		url: url,
 		type: 'POST',
