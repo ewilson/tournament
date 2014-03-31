@@ -44,3 +44,20 @@ def test_two_teams_scheduled():
 
     assert len(schedule) == 1
     assert schedule[0] == set(['alpha','bravo'])
+
+def test_four_team_bracket():
+    entries = ['alpha','beta','gamma','delta']
+
+    schedule = scheduler.bracket(entries)
+
+    assert len(schedule) == 2
+    match1 = schedule[0]
+    match2 = schedule[1]
+    assert match1[0]['player'] == 'alpha'
+    assert match1[0]['seed'] == 0
+    assert match1[1]['player'] == 'delta'
+    assert match1[1]['seed'] == 3
+    assert match2[0]['player'] == 'beta'
+    assert match2[0]['seed'] == 1
+    assert match2[1]['player'] == 'gamma'
+    assert match2[1]['seed'] == 2

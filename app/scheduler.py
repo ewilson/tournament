@@ -1,5 +1,14 @@
 import numpy as np
 
+def bracket(teams):
+    schedule = []
+    num_teams = len(teams)
+    for n in range(num_teams/2):
+        comp = num_teams - n - 1
+        schedule.append(({'player':teams[n],'seed':n},
+                         {'player':teams[comp],'seed':comp}))
+    return schedule
+
 def round_robin(teams):
     g = Graph(len(teams))
     schedule = []
