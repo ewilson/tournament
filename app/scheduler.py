@@ -1,12 +1,18 @@
+import math
 import numpy as np
 
 def bracket(teams):
     schedule = []
     num_teams = len(teams)
-    for n in range(num_teams/2):
-        comp = num_teams - n - 1
-        schedule.append(({'player':teams[n],'seed':n},
-                         {'player':teams[comp],'seed':comp}))
+    num_rounds = math.ceil(np.log2(num_teams))
+    bracket_size = int(2**num_rounds)
+    for n in range(bracket_size/2):
+        comp = bracket_size - n - 1
+        player1 = {'player':teams[n],'seed':n}
+        if comp < num_teams:
+            schedule.append((player1,{'player':teams[comp],'seed':comp}))
+        else: # player1 gets a bye
+            schedule.append((player1,))
     return schedule
 
 def round_robin(teams):
