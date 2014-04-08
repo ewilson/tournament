@@ -27,6 +27,7 @@ drop table if exists attempt;
 create table attempt (
        player_id integer not null,
        match_id integer not null,
+       captured_seed integer,
        score integer,
        opp_score integer,
        primary key (player_id, match_id),
@@ -39,6 +40,7 @@ drop table if exists entry;
 create table entry (
        player_id integer not null,
        tournament_id integer not null,
+       seed integer,
        champion integer,
        primary key (player_id, tournament_id),
        foreign key (player_id) references player (id),
