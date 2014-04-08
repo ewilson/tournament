@@ -1,64 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-
-{% set tournament = model['tournament'] %}
+<script src="/static/js/dao.js"></script>
+<script src="/static/js/play-tournament.js"></script>
 
 <div class="container">
-  <h1>{{tournament.description}}</h1>
+  <div id="head" data-tournament_id={{tournament_id}}>
+  </div>
   <div class="row">
-    <div class="col-md-4">
-      <h2>Scheduled Matches</h2>
-      {% for s_match in model['schedule'] %}
-        <div class="well">
-	  <form action="{{tournament.id}}" method="post" name="match" role="form" class="form-horizontal">
-	    {{ form.csrf_token }}
-	    {{form.id(value=s_match.id)}}
-	    {{form.player1_id(value=s_match.player1.id)}}
-	    {{form.player2_id(value=s_match.player2.id)}}
-	    <div class="form-group">
-	      <label for="score1" class="col-sm-3 control-label">
-		{{s_match.player1.fname}}
-	      </label>
-	      <div class="col-sm-9">
-		{{ form.score1(size=4,value='',class="form-control",
-		placeholder="Enter Score") }}
-	      </div>
-	    </div>
-	    <div class="form-group">
-	      <label for="score2" class="col-sm-3 control-label">
-		{{s_match.player2.fname}}
-	      </label>
-	      <div class="col-sm-9">
-		{{ form.score2(size=4,value='',class="form-control",
-		placeholder="Enter Score") }}
-	      </div>
-	    </div>
-	    <div class="form-group">
-	      <div class="col-sm-offset-3 col-sm-9">
-	      <button type="submit" class="btn btn-primary">
-		Add Match
-	      </button>
-	      </div>
-	    </div>
-	  </form>
-	</div>
-      {% endfor %}
+    <div class="col-md-6" id="matches">
+      <h2>Matches</h2>
     </div>
-    <div class="col-md-4">
-      <h2>Completed Matches</h2>
-      {% for c_match in model['completed'] %}
-	<div class="well">
-          <table class="table">
-	    <tr><td>{{c_match.player1.fname}}</td><td>{{c_match.score1}}</td></tr>
-            <tr><td>{{c_match.player2.fname}}</td><td>{{c_match.score2}}</td></tr>
-          </table>
-	  <a href="{{url_for('undo_match',
-		   tourn_id = tournament.id,
-		   match_id = c_match.id)}}"><span class="glyphicon glyphicon-remove"></span></a>
-	</div>
-      {% endfor %}
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <h2>Standings</h2>
       <table class="table table-bordered table-hover">
 	<thead>
@@ -67,27 +19,76 @@
 	    <th>PF</th><th>PA</th><th>+/-</th>
 	  </tr>
 	</thead>
-	<tbody>
-	{% for standing_row in model['standings'] %}
-	  <tr>
-	    <td>{{standing_row.name}}</td>
-	    <td>{{standing_row.win}}</td>
-	    <td>{{standing_row.loss}}</td>
-	    <td>{{standing_row.tie}}</td>
-	    <td>{{standing_row.percent_display}}</td> 
-	    <td>{{standing_row.pf}}</td>
-	    <td>{{standing_row.pa}}</td>
-	    <td>{{standing_row.pf - standing_row.pa}}</td> 
-	  </tr>
-	{% endfor %}
+	<tbody id="standings">
 	</tbody>
       </table>
-      {% if not model['schedule'] %}
-        <a href="{{ url_for('conclude_tournament', id = tournament.id) }}">
-	  <button class="btn btn-danger">Complete Tournament</button>
-	</a>
-      {% endif %}
+      <button id="complete" class="btn btn-danger">Complete Tournament</button>
+      </a>
     </div>
   </div>
 </div>
+{% raw %}
+<script id="match-well-template" type="text/x-handlebars-template">
+  <div class="well" data-match_id={{id}}></div>
+</script>
+<script id="complete-match-template" type="text/x-handlebars-template">
+  <table class="table">
+    <tr><td>{{player1.fname}}</td><td>{{score1}}</td></tr>
+    <tr><td>{{player2.fname}}</td><td>{{score2}}</td></tr>
+  </table>
+  <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+</script>
+<script id="match-form-template" type="text/x-handlebars-template">
+  <form action="" method="post" name="match" role="form" class="form-horizontal match-form">
+    <input id="player1_id" name="player1_id" type="hidden" value="{{player1.id}}">
+    <input id="player2_id" name="player2_id" type="hidden" value="{{player2.id}}">
+    <div class="form-group">
+      <label for="score1" class="col-sm-3 control-label">
+	{{player1.fname}}
+      </label>
+      <div class="col-sm-9">
+	<input class="form-control" id="score1" name="score1" placeholder="Enter Score" size="4" type="text" value="">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="score2" class="col-sm-3 control-label">
+	{{player2.fname}}
+      </label>
+      <div class="col-sm-9">
+	<input class="form-control" id="score2" name="score2" placeholder="Enter Score" size="4" type="text" value="">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+	<button type="submit" class="btn btn-primary">
+	  Add Match
+	</button>
+      </div>
+    </div>
+  </form>
+</script>
+<script id="standing-rows-template" type="text/x-handlebars-template">
+  {{#each standings}}
+  <tr>
+    <td class="name">{{this.name}}</td>
+    <td>{{this.win}}</td>
+    <td>{{this.loss}}</td>
+    <td>{{this.tie}}</td>
+    <td>{{this.percent_display}}</td> 
+    <td>{{this.pf}}</td>
+    <td>{{this.pa}}</td>
+    <td>{{this.pf - this.pa}}</td> 
+  </tr>
+  {{/each}}
+</script>
+<script id="head-template" type="text/x-handlebars-template">
+  <h1>{{description}}</h1>
+</script>
+<script id="congrats-template" type="text/x-handlebars-template">
+  <div class="jumbotron">
+    <h1>Congratulations {{ winner }}!</h1>
+    <p>You have won the "{{ description }}" tournament</p>
+  </div>
+</script>
+{% endraw %}
 {% endblock %}

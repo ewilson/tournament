@@ -53,3 +53,4 @@ class Standing(object):
 
     def __repr__(self):
         return '(%d)--%s-- W: %d, L: %d' % (self. pid, self.name, self.win, self.loss)
+
