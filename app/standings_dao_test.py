@@ -20,11 +20,11 @@ class FakeG(object):
 
 @pytest.fixture
 def g():
-    fG = FakeG()
-    standings_dao.g = fG
-    match_dao.g = fG
-    player_dao.g = fG
-    tournament_dao.g = fG
+    fake_g = FakeG()
+    standings_dao.g = fake_g
+    match_dao.g = fake_g
+    player_dao.g = fake_g
+    tournament_dao.g = fake_g
 
 
 def test_standings(g):
@@ -138,4 +138,3 @@ def test_standings_with_games_not_played(g):
     assert standings[2].win == 0
     assert standings[2].loss == 0
     assert standings[2].tie == 0
-

@@ -26,7 +26,7 @@ def round_robin(teams):
         for option in options:
             if g.is_not_edge(first, option):
                 g.add_edge(first, option)
-                schedule.append(set([teams[first], teams[option]]))
+                schedule.append({teams[first], teams[option]})
                 break
 
     while not g.finished():

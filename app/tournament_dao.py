@@ -50,20 +50,20 @@ def delete(id):
 
 # Not currently used
 def update(tourn):
-    update = """
+    update_sql = """
         update tournament set start_date = ?,
                               tourn_type = ?,
                               description = ?,
                               status = ? where id = ?"""
     data = [tourn.start_date, tourn.tourn_type, tourn.description,
             tourn.status, tourn.id]
-    g.db.execute(update, data)
+    g.db.execute(update_sql, data)
     g.db.commit()
 
 
 def update_status(tourn_id, status):
-    update = "update tournament set status = ? where id = ?"
+    update_sql = "update tournament set status = ? where id = ?"
     data = [status, tourn_id]
-    g.db.execute(update, data)
+    g.db.execute(update_sql, data)
     g.db.commit()
 

@@ -17,8 +17,7 @@ class FakeG(object):
 
 @pytest.fixture
 def g():
-    fG = FakeG()
-    tournament_dao.g = fG
+    tournament_dao.g = FakeG()
 
 
 def test_create_tournament(g):
@@ -57,10 +56,10 @@ def test_begin_tournament(g):
     t = tournament_dao.create(t)
 
     tournament_dao.update_status(t.id, 1)
-    retreived_t = tournament_dao.find_all_by_status(1)
+    retrieved_t = tournament_dao.find_all_by_status(1)
 
-    assert retreived_t[0].description == t.description
-    assert retreived_t[0].status == 1
+    assert retrieved_t[0].description == t.description
+    assert retrieved_t[0].status == 1
 
 
 def test_find_all_new_tournaments(g):
@@ -81,7 +80,7 @@ def test_complete_tournament(g):
     t = tournament_dao.create(t)
 
     tournament_dao.update_status(t.id, 2)
-    retreived_t = tournament_dao.find_all_by_status(2)
+    retrieved_t = tournament_dao.find_all_by_status(2)
 
-    assert retreived_t[0].description == t.description
-    assert retreived_t[0].status == 2
+    assert retrieved_t[0].description == t.description
+    assert retrieved_t[0].status == 2
