@@ -18,9 +18,9 @@ class FakeG(object):
 
 @pytest.fixture
 def g():
-    fG = FakeG()
-    player_dao.g = fG
-    tournament_dao.g = fG
+    fake_g = FakeG()
+    player_dao.g = fake_g
+    tournament_dao.g = fake_g
 
 
 def test_create_and_find_player(g):
@@ -30,7 +30,7 @@ def test_create_and_find_player(g):
     p2 = player_dao.find(1)
 
     assert p.fname == p2.fname
-    assert p2.id == 1
+    assert p2.player_id == 1
 
 
 def test_find_all(g):
@@ -40,7 +40,7 @@ def test_find_all(g):
 
     players2 = player_dao.find_all()
     assert 5 == len(players2)
-    assert players2[3].id == 4
+    assert players2[3].player_id == 4
     assert players2[3].fname == 'TEST3'
 
 
@@ -54,9 +54,9 @@ def test_find_in_tournament(g):
     t = Tournament(description="Test Tourn")
     t = tournament_dao.create(t)
 
-    player_dao.enter_tournament(pid, t.id)
-    player_dao.enter_tournament(pid3, t.id)
-    players = player_dao.find_in_tournament(t.id)
+    player_dao.enter_tournament(pid, t.tournament_id)
+    player_dao.enter_tournament(pid3, t.tournament_id)
+    players = player_dao.find_in_tournament(t.tournament_id)
 
     assert players[0].fname == p.fname
     assert players[1].fname == p3.fname
@@ -75,8 +75,8 @@ def test_delete_player(g):
     players = player_dao.find_all()
 
     assert len(players) == 2
-    assert players[0].id == 2
-    assert players[1].id == 3
+    assert players[0].player_id == 2
+    assert players[1].player_id == 3
 
 
 def test_delete_player_in_tournament_fails(g):

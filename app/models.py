@@ -1,7 +1,7 @@
 class Tournament(object):
-    def __init__(self, id=id, start_date='', description='',
+    def __init__(self, tournament_id=0, start_date='', description='',
                  tourn_type='', status=0):
-        self.id = id
+        self.tournament_id = tournament_id
         self.start_date = start_date
         self.tourn_type = tourn_type
         self.description = description
@@ -9,29 +9,29 @@ class Tournament(object):
 
     def __repr__(self):
         return ('<(%d)%s:%s--%s, status=%s>' %
-                (self.id, self.description,
+                (self.tournament_id, self.description,
                  self.tourn_type, self.start_date, self.status))
 
 
 class Player(object):
-    def __init__(self, fname='', id=0):
-        self.id = id
+    def __init__(self, fname='', player_id=0):
+        self.player_id = player_id
         self.fname = fname
 
     def __str__(self):
-        return '<(%d)%s>' % (self.id, self.fname)
+        return '<(%d)%s>' % (self.player_id, self.fname)
 
 
 class Match(object):
-    def __init__(self, player1=None, player2=None, score1=0, score2=0, id=0):
-        self.id = id
+    def __init__(self, player1=None, player2=None, score1=0, score2=0, match_id=0):
+        self.match_id = match_id
         self.player1 = player1
         self.player2 = player2
         self.score1 = score1
         self.score2 = score2
 
     def __repr__(self):
-        return '<(%d): %s vs %s>' % (self.id, self.player1, self.player2)
+        return '<(%d): %s vs %s>' % (self.match_id, self.player1, self.player2)
 
 
 class Standing(object):
