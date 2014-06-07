@@ -14,8 +14,7 @@ class MockStandingsDao(object):
 
 @pytest.fixture
 def inject():
-    mockStandingsDao = MockStandingsDao()
-    tourney.standings_dao = mockStandingsDao
+    tourney.standings_dao = MockStandingsDao()
 
 
 def test_sorts_by_percentage(inject):

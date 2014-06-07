@@ -15,23 +15,23 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/tournament/<id>', methods=['GET'])
-def tournament(id):
+@app.route('/tournament/<tournament_id>', methods=['GET'])
+def get_tournament(tournament_id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    tournament = tournament_dao.find(id)
+    tournament = tournament_dao.find(tournament_id)
     if not tournament.status:
         return render_template('edit-tournament.html',
                                tournament=tournament)
-    return redirect(url_for('play_tournament', id=id))
+    return redirect(url_for('play_tournament', tournament_id=tournament_id))
 
 
-@app.route('/play-tournament/<id>')
-def play_tournament(id):
+@app.route('/play-tournament/<tournament_id>')
+def play_tournament(tournament_id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     return render_template('play-tournament.html',
-                           tournament_id=id)
+                           tournament_id=tournament_id)
 
 
 @app.route('/tournament/undo/<tourn_id>/<match_id>', methods=['GET', 'POST'])
@@ -88,4 +88,3 @@ def page_not_found(e):
 
 def connect_db():
     return sqlite3.connect(config.DATABASE)
-
