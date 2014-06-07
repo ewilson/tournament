@@ -35,7 +35,7 @@
 </div>
 {% raw %}
 <script id="match-well-template" type="text/x-handlebars-template">
-    <div class="well" data-match_id={{id}}></div>
+    <div class="well" data-match_id={{match_id}}></div>
 </script>
 <script id="complete-match-template" type="text/x-handlebars-template">
     <table class="table">
@@ -52,8 +52,8 @@
 </script>
 <script id="match-form-template" type="text/x-handlebars-template">
     <form action="" method="post" name="match" role="form" class="form-horizontal match-form">
-        <input id="player1_id" name="player1_id" type="hidden" value="{{player1.id}}">
-        <input id="player2_id" name="player2_id" type="hidden" value="{{player2.id}}">
+        <input id="player1_id" name="player1_id" type="hidden" value="{{player1.player_id}}">
+        <input id="player2_id" name="player2_id" type="hidden" value="{{player2.player_id}}">
 
         <div class="form-group">
             <label for="score1" class="col-sm-3 control-label">

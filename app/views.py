@@ -39,7 +39,7 @@ def undo_match(tourn_id, match_id):
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     tourney.undo_match(match_id)
-    return redirect(url_for('play_tournament', id=tourn_id))
+    return redirect(url_for('play_tournament', tournament_id=tourn_id))
 
 
 @app.route('/player')

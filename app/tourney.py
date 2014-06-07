@@ -8,7 +8,7 @@ from models import Player, Match, Tournament
 
 def setup_round_robin(tournament_id):
     players = player_dao.find_in_tournament(tournament_id)
-    pairs = scheduler.round_robin([p.id for p in players])
+    pairs = scheduler.round_robin([p.player_id for p in players])
     for pair in pairs:
         match_dao.create(list(pair), tournament_id)
 

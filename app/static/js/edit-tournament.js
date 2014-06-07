@@ -31,10 +31,10 @@ jQuery(function ($) {
 		    var all = allPlayers.players;
 		    var added = data.players;
 		    var added_ids = $.map(added, function(player, i) {
-			return player.id;
+			return player.player_id;
 		    });
 		    var omitted = $.grep(all, function(player, i){
-			return $.inArray(player.id, added_ids) == -1
+			return $.inArray(player.player_id, added_ids) == -1
 		    });
 		    Page.appendPlayers(added,Page.$addedPlayers);
 		    Page.appendPlayers(omitted,Page.$omittedPlayers);

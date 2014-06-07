@@ -78,7 +78,8 @@ jQuery(function ($) {
 	},
 	displayAllMatches: function(data) {
 	    $.each(data.matches, function(i, match) {
-		var matchTemplate = $(Page.$matchWellTemplate({'id':match.id}));
+	    alert(match.match_id)
+		var matchTemplate = $(Page.$matchWellTemplate({'match_id':match.match_id}));
 		if (match.entered_time) {
 		    var matchHtml = Page.$completeMatchTemplate(match);
 		} else {
