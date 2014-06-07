@@ -1,6 +1,7 @@
 import types
 import json
- 
+
+
 def jsonify(obj):
     """Converts to JSON like json.dumps, but supports objects
 
@@ -10,6 +11,7 @@ def jsonify(obj):
     The resulting collection is then passed into json.dumps()
     which produces a JSON representation of the input.
     """
+
     def _dictify(val):
         if type(val) in [int, long, float, bool, str, unicode, types.NoneType]:
             return val
@@ -19,7 +21,7 @@ def jsonify(obj):
             return {k: _dictify(val[k]) for k in val}
         elif type(val) == complex:
             return {"real": val.real, "imag": val.imag}
-        elif hasattr(val,'__dict__'):
+        elif hasattr(val, '__dict__'):
             return {k: _dictify(getattr(val, k)) for k in val.__dict__}
         else:
             raise TypeError('Type %s not serializable' % type(val))

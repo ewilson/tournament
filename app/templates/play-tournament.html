@@ -4,91 +4,109 @@
 <script src="/static/js/play-tournament.js"></script>
 
 <div class="container">
-  <div id="head" data-tournament_id={{tournament_id}}>
-  </div>
-  <div class="row">
-    <div class="col-md-6" id="matches">
-      <h2>Matches</h2>
+    <div id="head" data-tournament_id={{tournament_id}}>
     </div>
-    <div class="col-md-6">
-      <h2>Standings</h2>
-      <table class="table table-bordered table-hover">
-	<thead>
-	  <tr>
-	    <th>Team</th><th>W</th><th>L</th><th>T</th><th>%</th>
-	    <th>PF</th><th>PA</th><th>+/-</th>
-	  </tr>
-	</thead>
-	<tbody id="standings">
-	</tbody>
-      </table>
-      <button id="complete" class="btn btn-danger">Complete Tournament</button>
-      </a>
+    <div class="row">
+        <div class="col-md-6" id="matches">
+            <h2>Matches</h2>
+        </div>
+        <div class="col-md-6">
+            <h2>Standings</h2>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>T</th>
+                    <th>%</th>
+                    <th>PF</th>
+                    <th>PA</th>
+                    <th>+/-</th>
+                </tr>
+                </thead>
+                <tbody id="standings">
+                </tbody>
+            </table>
+            <button id="complete" class="btn btn-danger">Complete Tournament</button>
+            </a>
+        </div>
     </div>
-  </div>
 </div>
 {% raw %}
 <script id="match-well-template" type="text/x-handlebars-template">
-  <div class="well" data-match_id={{id}}></div>
+    <div class="well" data-match_id={{id}}></div>
 </script>
 <script id="complete-match-template" type="text/x-handlebars-template">
-  <table class="table">
-    <tr><td>{{player1.fname}}</td><td>{{score1}}</td></tr>
-    <tr><td>{{player2.fname}}</td><td>{{score2}}</td></tr>
-  </table>
-  <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+    <table class="table">
+        <tr>
+            <td>{{player1.fname}}</td>
+            <td>{{score1}}</td>
+        </tr>
+        <tr>
+            <td>{{player2.fname}}</td>
+            <td>{{score2}}</td>
+        </tr>
+    </table>
+    <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
 </script>
 <script id="match-form-template" type="text/x-handlebars-template">
-  <form action="" method="post" name="match" role="form" class="form-horizontal match-form">
-    <input id="player1_id" name="player1_id" type="hidden" value="{{player1.id}}">
-    <input id="player2_id" name="player2_id" type="hidden" value="{{player2.id}}">
-    <div class="form-group">
-      <label for="score1" class="col-sm-3 control-label">
-	{{player1.fname}}
-      </label>
-      <div class="col-sm-9">
-	<input class="form-control" id="score1" name="score1" placeholder="Enter Score" size="4" type="text" value="">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="score2" class="col-sm-3 control-label">
-	{{player2.fname}}
-      </label>
-      <div class="col-sm-9">
-	<input class="form-control" id="score2" name="score2" placeholder="Enter Score" size="4" type="text" value="">
-      </div>
-    </div>
-    <div class="form-group">
-      <div class="col-sm-offset-3 col-sm-9">
-	<button type="submit" class="btn btn-primary">
-	  Add Match
-	</button>
-      </div>
-    </div>
-  </form>
+    <form action="" method="post" name="match" role="form" class="form-horizontal match-form">
+        <input id="player1_id" name="player1_id" type="hidden" value="{{player1.id}}">
+        <input id="player2_id" name="player2_id" type="hidden" value="{{player2.id}}">
+
+        <div class="form-group">
+            <label for="score1" class="col-sm-3 control-label">
+                {{player1.fname}}
+            </label>
+
+            <div class="col-sm-9">
+                <input class="form-control" id="score1" name="score1" placeholder="Enter Score" size="4" type="text"
+                       value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="score2" class="col-sm-3 control-label">
+                {{player2.fname}}
+            </label>
+
+            <div class="col-sm-9">
+                <input class="form-control" id="score2" name="score2" placeholder="Enter Score" size="4" type="text"
+                       value="">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                <button type="submit" class="btn btn-primary">
+                    Add Match
+                </button>
+            </div>
+        </div>
+    </form>
 </script>
 <script id="standing-rows-template" type="text/x-handlebars-template">
-  {{#each standings}}
-  <tr>
-    <td class="name">{{this.name}}</td>
-    <td>{{this.win}}</td>
-    <td>{{this.loss}}</td>
-    <td>{{this.tie}}</td>
-    <td>{{this.percent_display}}</td> 
-    <td>{{this.pf}}</td>
-    <td>{{this.pa}}</td>
-    <td>{{this.pf - this.pa}}</td> 
-  </tr>
-  {{/each}}
+    {{#each standings}}
+    <tr>
+        <td class="name">{{this.name}}</td>
+        <td>{{this.win}}</td>
+        <td>{{this.loss}}</td>
+        <td>{{this.tie}}</td>
+        <td>{{this.percent_display}}</td>
+        <td>{{this.pf}}</td>
+        <td>{{this.pa}}</td>
+        <td>{{this.pf - this.pa}}</td>
+    </tr>
+    {{/each}}
 </script>
 <script id="head-template" type="text/x-handlebars-template">
-  <h1>{{description}}</h1>
+    <h1>{{description}}</h1>
 </script>
 <script id="congrats-template" type="text/x-handlebars-template">
-  <div class="jumbotron">
-    <h1>Congratulations {{ winner }}!</h1>
-    <p>You have won the "{{ description }}" tournament</p>
-  </div>
+    <div class="jumbotron">
+        <h1>Congratulations {{ winner }}!</h1>
+
+        <p>You have won the "{{ description }}" tournament</p>
+    </div>
 </script>
 {% endraw %}
 {% endblock %}

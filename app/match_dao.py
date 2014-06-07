@@ -1,8 +1,9 @@
-from flask import g
-import sqlite3
 from datetime import datetime
 
+from flask import g
+
 from models import Match, Player
+
 
 def find(id):
     select = """
@@ -24,11 +25,13 @@ def find(id):
     m.entered_time = attempts[0][-1]
     return m
 
+
 def find_by_tournament(tournament_id):
     select = "select id from match where tournament_id = ?"
     cur = g.db.execute(select, [tournament_id])
     matches = [find(row[0]) for row in cur.fetchall()]
     return matches
+
 
 def create(player_ids, tournament_id):
     insert_match = "insert into match (tournament_id) values (?)"
@@ -37,23 +40,25 @@ def create(player_ids, tournament_id):
     values (?,?)
     """
     g.db.execute("BEGIN TRANSACTION")
-    g.db.execute(insert_match,[tournament_id])
+    g.db.execute(insert_match, [tournament_id])
     cursor = g.db.execute('SELECT max(id) FROM match')
     match_id = cursor.fetchone()[0]
     for player_id in player_ids:
-        g.db.execute(insert_entry,[player_id, match_id])
+        g.db.execute(insert_entry, [player_id, match_id])
     g.db.commit()
+
 
 def update(match):
     update = """
     update attempt set score = ?, opp_score = ?
     where player_id = ? and match_id = ?"""
     g.db.execute("BEGIN TRANSACTION")
-    g.db.execute(update,[match.score1,match.score2,match.player1.id,match.id])
-    g.db.execute(update,[match.score2,match.score1,match.player2.id,match.id])
+    g.db.execute(update, [match.score1, match.score2, match.player1.id, match.id])
+    g.db.execute(update, [match.score2, match.score1, match.player2.id, match.id])
     g.db.execute('update match set entered_time = ? where id = ?',
-                 [datetime.now(),match.id])
+                 [datetime.now(), match.id])
     g.db.commit()
+
 
 def undo(match):
     update = """
@@ -61,8 +66,8 @@ def undo(match):
     where player_id = ? and match_id = ?
     """
     g.db.execute("BEGIN TRANSACTION")
-    g.db.execute(update,[match.player1.id,match.id])
-    g.db.execute(update,[match.player2.id,match.id])
+    g.db.execute(update, [match.player1.id, match.id])
+    g.db.execute(update, [match.player2.id, match.id])
     g.db.execute('update match set entered_time = null where id = ?',
                  [match.id])
     g.db.commit()

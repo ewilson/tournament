@@ -1,9 +1,11 @@
-import pytest
 import sqlite3
+
+import pytest
 
 import tournament_dao
 import config
 from models import Tournament
+
 
 class FakeG(object):
     def __init__(self):
@@ -12,30 +14,34 @@ class FakeG(object):
         self.db.executescript(script)
         self.db.execute('pragma foreign_keys = ON')
 
+
 @pytest.fixture
 def g():
     fG = FakeG()
     tournament_dao.g = fG
 
+
 def test_create_tournament(g):
-    t = Tournament(0,description='test-tourn')
+    t = Tournament(0, description='test-tourn')
 
     created_t = tournament_dao.create(t)
 
     assert t.description == created_t.description
-    assert created_t.start_date != None
+    assert created_t.start_date is not None
     assert created_t.id == 1
 
+
 def test_create_and_find_tournament(g):
-    t = Tournament(0,description='test-tourn')
+    t = Tournament(0, description='test-tourn')
 
     tournament_dao.create(t)
     retreived_t = tournament_dao.find(1)
 
     assert retreived_t.description == t.description
 
+
 def test_create_and_delete_tournament(g):
-    t = Tournament(0,description='test-tourn')
+    t = Tournament(0, description='test-tourn')
     tournament_dao.create(t)
     retreived_t = tournament_dao.find(1)
     id = retreived_t.id
@@ -45,8 +51,9 @@ def test_create_and_delete_tournament(g):
 
     assert all_tournaments == []
 
+
 def test_begin_tournament(g):
-    t = Tournament(0,description='test-tourn')
+    t = Tournament(0, description='test-tourn')
     t = tournament_dao.create(t)
 
     tournament_dao.update_status(t.id, 1)
@@ -55,9 +62,10 @@ def test_begin_tournament(g):
     assert retreived_t[0].description == t.description
     assert retreived_t[0].status == 1
 
+
 def test_find_all_new_tournaments(g):
-    t = Tournament(0,description='test-tourn')
-    t2 = Tournament(0,description='test-tourn-2')
+    t = Tournament(0, description='test-tourn')
+    t2 = Tournament(0, description='test-tourn-2')
     tournament_dao.create(t)
     tournament_dao.create(t2)
 
@@ -69,7 +77,7 @@ def test_find_all_new_tournaments(g):
 
 
 def test_complete_tournament(g):
-    t = Tournament(0,description='test-tourn')
+    t = Tournament(0, description='test-tourn')
     t = tournament_dao.create(t)
 
     tournament_dao.update_status(t.id, 2)

@@ -1,9 +1,14 @@
-import pytest
 import sqlite3
 
-import tournament_dao, player_dao, match_dao, standings_dao
+import pytest
+
+import tournament_dao
+import player_dao
+import match_dao
+import standings_dao
 import config
-from models import Tournament, Player, Match, Standing
+from models import Tournament, Player, Match
+
 
 class FakeG(object):
     def __init__(self):
@@ -12,6 +17,7 @@ class FakeG(object):
         self.db.executescript(script)
         self.db.execute('pragma foreign_keys = ON')
 
+
 @pytest.fixture
 def g():
     fG = FakeG()
@@ -19,6 +25,7 @@ def g():
     match_dao.g = fG
     player_dao.g = fG
     tournament_dao.g = fG
+
 
 def test_standings(g):
     p = Player("test player")
@@ -30,19 +37,19 @@ def test_standings(g):
     p2.id = 2
     player_dao.create(p3)
     p3.id = 3
-    t = Tournament(0,'','T1','type',0)
+    t = Tournament(0, '', 'T1', 'type', 0)
     tournament_dao.create(t)
     t.id = 1
     match_dao.create([p.id, p2.id], t.id)
     match_dao.create([p.id, p3.id], t.id)
     match_dao.create([p3.id, p2.id], t.id)
-    match = Match(player1=p,player2=p2,id=1)
+    match = Match(player1=p, player2=p2, id=1)
     match.score1 = 19
     match.score2 = 21
-    match2 = Match(player1=p,player2=p3,id=2)
+    match2 = Match(player1=p, player2=p3, id=2)
     match2.score1 = 17
     match2.score2 = 21
-    match3 = Match(player1=p3,player2=p2,id=3)
+    match3 = Match(player1=p3, player2=p2, id=3)
     match3.score1 = 23
     match3.score2 = 21
 
@@ -61,6 +68,7 @@ def test_standings(g):
     assert standings[2].win == 2
     assert standings[2].loss == 0
 
+
 def test_standings_with_ties(g):
     p = Player("test player")
     p2 = Player("test player 2")
@@ -71,16 +79,16 @@ def test_standings_with_ties(g):
     p2.id = 2
     player_dao.create(p3)
     p3.id = 3
-    t = Tournament(0,'','T1','type',0)
+    t = Tournament(0, '', 'T1', 'type', 0)
     tournament_dao.create(t)
     t.id = 1
     match_dao.create([p.id, p2.id], t.id)
     match_dao.create([p.id, p3.id], t.id)
     match_dao.create([p3.id, p2.id], t.id)
-    match = Match(player1=p,player2=p2,id=1)
+    match = Match(player1=p, player2=p2, id=1)
     match.score1 = 19
     match.score2 = 21
-    match2 = Match(player1=p,player2=p3,id=2)
+    match2 = Match(player1=p, player2=p3, id=2)
     match2.score1 = 17
     match2.score2 = 17
 
@@ -101,6 +109,7 @@ def test_standings_with_ties(g):
     assert standings[2].loss == 0
     assert standings[2].tie == 1
 
+
 def test_standings_with_games_not_played(g):
     p = Player("test player")
     p2 = Player("test player 2")
@@ -111,7 +120,7 @@ def test_standings_with_games_not_played(g):
     p2.id = 2
     player_dao.create(p3)
     p3.id = 3
-    t = Tournament(0,'','T1','type',0)
+    t = Tournament(0, '', 'T1', 'type', 0)
     tournament_dao.create(t)
     t.id = 1
     match_dao.create([p.id, p2.id], t.id)

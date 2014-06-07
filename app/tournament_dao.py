@@ -1,7 +1,9 @@
+import logging
+
 from flask import g
-import sqlite3, logging
 
 from models import Tournament
+
 
 def find_all():
     select = '''select id, start_date, description, tourn_type, status
@@ -10,12 +12,14 @@ def find_all():
     cur = g.db.execute(select)
     return [Tournament(*row) for row in cur.fetchall()]
 
+
 def find_all_by_status(status):
     select = '''select id, start_date, description, tourn_type, status
                 from tournament
                 where status = ?'''
-    cur = g.db.execute(select,[status])
+    cur = g.db.execute(select, [status])
     return [Tournament(*row) for row in cur.fetchall()]
+
 
 def find(id):
     select = "select * from tournament where id = ?"
@@ -25,6 +29,7 @@ def find(id):
         return Tournament(*row)
     else:
         return None
+
 
 def create(tourn):
     insert_tournament = """
@@ -36,6 +41,7 @@ def create(tourn):
     id = cur.fetchone()[0]
     g.db.commit()
     return find(id)
+
 
 def delete(id):
     delete = "delete from tournament where id = ?"
@@ -49,10 +55,11 @@ def update(tourn):
                               tourn_type = ?,
                               description = ?,
                               status = ? where id = ?"""
-    data = [tourn.start_date, tourn.tourn_type, tourn.description, 
+    data = [tourn.start_date, tourn.tourn_type, tourn.description,
             tourn.status, tourn.id]
     g.db.execute(update, data)
     g.db.commit()
+
 
 def update_status(tourn_id, status):
     update = "update tournament set status = ? where id = ?"
