@@ -19,10 +19,10 @@ class FakeG(object):
 
 @pytest.fixture
 def g():
-    fG = FakeG()
-    match_dao.g = fG
-    player_dao.g = fG
-    tournament_dao.g = fG
+    fake_g = FakeG()
+    match_dao.g = fake_g
+    player_dao.g = fake_g
+    tournament_dao.g = fake_g
 
 
 def test_create_and_find_match(g):

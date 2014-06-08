@@ -13,7 +13,7 @@ def bracket(teams):
         player1 = {'player': teams[n], 'seed': n}
         if comp < num_teams:
             schedule.append((player1, {'player': teams[comp], 'seed': comp}))
-        else: # player1 gets a bye
+        else:  # player1 gets a bye
             schedule.append((player1,))
     return schedule
 
@@ -22,8 +22,8 @@ def round_robin(teams):
     g = Graph(len(teams))
     schedule = []
 
-    def _choose_pair(first, options):
-        for option in options:
+    def _choose_pair(first, rest_opts):
+        for option in rest_opts:
             if g.is_not_edge(first, option):
                 g.add_edge(first, option)
                 schedule.append({teams[first], teams[option]})

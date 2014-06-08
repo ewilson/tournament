@@ -72,7 +72,7 @@ jQuery(function ($) {
 		});
 		Page.$description.val('');
 	    } else {
-		alert('Description field is required.');
+		bootbox.alert('Description field is required.');
 	    }
         },
 	appendNewTournament: function(data) {
