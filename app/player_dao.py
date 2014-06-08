@@ -27,10 +27,10 @@ def create(player):
     return id
 
 
-def delete(id):
+def delete(player_id):
     delete_player = "delete from player where id = ?"
     logging.debug(delete_player)
-    g.db.execute(delete_player, [id])
+    g.db.execute(delete_player, [player_id])
     g.db.commit()
 
 

@@ -21,9 +21,9 @@ def find_all_by_status(status):
     return [Tournament(*row) for row in cur.fetchall()]
 
 
-def find(id):
+def find(tournament_id):
     select = "select * from tournament where id = ?"
-    cur = g.db.execute(select, [id])
+    cur = g.db.execute(select, [tournament_id])
     row = cur.fetchone()
     if row:
         return Tournament(*row)
@@ -43,9 +43,9 @@ def create(tourn):
     return find(id)
 
 
-def delete(id):
-    delete = "delete from tournament where id = ?"
-    g.db.execute(delete, [id])
+def delete(tournament_id):
+    delete_sql = "delete from tournament where id = ?"
+    g.db.execute(delete_sql, [tournament_id])
     g.db.commit()
 
 # Not currently used

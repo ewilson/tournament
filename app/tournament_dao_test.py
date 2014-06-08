@@ -34,16 +34,16 @@ def test_create_and_find_tournament(g):
     t = Tournament(0, description='test-tourn')
 
     tournament_dao.create(t)
-    retreived_t = tournament_dao.find(1)
+    retrieved_t = tournament_dao.find(1)
 
-    assert retreived_t.description == t.description
+    assert retrieved_t.description == t.description
 
 
 def test_create_and_delete_tournament(g):
     t = Tournament(0, description='test-tourn')
     tournament_dao.create(t)
-    retreived_t = tournament_dao.find(1)
-    id = retreived_t.tournament_id
+    retrieved_t = tournament_dao.find(1)
+    id = retrieved_t.tournament_id
 
     tournament_dao.delete(id)
     all_tournaments = tournament_dao.find_all()
