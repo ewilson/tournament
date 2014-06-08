@@ -3,3 +3,5 @@
 *.db
 tournament_venv
 *.log
+.idea
+*.iml

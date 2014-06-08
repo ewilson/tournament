@@ -1,7 +1,7 @@
 import pytest
 
-import tourney
-from models import Standing
+import app.tourney as tourney
+from app.models import Standing
 
 
 class MockStandingsDao(object):

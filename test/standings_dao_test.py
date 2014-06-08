@@ -2,12 +2,12 @@ import sqlite3
 
 import pytest
 
-import tournament_dao
-import player_dao
-import match_dao
-import standings_dao
+import app.tournament_dao as tournament_dao
+import app.player_dao as player_dao
+import app.match_dao as match_dao
+import app.standings_dao as standings_dao
 import config
-from models import Tournament, Player, Match
+from app.models import Tournament, Player, Match
 
 
 class FakeG(object):

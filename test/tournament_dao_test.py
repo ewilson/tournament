@@ -2,9 +2,9 @@ import sqlite3
 
 import pytest
 
-import tournament_dao
+import app.tournament_dao as tournament_dao
 import config
-from models import Tournament
+from app.models import Tournament
 
 
 class FakeG(object):

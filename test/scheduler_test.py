@@ -1,4 +1,4 @@
-import scheduler
+import app.scheduler as scheduler
 
 
 def test_four_teams_scheduled():

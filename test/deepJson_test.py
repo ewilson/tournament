@@ -1,10 +1,10 @@
 from json import loads
 
-from deepJson import jsonify
+from app.deepJson import jsonify
 
 
 class Foo(object):
-    def fuzz():
+    def fuzz(self):
         """To show that methods don't show up in resulting JSON"""
         return "FUZZ"
 
