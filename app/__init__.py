@@ -17,3 +17,4 @@ logging.basicConfig(filename=config.LOGFILE,
                     format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p')
 
+logging.getLogger().addHandler(logging.StreamHandler())
