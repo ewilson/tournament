@@ -19,8 +19,6 @@ def jsonify(obj):
             return [_dictify(item) for item in val]
         elif type(val) == dict:
             return {k: _dictify(val[k]) for k in val}
-        elif type(val) == complex:
-            return {"real": val.real, "imag": val.imag}
         elif hasattr(val, '__dict__'):
             return {k: _dictify(getattr(val, k)) for k in val.__dict__}
         else:

@@ -28,14 +28,12 @@ def test_jsonify_obj_with_primatives():
 def test_jsonify_obj_with_other_primatives():
     f = Foo()
     f.num1 = 1L
-    f.num2 = 3 + 4j
     f.null = None
     f.u = u"uni"
 
     json = jsonify(f)
 
-    assert loads(json) == {"null": None, "num1": 1, "u": "uni",
-                           "num2": {"real": 3.0, "imag": 4.0}}
+    assert loads(json) == {"null": None, "num1": 1, "u": "uni"}
 
 
 def test_jsonify_obj_with_collections():
@@ -102,12 +100,11 @@ def test_primatives():
     assert '"three"' == jsonify("three")
     assert "false" == jsonify(False)
     assert "null" == jsonify(None)
-    assert '{"real": 3.0, "imag": 4.0}' == jsonify(3 + 4j)
 
 
 def test_non_supported_attr():
     f = Foo()
-    f.bar = slice(-3) # sorry, slice objects can't be jsonified
+    f.bar = 3 + 4j
     caught = False
     try:
         jsonify(f)
