@@ -1,5 +1,4 @@
-import json
-import sqlite3
+from sqlite3 import IntegrityError
 
 from flask import request
 
@@ -18,7 +17,7 @@ def post_tournament():
         description = request.form['description']
         tourn_type = ''
         tournament = tourney.create_tournament(description, tourn_type)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "DB ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -45,7 +44,7 @@ def _post_tourney_entries(tournament_id):
     try:
         player_ids = request.form['entries']
         tourney.setup_round_robin(player_ids, tournament_id)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -55,7 +54,7 @@ def _post_tourney_entries(tournament_id):
 def _delete_tournament(tournament_id):
     try:
         tournament_dao.delete(tournament_id)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -65,7 +64,7 @@ def _delete_tournament(tournament_id):
 def _get_tournament(tournament_id):
     try:
         tournament = tournament_dao.find(tournament_id)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -89,7 +88,7 @@ def _post_match(match_id):
         match = tourney.update_match(match_id, params['player1_id'],
                                      params['player2_id'],
                                      params['score1'], params['score2'])
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -99,7 +98,7 @@ def _post_match(match_id):
 def _delete_match(match_id):
     try:
         match = tourney.undo_match(match_id)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -132,7 +131,7 @@ def entry_http(tournament_id, player_id):
             player = player_dao.enter_tournament(player_id, tournament_id)
         elif request.method == 'DELETE':
             player = player_dao.unenter_tournament(player_id, tournament_id)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -146,7 +145,7 @@ def update_status(tournament_id, status):
         if status == '1':
             tourney.setup_round_robin(tournament_id)
         tournament_dao.update_status(tournament_id, status)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -157,7 +156,7 @@ def update_status(tournament_id, status):
 def delete_player(player_id):
     try:
         player_dao.delete(player_id)
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "Players in tournaments cannot be deleted."
         return jsonify({'success': False, 'message': message}), 409
     else:
@@ -176,7 +175,7 @@ def _post_player():
     try:
         fname = request.form['fname']
         player_id = player_dao.create(Player(fname))
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         message = "Player name must be unique."
         return jsonify({'success': False, 'message': message}), 409
     else:
