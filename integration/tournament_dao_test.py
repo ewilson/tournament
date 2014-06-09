@@ -1,18 +1,9 @@
-import sqlite3
-
 import pytest
 
 import app.tournament_dao as tournament_dao
-import config
 from app.models import Tournament
 
-
-class FakeG(object):
-    def __init__(self):
-        self.db = sqlite3.connect(config.TEST_DATABASE)
-        script = open(config.SCHEMA).read()
-        self.db.executescript(script)
-        self.db.execute('pragma foreign_keys = ON')
+from test_utils import FakeG
 
 
 @pytest.fixture

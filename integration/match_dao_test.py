@@ -5,16 +5,9 @@ import pytest
 import app.match_dao as match_dao
 import app.player_dao as player_dao
 import app.tournament_dao as tournament_dao
-import config
 from app.models import Player, Match, Tournament
 
-
-class FakeG(object):
-    def __init__(self):
-        self.db = sqlite3.connect(config.TEST_DATABASE)
-        script = open(config.SCHEMA).read()
-        self.db.executescript(script)
-        self.db.execute('pragma foreign_keys = ON')
+from test_utils import FakeG
 
 
 @pytest.fixture
