@@ -59,14 +59,14 @@ def test_four_team_bracket():
     assert len(schedule) == 2
     match1 = schedule[0]
     match2 = schedule[1]
-    assert match1[0]['player'] == 'alpha'
-    assert match1[0]['seed'] == 0
-    assert match1[1]['player'] == 'delta'
-    assert match1[1]['seed'] == 3
-    assert match2[0]['player'] == 'beta'
-    assert match2[0]['seed'] == 1
-    assert match2[1]['player'] == 'gamma'
-    assert match2[1]['seed'] == 2
+    assert match1 == (
+        {'player': 'alpha', 'seed': 0},
+        {'player': 'delta', 'seed': 3}
+    )
+    assert match2 == (
+        {'player': 'beta', 'seed': 1},
+        {'player': 'gamma', 'seed': 2}
+    )
 
 
 def test_six_team_bracket():
@@ -79,19 +79,17 @@ def test_six_team_bracket():
     match2 = schedule[1]
     match3 = schedule[2]
     match4 = schedule[3]
-    assert match1[0]['player'] == 'alpha'
-    assert match1[0]['seed'] == 0
-    assert len(match1) == 1
-    assert match2[0]['player'] == 'bravo'
-    assert match2[0]['seed'] == 1
-    assert len(match2) == 1
-    assert match3[0]['player'] == 'charlie'
-    assert match3[0]['seed'] == 2
-    assert match3[1]['player'] == 'foxtrot'
-    assert match3[1]['seed'] == 5
-    assert len(match3) == 2
-    assert match4[0]['player'] == 'delta'
-    assert match4[0]['seed'] == 3
-    assert match4[1]['player'] == 'echo'
-    assert match4[1]['seed'] == 4
-    assert len(match4) == 2
+    assert match1 == (
+        {'player': 'alpha', 'seed': 0},
+    )
+    assert match2 == (
+        {'player': 'bravo', 'seed': 1},
+    )
+    assert match3 == (
+        {'player': 'charlie', 'seed': 2},
+        {'player': 'foxtrot', 'seed': 5}
+    )
+    assert match4 == (
+        {'player': 'delta', 'seed': 3},
+        {'player': 'echo', 'seed': 4}
+    )
