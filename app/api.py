@@ -173,7 +173,7 @@ def player_http():
 
 def _post_player():
     try:
-        fname = request.form['fname']
+        fname = request.json['fname']
         player_id = player_dao.create(Player(fname))
     except IntegrityError:
         message = "Player name must be unique."

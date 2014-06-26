@@ -5,3 +5,4 @@ tournament_venv
 *.log
 .idea
 *.iml
+out

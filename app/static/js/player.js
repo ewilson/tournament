@@ -1,11 +1,15 @@
+var Player = Backbone.Model.extend({
+    urlRoot: '/api/player'
+});
+
+
 jQuery(function ($) {
     'use strict';
 
     var App = {
         init: function () {
 	    this.playerTemplate = Handlebars.compile($("#player-template").html());
-	    this.$page = $('.container');
-            this.$players = $('#players');
+        this.$players = $('#players');
 	    this.$newPlayerForm = $('#new-player form');
 	    this.$fname = $('#fname');
 	    this.$players.on('click','.glyphicon-trash',this.deletePlayer);
@@ -37,17 +41,24 @@ jQuery(function ($) {
 	    e.preventDefault();
 	    var name = App.$fname.val().trim();
 	    if (name) {
-		Dao.Player.add({
-		    fname: name,
-		    success: App.appendPlayer,
-		    error: App.displayError
-		});
+            var player = new Player({ fname: name});
+            player.save(null, {
+                success: App.appendPlayer,
+                error: App.displayError
+            });
+//		Dao.Player.add({
+//		    fname: name,
+//		    success: App.appendPlayer,
+//		    error: App.displayError
+//		});
 		App.$fname.val('');
 	    } else {
 		bootbox.alert('Name field is required.');
 	    }
         },
 	appendPlayer: function(data) {
+        alert('append');
+        console.log(data);
 	    var player = App.playerTemplate(data);
 	    App.$players.append(player);
 	},
