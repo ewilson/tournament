@@ -1,5 +1,11 @@
 var Player = Backbone.Model.extend({
-    urlRoot: '/api/player'
+    urlRoot: '/api/player',
+    validate: function( attributes ) {
+        if (attributes.fname === '') {
+            bootbox.alert('Name field is required.');
+            return 'Invalid';
+        }
+    }
 });
 
 
@@ -40,28 +46,19 @@ jQuery(function ($) {
 	addPlayer: function(e) {
 	    e.preventDefault();
 	    var name = App.$fname.val().trim();
-	    if (name) {
-            var player = new Player({ fname: name});
-            player.save(null, {
-                success: App.appendPlayer,
-                error: App.displayError
-            });
-//		Dao.Player.add({
-//		    fname: name,
-//		    success: App.appendPlayer,
-//		    error: App.displayError
-//		});
-		App.$fname.val('');
-	    } else {
-		bootbox.alert('Name field is required.');
-	    }
-        },
+        new Player({ fname: name}).save(null, {
+            success: App.appendPlayerBB,
+            error: App.displayError
+        });
+    },
 	appendPlayer: function(data) {
-        alert('append');
-        console.log(data);
 	    var player = App.playerTemplate(data);
 	    App.$players.append(player);
 	},
+    appendPlayerBB: function(data) {
+        var player = App.playerTemplate({fname: data.get('fname'), player_id: data.get('player_id')});
+        App.$players.append(player);
+    },
 	appendPlayers: function(data) {
 	    $.each(data.players, function(i, player) {
 		App.appendPlayer(player);
