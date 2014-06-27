@@ -7,7 +7,20 @@ var Player = Backbone.Model.extend({
         }
     }
 });
-
+var PlayerView = Backbone.View.extend({
+    initialize: function() {
+        this.render();
+    },
+    template: _.template("#player-templateU"),
+    render: function() {
+        console.log('rendering', this.model.attributes);
+//        this.$el.html(this.template(this.model.attributes));
+        var template = _.template( $("#player-templateU").html(), this.model.attributes);
+        this.$el.html(template)
+        console.log(this.el);
+        return this;
+    }
+});
 
 jQuery(function ($) {
     'use strict';
@@ -15,6 +28,7 @@ jQuery(function ($) {
     var App = {
         init: function () {
 	    this.playerTemplate = Handlebars.compile($("#player-template").html());
+        this.playerTemplateU = Handlebars.compile($("#player-template").html());
         this.$players = $('#players');
 	    this.$newPlayerForm = $('#new-player form');
 	    this.$fname = $('#fname');
@@ -55,9 +69,9 @@ jQuery(function ($) {
 	    var player = App.playerTemplate(data);
 	    App.$players.append(player);
 	},
-    appendPlayerBB: function(data) {
-        var player = App.playerTemplate({fname: data.get('fname'), player_id: data.get('player_id')});
-        App.$players.append(player);
+    appendPlayerBB: function(player) {
+        var playerView = new PlayerView({ model: player });
+        App.$players.append(playerView.$el);
     },
 	appendPlayers: function(data) {
 	    $.each(data.players, function(i, player) {

@@ -1,15 +1,5 @@
 var Dao = (function($) {
     var Player = {
-	add: function(options) {
-	    $.ajax({
-		url: $SCRIPT_ROOT + '/player',
-		type: 'POST',
-		dataType: 'json',
-		data: { fname: options.fname },
-		success: options.success,
-		error: options.error
-	    });
-	},
 	remove: function(options) {
 	    $.ajax({
 		url: $SCRIPT_ROOT + '/player/' + options.player_id,
