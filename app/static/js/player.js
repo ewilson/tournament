@@ -11,12 +11,17 @@ var PlayerView = Backbone.View.extend({
     initialize: function() {
         this.render();
     },
+    tagName: 'a',
+    attributes : {
+        href: '#'
+    },
+
+    className: 'list-group-item player-item',
     template: _.template("#player-templateU"),
     render: function() {
         console.log('rendering', this.model.attributes);
-//        this.$el.html(this.template(this.model.attributes));
         var template = _.template( $("#player-templateU").html(), this.model.attributes);
-        this.$el.html(template)
+        this.$el.html(template);
         console.log(this.el);
         return this;
     }
@@ -28,7 +33,6 @@ jQuery(function ($) {
     var App = {
         init: function () {
 	    this.playerTemplate = Handlebars.compile($("#player-template").html());
-        this.playerTemplateU = Handlebars.compile($("#player-template").html());
         this.$players = $('#players');
 	    this.$newPlayerForm = $('#new-player form');
 	    this.$fname = $('#fname');
