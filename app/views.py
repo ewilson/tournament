@@ -7,6 +7,9 @@ from app import app
 import tournament_dao
 import tourney
 
+@app.route('/n')
+def i2():
+    return render_template('index2.html')
 
 @app.route('/', methods=['GET'])
 def index():
