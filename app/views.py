@@ -7,11 +7,11 @@ from app import app
 import tournament_dao
 import tourney
 
-@app.route('/n')
+@app.route('/')
 def i2():
     return render_template('index2.html')
 
-@app.route('/', methods=['GET'])
+@app.route('/old', methods=['GET'])
 def index():
     if not session.get('logged_in'):
         return redirect(url_for('login'))

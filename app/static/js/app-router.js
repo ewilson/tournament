@@ -13,7 +13,6 @@ var ApplicationRouter = Backbone.Router.extend({
 		"": "lorem",
 		"lorem": "lorem",
 		"at": "at",
-		"duis": "duis",
 		"*else": "notFound"
 	},
 
