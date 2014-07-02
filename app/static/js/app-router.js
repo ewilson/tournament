@@ -4,7 +4,7 @@ var ApplicationRouter = Backbone.Router.extend({
 		this.el = el;
 
 		this.loremView = new ContentView({template: '#home'});
-		this.atView = new ContentView({template: '#players'});
+		this.playersView = new ContentView({template: '#players'});
 		this.notFoundView = new ContentView({template: '#not-found'});
 	},
 
@@ -32,9 +32,7 @@ var ApplicationRouter = Backbone.Router.extend({
 		this.currentView = view;
 	},
 
-	/*
-	 * Change the active element in the topbar
-	 */
+	 // Change the active element in the topbar
 	setActiveEntry: function(url) {
 		// Unmark all entries
 		$('li').removeClass('active');
@@ -45,12 +43,12 @@ var ApplicationRouter = Backbone.Router.extend({
 
 	home: function() {
 		this.switchView(this.loremView);
-		this.setActiveEntry('#lorem');
+		this.setActiveEntry('#home');
 	},
 
 	players: function() {
-		this.switchView(this.atView);
-		this.setActiveEntry('#at');
+		this.switchView(this.playersView);
+		this.setActiveEntry('#players');
 	},
 
 	notFound: function() {
