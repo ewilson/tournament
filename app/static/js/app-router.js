@@ -4,15 +4,14 @@ var ApplicationRouter = Backbone.Router.extend({
 		this.el = el;
 
 		this.loremView = new ContentView({template: '#lorem'});
-		this.atView = new ContentView({template: '#at'});
-		this.duisView = new ContentView({template: '#duis'});
+		this.atView = new ContentView({template: '#players'});
 		this.notFoundView = new ContentView({template: '#not-found'});
 	},
 
 	routes: {
 		"": "lorem",
 		"lorem": "lorem",
-		"at": "at",
+		"players": "players",
 		"*else": "notFound"
 	},
 
@@ -49,14 +48,9 @@ var ApplicationRouter = Backbone.Router.extend({
 		this.setActiveEntry('#lorem');
 	},
 
-	at: function() {
+	players: function() {
 		this.switchView(this.atView);
 		this.setActiveEntry('#at');
-	},
-
-	duis: function() {
-		this.switchView(this.duisView);
-		this.setActiveEntry('#duis');
 	},
 
 	notFound: function() {
