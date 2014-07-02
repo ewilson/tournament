@@ -3,14 +3,14 @@ var ApplicationRouter = Backbone.Router.extend({
 	initialize: function(el) {
 		this.el = el;
 
-		this.loremView = new ContentView({template: '#lorem'});
+		this.loremView = new ContentView({template: '#home'});
 		this.atView = new ContentView({template: '#players'});
 		this.notFoundView = new ContentView({template: '#not-found'});
 	},
 
 	routes: {
-		"": "lorem",
-		"lorem": "lorem",
+		"": "home",
+		"home": "home",
 		"players": "players",
 		"*else": "notFound"
 	},
@@ -43,7 +43,7 @@ var ApplicationRouter = Backbone.Router.extend({
 		$("li a[href='" + url + "']").parents('li').addClass('active');
 	},
 
-	lorem: function() {
+	home: function() {
 		this.switchView(this.loremView);
 		this.setActiveEntry('#lorem');
 	},
