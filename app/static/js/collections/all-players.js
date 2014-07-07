@@ -1,15 +1,9 @@
 var AllPlayers = Backbone.Collection.extend({
 
     model: Player,
-    url: '/api/player'
+    url: '/api/player',
+    initialize: function() {
+        console.log('AllPlayers collection init');
+    }
 
 });
-
-var allPlayers = new AllPlayers();
-allPlayers.fetch({success: function(collection, response, options) {
-    console.log('collection', collection);
-    console.log('response', response.players);
-    console.log('options', options);
-}, error: function() {
-    console.log('oops')
-}});

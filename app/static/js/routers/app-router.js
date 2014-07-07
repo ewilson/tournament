@@ -4,7 +4,7 @@ var ApplicationRouter = Backbone.Router.extend({
 		this.el = el;
 
 		this.loremView = new ContentView({template: '#home'});
-		this.playersView = new ContentView({template: '#players'});
+		this.playersView = new PlayersView();
 		this.notFoundView = new ContentView({template: '#not-found'});
 	},
 
