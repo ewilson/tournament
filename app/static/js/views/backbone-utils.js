@@ -1,3 +1,5 @@
+var app = app || {}
+
 // Override View.remove()'s default behavior
 Backbone.View = Backbone.View.extend({
 

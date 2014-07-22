@@ -2,7 +2,7 @@ app.PlayersView = Backbone.View.extend({
 
     initialize: function() {
         this.template = '#players';
-        var allPlayers = new AllPlayers();
+        var allPlayers = new app.AllPlayers();
         var self = this;
         allPlayers.fetch({success: function(collection, response, options) {
             console.log('IN VIEW');

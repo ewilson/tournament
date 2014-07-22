@@ -13,6 +13,8 @@
     <script type="text/javascript" src="/static/js/routers/app.js"></script>
     <script type="text/javascript" src="/static/js/models/player.js"></script>
     <script type="text/javascript" src="/static/js/collections/all-players.js"></script>
+    <script type="text/javascript" src="/static/js/views/app.js"></script>
+    <script type="text/javascript" src="/static/js/app.js"></script>
     <link rel="shortcut icon" href="/static/img/trophy.ico">
 </head>
 <body>
@@ -112,12 +114,9 @@
     <!-- Init Application Router -->
 
     <script type="text/javascript">
-        var router = new ApplicationRouter($('#content'));
+        var router = new app.ApplicationRouter($('#content'));
         Backbone.history.start();
     </script>
 
-<script src="/static/js/views/app-view.js"></script>
-<script src="/static/js/app.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 </body>
 </html>
