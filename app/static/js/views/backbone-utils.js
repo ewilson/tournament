@@ -10,7 +10,7 @@ Backbone.View = Backbone.View.extend({
 
 });
 
-var ContentView = Backbone.View.extend({
+app.ContentView = Backbone.View.extend({
 
     /*
      * Initialize with the template-id

@@ -1,4 +1,4 @@
-var AllPlayers = Backbone.Collection.extend({
+app.AllPlayers = Backbone.Collection.extend({
 
     model: Player,
     url: '/api/player',

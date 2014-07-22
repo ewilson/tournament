@@ -1,11 +1,11 @@
-var ApplicationRouter = Backbone.Router.extend({
+app.ApplicationRouter = Backbone.Router.extend({
 
 	initialize: function(el) {
 		this.el = el;
 
-		this.loremView = new ContentView({template: '#home'});
-		this.playersView = new PlayersView();
-		this.notFoundView = new ContentView({template: '#not-found'});
+		this.loremView = new app.ContentView({template: '#home'});
+		this.playersView = new app.PlayersView();
+		this.notFoundView = new app.ContentView({template: '#not-found'});
 	},
 
 	routes: {

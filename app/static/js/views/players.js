@@ -1,4 +1,4 @@
-var PlayersView = Backbone.View.extend({
+app.PlayersView = Backbone.View.extend({
 
     initialize: function() {
         this.template = '#players';

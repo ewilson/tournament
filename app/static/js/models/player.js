@@ -1,4 +1,4 @@
-var Player = Backbone.Model.extend({
+app.Player = Backbone.Model.extend({
     urlRoot: '/api/player',
     validate: function( attributes ) {
         if (attributes.fname === '') {
