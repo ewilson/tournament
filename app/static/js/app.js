@@ -5,5 +5,9 @@ var ESC_KEY = 27;
 $(function () {
     'use strict';
 
+    new app.ApplicationRouter($('#content'));
+    Backbone.history.start();
+
     new app.AppView();
+
 });
