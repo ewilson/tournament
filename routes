@@ -1,0 +1,5 @@
+/			"Add new tournament"
+/players		"Add new player"
+/tournament/:id		"Select players"
+/play-tournament/:id	"Matches, Standings"
+			"Congratulations"
