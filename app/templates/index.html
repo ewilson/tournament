@@ -4,6 +4,7 @@
     <title>Pools &amp; Brackets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/trophy.ico">
 </head>
 <body>
 {% raw %}
@@ -15,8 +16,8 @@
               </div>
               <div class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                      <li><a href="/">Home</a></li>
-                      <li><a href="/player">Players</a></li>
+                      <li>{{#link-to "home" activeClass="selected"}}Home{{/link-to}}</li>
+                      <li>{{#link-to "players" activeClass="selected"}}Players{{/link-to}}</li>
                   </ul>
               </div>
           </div>
@@ -25,18 +26,71 @@
   </script>
 
     <script type="text/x-handlebars" id="home">
-        <ul>
-            {{#each item in model}}
-                <li>{{item}}</li>
-            {{/each}}
-        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary tourneys" id="new-tournaments">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">New Tournaments</h3>
+                        </div>
+                        <div class="panel-body list-group"></div>
+                    </div>
+                    <div class="panel panel-primary tourneys" id="active-tournaments">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Active Tournaments</h3>
+                        </div>
+                        <div class="panel-body list-group"></div>
+                    </div>
+                    <div class="panel panel-primary tourneys" id="completed-tournaments">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Completed Tournaments</h3>
+                        </div>
+                        <div class="panel-body list-group"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well well-lg">
+                        <h3>Add new tournament</h3>
+                        <form action="" method="post" name="tournament" role="form" class="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="description"
+                                       placeholder="Enter Tournament Description" value="">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </script>
     <script type="text/x-handlebars" id="players">
-        <ul>
-            {{#each item in model}}
-            <li>{{item}}</li>
-            {{/each}}
-        </ul>
+        <div class="container">
+            <div id="errorContainer"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Current Players</h3>
+                        </div>
+                        <div class="panel-body list-group" id="players"></div>
+                    </div>
+                </div>
+                <div class="col-md-6" id="new-player">
+                    <div class="well well-lg">
+                        <h3>Add new player</h3>
+                        <form action="player" method="post" name="tournament">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fname"
+                                       placeholder="Enter name" value="">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='handle'></div>
     </script>
 {% endraw %}
   <script src="/static/js/libs/jquery-1.10.2.js"></script>
