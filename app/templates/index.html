@@ -73,7 +73,14 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Current Players</h3>
                         </div>
-                        <div class="panel-body list-group" id="players"></div>
+                        <div class="panel-body list-group" id="players-old">
+                            {{#each}}
+                                <a class="list-group-item player-item" href="#">
+                                    <span class="fname">{{fname}}</span>
+                                    <span class="glyphicon glyphicon-trash pull-right"></span>
+                                </a>
+                            {{/each}}
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6" id="new-player">
@@ -96,6 +103,8 @@
   <script src="/static/js/libs/jquery-1.10.2.js"></script>
   <script src="/static/js/libs/handlebars-1.1.2.js"></script>
   <script src="/static/js/libs/ember-1.6.1.js"></script>
+  <script src="/static/js/libs/ember-data.js"></script>
   <script src="/static/js/app.js"></script>
+  <script src="/static/js/models/player.js"></script>
 </body>
 </html>
