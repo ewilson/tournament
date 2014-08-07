@@ -120,7 +120,7 @@ def get_standings(tournament_id):
 @app.route('/api/tournament/<tournament_id>/player', methods=['GET'])
 def get_entries(tournament_id):
     players = player_dao.find_in_tournament(tournament_id)
-    return jsonify({'players': players})
+    return jsonify({'players': players}), 200,  {'Content-Type': 'application/json; charset=utf-8'}
 
 
 @app.route('/api/tournament/<tournament_id>/player/<player_id>',
@@ -152,7 +152,7 @@ def update_status(tournament_id, status):
         return jsonify({'success': True, 'tournament_id': tournament_id})
 
 
-@app.route('/api/player/<player_id>', methods=['DELETE'])
+@app.route('/players/<player_id>', methods=['DELETE'])
 def delete_player(player_id):
     try:
         player_dao.delete(player_id)
@@ -163,12 +163,12 @@ def delete_player(player_id):
         return jsonify({'success': True, 'tournament_id': player_id})
 
 
-@app.route('/api/player', methods=['GET', 'POST'])
+@app.route('/players', methods=['GET', 'POST'])
 def player_http():
     if request.method == 'POST':
         return _post_player()
     elif request.method == 'GET':
-        return _get_player()
+        return _get_player(), 200,  {'Content-Type': 'application/json; charset=utf-8'}
 
 
 def _post_player():

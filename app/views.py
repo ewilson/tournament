@@ -42,13 +42,6 @@ def undo_match(tourn_id, match_id):
     return redirect(url_for('play_tournament', tournament_id=tourn_id))
 
 
-@app.route('/player')
-def player():
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    return render_template('player.html')
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None

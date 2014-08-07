@@ -14,12 +14,12 @@ class Tournament(object):
 
 
 class Player(object):
-    def __init__(self, fname='', player_id=0):
-        self.player_id = player_id
+    def __init__(self, fname='', id=0):
+        self.id = id
         self.fname = fname
 
     def __str__(self):
-        return '<(%d)%s>' % (self.player_id, self.fname)
+        return '<(%d)%s>' % (self.id, self.fname)
 
 
 class Match(object):
