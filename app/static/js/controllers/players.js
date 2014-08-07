@@ -9,7 +9,6 @@ App.PlayersController = Ember.ArrayController.extend({
             });
 
             this.set('newFname', '');
-            console.log(player);
             player.save();
         }
     }

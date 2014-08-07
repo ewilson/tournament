@@ -74,10 +74,10 @@
                             <h3 class="panel-title">Current Players</h3>
                         </div>
                         <div class="panel-body list-group" id="players-old">
-                            {{#each}}
+                            {{#each itemController="player"}}
                                 <a class="list-group-item player-item" href="#">
                                     <span class="fname">{{fname}}</span>
-                                    <span class="glyphicon glyphicon-trash pull-right"></span>
+                                    <span class="glyphicon glyphicon-trash pull-right" {{action "removePlayer"}}></span>
                                 </a>
                             {{/each}}
                         </div>
@@ -107,5 +107,6 @@
   <script src="/static/js/app.js"></script>
   <script src="/static/js/models/players.js"></script>
   <script src="/static/js/controllers/players.js"></script>
+  <script src="/static/js/controllers/player.js"></script>
 </body>
 </html>
