@@ -22,7 +22,7 @@ def test_create_and_find_player(g):
     p2 = player_dao.find(1)
 
     assert p.fname == p2.fname
-    assert p2.player_id == 1
+    assert p2.id == 1
 
 
 def test_find_all(g):
@@ -32,7 +32,7 @@ def test_find_all(g):
 
     players2 = player_dao.find_all()
     assert 5 == len(players2)
-    assert players2[3].player_id == 4
+    assert players2[3].id == 4
     assert players2[3].fname == 'TEST3'
 
 
@@ -67,8 +67,8 @@ def test_delete_player(g):
     players = player_dao.find_all()
 
     assert len(players) == 2
-    assert players[0].player_id == 2
-    assert players[1].player_id == 3
+    assert players[0].id == 2
+    assert players[1].id == 3
 
 
 def test_delete_player_in_tournament_fails(g):

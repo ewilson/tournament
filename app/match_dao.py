@@ -9,7 +9,7 @@ def find(match_id):
     select = """
     select p.fname, p.id, a.score, m.entered_time 
     from player p, attempt a, match m
-    where p.id = a.player_id 
+    where p.id = a.player_id
     and a.match_id = ?
     and m.id = a.match_id
     """
@@ -53,8 +53,8 @@ def update(match):
     update attempt set score = ?, opp_score = ?
     where player_id = ? and match_id = ?"""
     g.db.execute("BEGIN TRANSACTION")
-    g.db.execute(update_sql, [match.score1, match.score2, match.player1.player_id, match.match_id])
-    g.db.execute(update_sql, [match.score2, match.score1, match.player2.player_id, match.match_id])
+    g.db.execute(update_sql, [match.score1, match.score2, match.player1.id, match.match_id])
+    g.db.execute(update_sql, [match.score2, match.score1, match.player2.id, match.match_id])
     g.db.execute('update match set entered_time = ? where id = ?',
                  [datetime.now(), match.match_id])
     g.db.commit()
@@ -66,8 +66,8 @@ def undo(match):
     where player_id = ? and match_id = ?
     """
     g.db.execute("BEGIN TRANSACTION")
-    g.db.execute(update_sql, [match.player1.player_id, match.match_id])
-    g.db.execute(update_sql, [match.player2.player_id, match.match_id])
+    g.db.execute(update_sql, [match.player1.id, match.match_id])
+    g.db.execute(update_sql, [match.player2.id, match.match_id])
     g.db.execute('update match set entered_time = null where id = ?',
                  [match.match_id])
     g.db.commit()

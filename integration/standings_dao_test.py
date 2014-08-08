@@ -23,17 +23,17 @@ def test_standings(g):
     p2 = Player("test player 2")
     p3 = Player("test player 3")
     player_dao.create(p)
-    p.player_id = 1
+    p.id = 1
     player_dao.create(p2)
-    p2.player_id = 2
+    p2.id = 2
     player_dao.create(p3)
-    p3.player_id = 3
+    p3.id = 3
     t = Tournament(0, '', 'T1', 'type', 0)
     tournament_dao.create(t)
     t.tournament_id = 1
-    match_dao.create([p.player_id, p2.player_id], t.tournament_id)
-    match_dao.create([p.player_id, p3.player_id], t.tournament_id)
-    match_dao.create([p3.player_id, p2.player_id], t.tournament_id)
+    match_dao.create([p.id, p2.id], t.tournament_id)
+    match_dao.create([p.id, p3.id], t.tournament_id)
+    match_dao.create([p3.id, p2.id], t.tournament_id)
     match = Match(player1=p, player2=p2, match_id=1)
     match.score1 = 19
     match.score2 = 21
@@ -65,17 +65,17 @@ def test_standings_with_ties(g):
     p2 = Player("test player 2")
     p3 = Player("test player 3")
     player_dao.create(p)
-    p.player_id = 1
+    p.id = 1
     player_dao.create(p2)
-    p2.player_id = 2
+    p2.id = 2
     player_dao.create(p3)
-    p3.player_id = 3
+    p3.id = 3
     t = Tournament(0, '', 'T1', 'type', 0)
     tournament_dao.create(t)
     t.tournament_id = 1
-    match_dao.create([p.player_id, p2.player_id], t.tournament_id)
-    match_dao.create([p.player_id, p3.player_id], t.tournament_id)
-    match_dao.create([p3.player_id, p2.player_id], t.tournament_id)
+    match_dao.create([p.id, p2.id], t.tournament_id)
+    match_dao.create([p.id, p3.id], t.tournament_id)
+    match_dao.create([p3.id, p2.id], t.tournament_id)
     match = Match(player1=p, player2=p2, match_id=1)
     match.score1 = 19
     match.score2 = 21
@@ -106,17 +106,17 @@ def test_standings_with_games_not_played(g):
     p2 = Player("test player 2")
     p3 = Player("test player 3")
     player_dao.create(p)
-    p.player_id = 1
+    p.id = 1
     player_dao.create(p2)
-    p2.player_id = 2
+    p2.id = 2
     player_dao.create(p3)
-    p3.player_id = 3
+    p3.id = 3
     t = Tournament(0, '', 'T1', 'type', 0)
     tournament_dao.create(t)
     t.tournament_id = 1
-    match_dao.create([p.player_id, p2.player_id], t.tournament_id)
-    match_dao.create([p.player_id, p3.player_id], t.tournament_id)
-    match_dao.create([p3.player_id, p2.player_id], t.tournament_id)
+    match_dao.create([p.id, p2.id], t.tournament_id)
+    match_dao.create([p.id, p3.id], t.tournament_id)
+    match_dao.create([p3.id, p2.id], t.tournament_id)
 
     standings = standings_dao.find(t.tournament_id)
 
