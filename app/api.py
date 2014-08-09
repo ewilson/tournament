@@ -158,7 +158,7 @@ def delete_player(player_id):
         player_dao.delete(player_id)
     except IntegrityError:
         message = "Players in tournaments cannot be deleted."
-        return jsonify({'success': False, 'message': message}), 409
+        return message, 409
     else:
         return jsonify({'success': True, 'tournament_id': player_id})
 
@@ -177,9 +177,9 @@ def _post_player():
         player_id = player_dao.create(Player(fname))
     except IntegrityError:
         message = "Player name must be unique."
-        return jsonify({'success': False, 'message': message}), 409
+        return message, 409
     else:
-        return jsonify({'player_id': player_id, 'fname': fname})
+        return jsonify({'player':{'id': player_id, 'fname': fname}})
 
 
 def _get_player():
