@@ -4,13 +4,14 @@ App.PlayersController = Ember.ArrayController.extend({
             var fname = this.get('newFname');
             if (!fname || !fname.trim()) { return false; }
 
-            var onFail = function(response) {
-                alert(response.responseText);
-            };
-
             var player = this.store.createRecord('player', {
                 fname: fname
             });
+
+            var onFail = function(response) {
+                alert(response.responseText);
+                player.rollback();
+            };
 
             this.set('newFname', '');
             player.save().then(function() {}, onFail);

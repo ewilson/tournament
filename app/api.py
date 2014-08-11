@@ -160,7 +160,7 @@ def delete_player(player_id):
         message = "Players in tournaments cannot be deleted."
         return message, 409
     else:
-        return jsonify({'success': True, 'tournament_id': player_id})
+        return jsonify({}), 204
 
 
 @app.route('/players', methods=['GET', 'POST'])
