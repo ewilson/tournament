@@ -8,13 +8,13 @@ App.Router.map(function() {
 
 App.IndexRoute = Ember.Route.extend({
   model: function() {
-    return ['red', 'yellow', 'blue'];
+      return this.store.find('tournament');
   }
 });
 
 App.HomeRoute = Ember.Route.extend({
     model: function() {
-        return ['red', 'yellow', 'black'];
+        return this.store.find('tournament');
     }
 });
 

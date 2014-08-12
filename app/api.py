@@ -11,26 +11,7 @@ import tourney
 from deepJson import jsonify
 
 
-@app.route('/api/tournament', methods=['POST'])
-def post_tournament():
-    try:
-        description = request.form['description']
-        tourn_type = ''
-        tournament = tourney.create_tournament(description, tourn_type)
-    except IntegrityError:
-        message = "DB ERROR!"
-        return jsonify({'success': False, 'message': message}), 409
-    else:
-        return jsonify(tournament)
-
-
-@app.route('/api/tournament/status/<status>', methods=['GET'])
-def get_new_tournaments(status):
-    tourneys = tournament_dao.find_all_by_status(status)
-    return jsonify({'tournaments': tourneys})
-
-
-@app.route('/api/tournament/<tournament_id>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/tournaments/<tournament_id>', methods=['GET', 'POST', 'DELETE'])
 def tournament_http(tournament_id):
     if request.method == 'POST':
         return _post_tourney_entries(tournament_id)
@@ -40,10 +21,40 @@ def tournament_http(tournament_id):
         return _get_tournament(tournament_id)
 
 
+@app.route('/tournaments', methods=['GET','POST'])
+def post_tournament():
+    if request.method == 'POST':
+        return _post_tournament()
+    elif request.method == 'GET':
+        return _get_tournaments()
+
+
+def _post_tournament():
+    try:
+        description = request.form['description']
+        tourn_type = ''
+        tournament = tourney.create_tournament(description, tourn_type)
+    except IntegrityError:
+        message = "DB ERROR!"
+        return jsonify({'success': False, 'message': message}), 409
+    else:
+        return jsonify({tournament: tournament})
+
+
+def _get_tournaments():
+    tournaments = tournament_dao.find_all()
+    return jsonify({'tournaments': tournaments}), 200,  {'Content-Type': 'application/json; charset=utf-8'}
+
+
+@app.route('/api/tournament/status/<status>', methods=['GET'])
+def get_new_tournaments(status):
+    tourneys = tournament_dao.find_all_by_status(status)
+    return jsonify({'tournaments': tourneys})
+
+
 def _post_tourney_entries(tournament_id):
     try:
-        player_ids = request.form['entries']
-        tourney.setup_round_robin(player_ids, tournament_id)
+        tourney.setup_round_robin(tournament_id)
     except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
@@ -151,7 +162,7 @@ def update_status(tournament_id, status):
     else:
         return jsonify({'success': True, 'tournament_id': tournament_id})
 
-
+# used
 @app.route('/players/<player_id>', methods=['DELETE'])
 def delete_player(player_id):
     try:
@@ -162,15 +173,15 @@ def delete_player(player_id):
     else:
         return jsonify({}), 204
 
-
+# used
 @app.route('/players', methods=['GET', 'POST'])
 def player_http():
     if request.method == 'POST':
         return _post_player()
     elif request.method == 'GET':
-        return _get_player(), 200,  {'Content-Type': 'application/json; charset=utf-8'}
+        return _get_player()
 
-
+# used
 def _post_player():
     try:
         fname = request.json['player']['fname']
@@ -181,8 +192,8 @@ def _post_player():
     else:
         return jsonify({'player':{'id': player_id, 'fname': fname}})
 
-
+# used
 def _get_player():
     players = player_dao.find_all()
-    return jsonify({'players': players})
+    return jsonify({'players': players}), 200,  {'Content-Type': 'application/json; charset=utf-8'}
 

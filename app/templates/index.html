@@ -16,7 +16,7 @@
               </div>
               <div class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                      <li>{{#link-to "home" activeClass="selected"}}Home{{/link-to}}</li>
+                      <li class="active">{{#link-to "home" activeClass="selected"}}Home{{/link-to}}</li>
                       <li>{{#link-to "players" activeClass="selected"}}Players{{/link-to}}</li>
                   </ul>
               </div>
@@ -45,7 +45,14 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Completed Tournaments</h3>
                         </div>
-                        <div class="panel-body list-group"></div>
+                        <div class="panel-body list-group">
+                            <a class="list-group-item tourney-item">
+                                {{#each itemController=completedTournament}}
+                                    <span><strong>{{description}}</strong> <em>{{start_date}}</em></span>
+                                    <span class="glyphicon glyphicon-trash pull-right"></span>
+                                {{/each}}
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -73,7 +80,7 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Current Players</h3>
                         </div>
-                        <div class="panel-body list-group" id="players-old">
+                        <div class="panel-body list-group">
                             {{#each itemController="player"}}
                                 <a class="list-group-item player-item" href="#">
                                     <span class="fname">{{fname}}</span>
@@ -104,10 +111,11 @@
   <script src="/static/js/libs/handlebars-1.1.2.js"></script>
   <script src="/static/js/libs/ember-1.6.1.js"></script>
   <script src="/static/js/libs/ember-data.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.1.0/bootbox.min.js"></script>
   <script src="/static/js/app.js"></script>
-  <script src="/static/js/models/players.js"></script>
+  <script src="/static/js/models/player.js"></script>
+  <script src="/static/js/models/tournament.js"></script>
   <script src="/static/js/controllers/players-controller.js"></script>
   <script src="/static/js/controllers/player-controller.js"></script>
+  <script src="/static/js/controllers/tournament-controller.js"></script>
 </body>
 </html>

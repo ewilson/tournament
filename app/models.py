@@ -1,7 +1,7 @@
 class Tournament(object):
-    def __init__(self, tournament_id=0, start_date='', description='',
+    def __init__(self, id=0, start_date='', description='',
                  tourn_type='', status=0):
-        self.tournament_id = tournament_id
+        self.id = id
         self.start_date = start_date
         self.tourn_type = tourn_type
         self.description = description
@@ -9,7 +9,7 @@ class Tournament(object):
 
     def __repr__(self):
         return ('<(%d)%s:%s--%s, status=%s>' %
-                (self.tournament_id, self.description,
+                (self.id, self.description,
                  self.tourn_type, self.start_date, self.status))
 
 
