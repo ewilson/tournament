@@ -41,14 +41,13 @@ def test_find_in_tournament(g):
     p2 = Player("Test2")
     p3 = Player("Test3")
     pid = player_dao.create(p)
-    pid2 = player_dao.create(p2)
     pid3 = player_dao.create(p3)
     t = Tournament(description="Test Tourn")
     t = tournament_dao.create(t)
 
-    player_dao.enter_tournament(pid, t.tournament_id)
-    player_dao.enter_tournament(pid3, t.tournament_id)
-    players = player_dao.find_in_tournament(t.tournament_id)
+    player_dao.enter_tournament(pid, t.id)
+    player_dao.enter_tournament(pid3, t.id)
+    players = player_dao.find_in_tournament(t.id)
 
     assert players[0].fname == p.fname
     assert players[1].fname == p3.fname
