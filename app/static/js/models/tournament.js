@@ -1,4 +1,4 @@
 App.Tournament = DS.Model.extend({
     description: DS.attr('string'),
-    status: DS.attr('number')
+    status: DS.attr('number', {defaultValue: 0})
 });
