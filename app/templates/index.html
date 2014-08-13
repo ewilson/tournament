@@ -16,7 +16,7 @@
               </div>
               <div class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                      <li class="active">{{#link-to "home" activeClass="selected"}}Home{{/link-to}}</li>
+                      <li class="active">{{#link-to "tournaments" activeClass="selected"}}Tournaments{{/link-to}}</li>
                       <li>{{#link-to "players" activeClass="selected"}}Players{{/link-to}}</li>
                   </ul>
               </div>
@@ -25,7 +25,7 @@
       {{outlet}}
   </script>
 
-    <script type="text/x-handlebars" id="home">
+    <script type="text/x-handlebars" id="tournaments">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -54,11 +54,9 @@
                 </div>
             </div>
         </div>
-
     </script>
     <script type="text/x-handlebars" id="players">
         <div class="container">
-            <div id="errorContainer"></div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel panel-primary">
@@ -99,5 +97,6 @@
   <script src="/static/js/controllers/players-controller.js"></script>
   <script src="/static/js/controllers/player-controller.js"></script>
   <script src="/static/js/controllers/tournament-controller.js"></script>
+  <script src="/static/js/controllers/tournaments-controller.js"></script>
 </body>
 </html>

@@ -31,14 +31,14 @@ def post_tournament():
 
 def _post_tournament():
     try:
-        description = request.form['description']
+        description = request.json['tournament']['description']
         tourn_type = ''
         tournament = tourney.create_tournament(description, tourn_type)
     except IntegrityError:
         message = "DB ERROR!"
         return jsonify({'success': False, 'message': message}), 409
     else:
-        return jsonify({tournament: tournament})
+        return jsonify({'tournament': tournament})
 
 
 def _get_tournaments():
