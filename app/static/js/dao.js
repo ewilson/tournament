@@ -1,38 +1,5 @@
 var Dao = (function($) {
     var Tournament = {
-	add: function(options) {
-	    $.ajax({
-		url: $SCRIPT_ROOT + '/tournament',
-		type: 'POST',
-		dataType: 'json',
-		data: { description: options.description },
-		success: options.success
-	    });
-	},
-	remove: function(options) {
-	    $.ajax({
-		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id,
-		type: 'DELETE',
-		dataType: 'json',
-		success: options.success
-	    });
-	},
-	find: function(options) {
-	    $.ajax({
-		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id,
-		type: 'GET',
-		dataType: 'json',
-		success: options.success
-	    });
-	},
-	findByStatus: function(options) {
-	    $.ajax({
-		url: $SCRIPT_ROOT + '/tournament/status/' + options.status,
-		type: 'GET',
-		dataType: 'json',
-		success: options.success
-	    })
-	},
 	findPlayers: function(options) {
 	    $.ajax({
 		url: $SCRIPT_ROOT + '/tournament/' + options.tournament_id + 

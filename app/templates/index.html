@@ -29,13 +29,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="panel panel-primary tourneys" id="completed-tournaments">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Tournaments</h3>
                         </div>
                         <div class="panel-body list-group">
-                            {{#each itemController=tournament}}
-                                <a class="list-group-item tourney-item">
+                            {{#each itemController="tournament"}}
+                                <a class="list-group-item tourney-item" href="#">
                                     <span><strong>{{description}}</strong> <em>{{start_date}}</em></span>
                                     <span class="glyphicon glyphicon-trash pull-right" {{action "removeTournament"}}></span>
                                 </a>

@@ -10,17 +10,17 @@ import match_dao
 import tourney
 from deepJson import jsonify
 
-
+# used
 @app.route('/tournaments/<tournament_id>', methods=['GET', 'POST', 'DELETE'])
 def tournament_http(tournament_id):
-    if request.method == 'POST':
+    if request.method == 'POST': # NOT YET
         return _post_tourney_entries(tournament_id)
     elif request.method == 'DELETE':
         return _delete_tournament(tournament_id)
-    elif request.method == 'GET':
+    elif request.method == 'GET': # NOT YET
         return _get_tournament(tournament_id)
 
-
+# used
 @app.route('/tournaments', methods=['GET','POST'])
 def post_tournament():
     if request.method == 'POST':
@@ -28,22 +28,30 @@ def post_tournament():
     elif request.method == 'GET':
         return _get_tournaments()
 
-
+# used
 def _post_tournament():
     try:
         description = request.json['tournament']['description']
         tourn_type = ''
         tournament = tourney.create_tournament(description, tourn_type)
     except IntegrityError:
-        message = "DB ERROR!"
-        return jsonify({'success': False, 'message': message}), 409
+        return "DB ERROR!", 409
     else:
-        return jsonify({'tournament': tournament})
+        return jsonify({}), 204
 
-
+#used
 def _get_tournaments():
     tournaments = tournament_dao.find_all()
     return jsonify({'tournaments': tournaments}), 200,  {'Content-Type': 'application/json; charset=utf-8'}
+
+# used
+def _delete_tournament(tournament_id):
+    try:
+        tournament_dao.delete(tournament_id)
+    except IntegrityError:
+        return "DB ERROR!", 409
+    else:
+        return jsonify({}), 204
 
 
 @app.route('/api/tournament/status/<status>', methods=['GET'])
@@ -55,16 +63,6 @@ def get_new_tournaments(status):
 def _post_tourney_entries(tournament_id):
     try:
         tourney.setup_round_robin(tournament_id)
-    except IntegrityError:
-        message = "ERROR!"
-        return jsonify({'success': False, 'message': message}), 409
-    else:
-        return jsonify({'success': True, 'tournament_id': tournament_id})
-
-
-def _delete_tournament(tournament_id):
-    try:
-        tournament_dao.delete(tournament_id)
     except IntegrityError:
         message = "ERROR!"
         return jsonify({'success': False, 'message': message}), 409
