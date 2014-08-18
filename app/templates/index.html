@@ -28,7 +28,7 @@
     <script type="text/x-handlebars" id="tournaments">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Tournaments</h3>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     {{outlet}}
                     <div class="well well-lg">
                         <h3>Add new tournament</h3>
@@ -88,6 +88,45 @@
         <div id='handle'></div>
     </script>
     <script type="text/x-handlebars" id="tournament">
+        <div class="container">
+            <div class="page-header">
+                <h1>
+                    <!--{{tournament.description}}-->
+                    <small>Select players</small>
+                </h1>
+            </div>
+
+            <form>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">Players to add</h2>
+                            </div>
+                            <div class="panel-body omitted-players list-group"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Added players</h3>
+                            </div>
+                            <div class="panel-body added-players list-group"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <p>
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                Begin Tournament
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
         Stuff here!
     </script>
 

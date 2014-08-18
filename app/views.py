@@ -42,6 +42,11 @@ def undo_match(tourn_id, match_id):
     return redirect(url_for('play_tournament', tournament_id=tourn_id))
 
 
+@app.route('/mock/dashboard')
+def mock_dashboard():
+    return render_template('dashboard-mock.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
