@@ -46,6 +46,9 @@ def undo_match(tourn_id, match_id):
 def mock_dashboard():
     return render_template('dashboard-mock.html')
 
+@app.route('/mock-tournament/create')
+def mock_create_tournament():
+    return render_template('tournaments.create.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
