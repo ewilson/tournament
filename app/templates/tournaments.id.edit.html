@@ -46,11 +46,12 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Analytics</a></li>
-                <li><a href="#">Export</a></li>
-                <li><a href="">Nav item</a></li>
+                <li><a href="#">Create Tournament</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="#">Barnes Family Cornhole</a></li>
+                <li><a href="#">New Year Men's PingPong</a></li>
+                <li><a href="#">LEBC Cornhole</a></li>
                 <li><a href="">Nav item again</a></li>
                 <li><a href="">One more nav</a></li>
                 <li><a href="">Another nav item</a></li>
@@ -59,35 +60,6 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Barnes Family Cornhole</h1>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">Available Players</h2>
-                        </div>
-                        <div class="panel-body omitted-players list-group"></div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Players In Tournament</h3>
-                        </div>
-                        <div class="panel-body added-players list-group"></div>
-                    </div>
-                    <div class="well">
-                        <form>
-                            <div class="form-group">
-                                <label for="new-player" class="control-label">New Player</label>
-                                <input type="text" class="form-control" id="new-player" placeholder="New player to add to tournament">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Add Player</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <select class="form-control">
@@ -100,10 +72,49 @@
                 </div>
                 <div class="col-sm-6">
                     <p>
-                        <button type="submit" class="btn btn-lg btn-primary">
+                        <button type="submit" class="btn btn-block btn-danger">
                             Begin Tournament
                         </button>
                     </p>
+                </div>
+            </div>
+            <h3 class="sub-header">Add Players</h2>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Available Players</h2>
+                        </div>
+                        <div class="panel-body omitted-players list-group">
+                            <a class="list-group-item" href="#">Eric W</a>
+                            <a class="list-group-item" href="#">Tom K</a>
+                            <a class="list-group-item" href="#">Steve H</a>
+                            <a class="list-group-item" href="#">Brad M</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Players In Tournament</h3>
+                        </div>
+                        <div class="panel-body added-players list-group">
+                            <a class="list-group-item" href="#">Justin B</a>
+                            <a class="list-group-item" href="#">Wesley B</a>
+                            <a class="list-group-item" href="#">David P</a>
+                        </div>
+                    </div>
+                    <div class="well">
+                        <form>
+                            <div class="form-group">
+                                <label for="new-player" class="control-label">New Player</label>
+                                <input type="text" class="form-control" id="new-player" placeholder="New player to add to tournament">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Add Player</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
