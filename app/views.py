@@ -54,6 +54,10 @@ def mock_create_tournament():
 def mock_edit_tournament():
     return render_template('tournaments.id.edit.html')
 
+@app.route('/mock-tournament/id/view')
+def mock_view_tournament():
+    return render_template('tournaments.id.view.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
