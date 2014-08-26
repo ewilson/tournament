@@ -58,6 +58,14 @@ def mock_edit_tournament():
 def mock_view_tournament():
     return render_template('tournaments.id.view.html')
 
+@app.route('/mock-tournament/id/standings/view')
+def mock_view_standings_tournament():
+    return render_template('tournaments.id.standings.view.html')
+
+@app.route('/mock-tournament/id/view/match-id/update')
+def mock_update_match():
+    return render_template('tournaments.id.view.match-id.update.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None

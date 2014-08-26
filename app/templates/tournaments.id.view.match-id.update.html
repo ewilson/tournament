@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+</head>
+
+<body>
+{% raw %}
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Pools & Brackets</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="#">Create Tournament</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="#">Barnes Family Cornhole</a></li>
+                <li><a href="#">New Year Men's PingPong</a></li>
+                <li><a href="#">LEBC Cornhole</a></li>
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+                <li><a href="">More navigation</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Barnes Family Cornhole</h1>
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#">Matches</a></li>
+                <li><a href="#">Standings</a></li>
+            </ul>
+            <div>&nbsp;</div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr class="info">
+                                    <td class="col-sm-10">Adam</td>
+                                    <td class="col-sm-2">21</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-10">Eric</td>
+                                    <td class="col-sm-2">13</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr class="info">
+                                    <td class="col-sm-10">Justin</td>
+                                    <td class="col-sm-2">21</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-10">Wesley</td>
+                                    <td class="col-sm-2">19</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr class="info">
+                                    <td class="col-sm-10">Wyatt</td>
+                                    <td class="col-sm-2">21</td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-10">Eric</td>
+                                    <td class="col-sm-2">19</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td class="col-sm-10">Ryan</td>
+                                    <td class="col-sm-2">12</td>
+                                </tr>
+                                <tr class="info">
+                                    <td class="col-sm-10">Wyatt</td>
+                                    <td class="col-sm-2">21</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td class="col-sm-10">Adam</td>
+                                    <td class="col-sm-2">21</td>
+                                </tr>
+                                <tr class="info">
+                                    <td class="col-sm-10">Justin</td>
+                                    <td class="col-sm-2">23</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td class="col-sm-10">Justin</td>
+                                    <td class="col-sm-2"><input type="text" class="form-control" id="score1" placeholder="0"></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-10">Wesley</td>
+                                    <td class="col-sm-2"><input type="text" class="form-control" id="score2" placeholder="0"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td class="col-sm-10">Ryan</td>
+                                    <td class="col-sm-2"></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-10">Wyatt</td>
+                                    <td class="col-sm-2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endraw %}
+<script src="/static/js/libs/jquery-1.10.2.js"></script>
+</body>
+</html>
