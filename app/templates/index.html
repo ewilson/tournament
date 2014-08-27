@@ -48,14 +48,11 @@
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
                     <li class="active"><a href="#">Create Tournament</a></li>
-                    <li><a href="#">Reports</a></li>
-                    <li><a href="#">Analytics</a></li>
-                    <li><a href="#">Export</a></li>
-                    <li><a href="">Nav item</a></li>
-                    <li><a href="">Nav item again</a></li>
-                    <li><a href="">One more nav</a></li>
-                    <li><a href="">Another nav item</a></li>
-                    <li><a href="">More navigation</a></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    {{#each}}
+                        <li><a href="#">{{group}}--{{event}}</a></li>
+                    {{/each}}
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -92,6 +89,6 @@
 <script src="/static/js/libs/ember-1.6.1.js"></script>
 <script src="/static/js/libs/ember-data.js"></script>
 <script src="/static/js/app.js"></script>
-<script src="/static/js/models/tournaments.js"></script>
+<script src="/static/js/models/tournament.js"></script>
 </body>
 </html>
