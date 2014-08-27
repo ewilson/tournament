@@ -14,42 +14,6 @@ def index():
         return redirect(url_for('login'))
     return render_template('index.html')
 
-
-@app.route('/tournament/<tournament_id>', methods=['GET'])
-def get_tournament(tournament_id):
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    tournament = tournament_dao.find(tournament_id)
-    if not tournament.status:
-        return render_template('edit-tournament.html',
-                               tournament=tournament)
-    return redirect(url_for('play_tournament', tournament_id=tournament_id))
-
-
-@app.route('/play-tournament/<tournament_id>')
-def play_tournament(tournament_id):
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    return render_template('play-tournament.html',
-                           tournament_id=tournament_id)
-
-
-@app.route('/tournament/undo/<tourn_id>/<match_id>', methods=['GET', 'POST'])
-def undo_match(tourn_id, match_id):
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    tourney.undo_match(match_id)
-    return redirect(url_for('play_tournament', tournament_id=tourn_id))
-
-
-@app.route('/mock/dashboard')
-def mock_dashboard():
-    return render_template('dashboard-mock.html')
-
-@app.route('/mock-tournament/create')
-def mock_create_tournament():
-    return render_template('tournaments.create.html')
-
 @app.route('/mock-tournament/id/edit')
 def mock_edit_tournament():
     return render_template('tournaments.id.edit.html')
