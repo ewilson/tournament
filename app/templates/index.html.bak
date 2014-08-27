@@ -1,51 +1,189 @@
-{% extends 'base.html' %}
-{% block content %}
-<script src="/static/js/dao.js"></script>
-<script src="/static/js/create-tournament.js"></script>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-primary tourneys" id="new-tournaments">
-                <div class="panel-heading">
-                    <h3 class="panel-title">New Tournaments</h3>
-                </div>
-                <div class="panel-body list-group"></div>
-            </div>
-            <div class="panel panel-primary tourneys" id="active-tournaments">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Active Tournaments</h3>
-                </div>
-                <div class="panel-body list-group"></div>
-            </div>
-            <div class="panel panel-primary tourneys" id="completed-tournaments">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Completed Tournaments</h3>
-                </div>
-                <div class="panel-body list-group"></div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="well well-lg">
-                <h3>Add new tournament</h3>
-
-                <form action="" method="post" name="tournament" role="form" class="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="description"
-                               placeholder="Enter Tournament Description" value="">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pools &amp; Brackets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/dashboard.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/trophy.ico">
+</head>
+<body>
 {% raw %}
-<script id="tournament-template" type="text/x-handlebars-template">
-    <a class="list-group-item tourney-item"
-       data-tourney_id="{{tournament_id}}" href="/tournament/{{tournament_id}}">
-        <span><strong>{{description}}</strong> <em>{{start_date}}</em></span>
-        <span class="glyphicon glyphicon-trash pull-right"></span>
-    </a>
-</script>
+  <script type="text/x-handlebars">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">Pools & Brackets</a>
+              </div>
+              <div class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a href="#">Dashboard</a></li>
+                      <li><a href="#">Settings</a></li>
+                      <li><a href="#">Profile</a></li>
+                      <li><a href="#">Help</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-sm-3 col-md-2 sidebar">
+                  <ul class="nav nav-sidebar">
+                      <li class="active"><a href="#">Overview</a></li>
+                      <li><a href="#">Reports</a></li>
+                      <li><a href="#">Analytics</a></li>
+                      <li><a href="#">Export</a></li>
+                      <li><a href="">Nav item</a></li>
+                      <li><a href="">Nav item again</a></li>
+                      <li><a href="">One more nav</a></li>
+                      <li><a href="">Another nav item</a></li>
+                      <li><a href="">More navigation</a></li>
+                  </ul>
+              </div>
+              <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                  <h1 class="page-header">Dashboard</h1>
+                  {{outlet}}
+              </div>
+          </div>
+      </div>
+      <div class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+              <div class="navbar-header">
+                  <a class="navbar-brand" href="/">Pools &amp; Brackets</a>
+              </div>
+              <div class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav">
+                      <li class="active">{{#link-to "tournaments" activeClass="selected"}}Tournaments{{/link-to}}</li>
+                      <li>{{#link-to "players" activeClass="selected"}}Players{{/link-to}}</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </script>
+
+    <script type="text/x-handlebars" id="tournaments">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Tournaments</h3>
+                        </div>
+                        <div class="panel-body list-group">
+                            {{#each itemController="tournament"}}
+                                {{#link-to "tournament" this class="list-group-item tourney-item" href="#"}}
+                                    <span><strong>{{description}}</strong> <em>{{start_date}}</em></span>
+                                    <span class="glyphicon glyphicon-trash pull-right" {{action "removeTournament"}}></span>
+                                {{/link-to}}
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    {{outlet}}
+                    <div class="well well-lg">
+                        <h3>Add new tournament</h3>
+                        <div class="form-group">
+                            {{input type="text" placeholder="Tournament Description"
+                            value=newDescription action="createTournament" class="form-control"}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-handlebars" id="players">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Current Players</h3>
+                        </div>
+                        <div class="panel-body list-group">
+                            {{#each itemController="player"}}
+                                <a class="list-group-item player-item" href="#">
+                                    <span class="fname">{{fname}}</span>
+                                    <span class="glyphicon glyphicon-trash pull-right" {{action "removePlayer"}}></span>
+                                </a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" id="new-player">
+                    <div class="well well-lg">
+                        <h3>Add new player</h3>
+                        <div class="form-group">
+                            {{input type="text" placeholder="Enter name"
+                            value=newFname action="createPlayer" class="form-control"}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id='handle'></div>
+    </script>
+    <script type="text/x-handlebars" id="tournament">
+        <div class="container">
+            <div class="page-header">
+                <h1>
+                    <!--{{tournament.description}}-->
+                    <small>Select players</small>
+                </h1>
+            </div>
+
+            <form>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">Players to add</h2>
+                            </div>
+                            <div class="panel-body omitted-players list-group"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Added players</h3>
+                            </div>
+                            <div class="panel-body added-players list-group"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <p>
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                Begin Tournament
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        Stuff here!
+    </script>
+
 {% endraw %}
-{% endblock %}
+  <script src="/static/js/libs/jquery-1.10.2.js"></script>
+  <script src="/static/js/libs/handlebars-1.1.2.js"></script>
+  <script src="/static/js/libs/ember-1.6.1.js"></script>
+  <script src="/static/js/libs/ember-data.js"></script>
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/models/player.js"></script>
+  <script src="/static/js/models/tournament.js"></script>
+  <script src="/static/js/controllers/players-controller.js"></script>
+  <script src="/static/js/controllers/player-controller.js"></script>
+  <script src="/static/js/controllers/tournament-controller.js"></script>
+  <script src="/static/js/controllers/tournaments-controller.js"></script>
+</body>
+</html>
