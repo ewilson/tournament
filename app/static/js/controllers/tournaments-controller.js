@@ -1,21 +1,24 @@
 App.TournamentsController = Ember.ArrayController.extend({
     actions: {
-        createTournament: function() {
-            console.log('gots it');
-            var description = this.get('newDescription');
-            if (!description || !description.trim()) { return false; }
-
+        createTournament: function(params) {
+            var participants = this.get('participants');
+            var game = this.get('game');
+            var description = this.get('description');
             var tournament = this.store.createRecord('tournament', {
+                participants: participants,
+                game: game,
                 description: description
             });
 
-            var onFail = function(response) {
-                alert(response.responseText);
-                tournament.rollback();
-            };
+            tournament.save();
 
-            this.set('newDescription', '');
-            tournament.save().then(function() {}, onFail);
+//  TODO Validation & clear fields
+//            var onFail = function(response) {
+//                alert(response.responseText);
+//                tournament.rollback();
+//            };
+//
+//            tournament.save().then(function() {}, onFail);
         }
     }
 });
