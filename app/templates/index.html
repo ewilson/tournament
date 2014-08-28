@@ -11,7 +11,7 @@
     <title>Pools & Brackets</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/dashboard.css') }}">
@@ -58,25 +58,23 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <h1 class="page-header">Create a Tournament</h1>
                 <div class="well well-lg">
-                    <form role="form">
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label for="group" class="control-label">Group</label>
-                                <input type="text" class="form-control" id="group" placeholder="Who is competing?">
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <label for="event" class="control-label">Event</label>
-                                <input type="text" class="form-control" id="event" placeholder="What are you playing?">
-                            </div>
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label for="group" class="control-label">Group</label>
+                            <input type="text" class="form-control" id="group" placeholder="Who is competing?">
                         </div>
-                        <div class="form-group">
-                            <label for="description" class="control-label">Description</label>
-                            <input type="text" class="form-control" id="event" placeholder="Short description or tagline for this tournament">
+                        <div class="col-sm-6 form-group">
+                            <label for="event" class="control-label">Event</label>
+                            <input type="text" class="form-control" id="event" placeholder="What are you playing?">
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Make it!</button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="control-label">Description</label>
+                        <input type="text" class="form-control" id="event" placeholder="Short description or tagline for this tournament">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Make it!</button>
+                    </div>
                 </div>
             </div>
         </div>
