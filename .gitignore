@@ -6,3 +6,4 @@ tournament_venv
 .idea
 *.iml
 out
+app/static/bower_components

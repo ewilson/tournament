@@ -1,0 +1,21 @@
+{
+  "name": "tournament",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ewilson/tournament",
+  "authors": [
+    "Eric Wilson <wilson.eric.n@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "ember-data": "1.0.0-beta.8"
+  }
+}
