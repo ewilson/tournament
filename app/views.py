@@ -10,8 +10,6 @@ import tourney
 
 @app.route('/', methods=['GET'])
 def index():
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
     return render_template('index.html')
 
 @app.route('/mock-tournament/id/edit')
@@ -29,24 +27,6 @@ def mock_view_standings_tournament():
 @app.route('/mock-tournament/id/view/match-id/update')
 def mock_update_match():
     return render_template('tournaments.id.view.match-id.update.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['password'] == config.PASSWORD:
-            session['logged_in'] = True
-            return redirect(url_for('index'))
-        else:
-            error = 'Invalid Password'
-    return render_template('login.html', error=error)
-
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    return redirect(url_for('login'))
-
 
 @app.before_request
 def before_request():
