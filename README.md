@@ -1,7 +1,9 @@
 Tournament
 ==========
 
-This is a JavaScript/Python/Flask app that can schedule and keep standings for a round-robin tournaments. It is currently deployed [here](wilsonericn.com).
+This is a JavaScript/Python/Flask app that can schedule and keep standings for a round-robin tournaments. It is no longer deployed, as it is being replaced by a new version, built with Ember/Django.
+
+All of the things below are on the roadmap for the new version, though not necessarily in the same order.
 
 Things that I need to add before this is worth anything to anyone besides me:
 * Support for single elimination tournaments
